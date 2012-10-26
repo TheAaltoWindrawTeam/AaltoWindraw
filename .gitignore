@@ -126,6 +126,12 @@ Thumbs.db
 # Folder config file
 Desktop.ini
 
+#############
+## Linux
+############
+
+# Get rid of tedious temp files
+*~
 
 #############
 ## Python

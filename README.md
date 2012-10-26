@@ -14,9 +14,9 @@ For people waking up from 30 years of sleep, rules are as follow :
 * The other has to guess what this something is
 
 It is kind of similar to some other game:
-_Draw Something_ (_Android_ , _Iphone_)
+_Draw Something_ ( _Android_, _Iphone_)
 
-__Aalto Window Platforms__ are _Microsoft PixelSense_ tables buffed up with some awesome tools (_Kinect_ , APIs and so on) and located on the three campus of __Aalto University__.
+__Aalto Window Platforms__ are _Microsoft PixelSense_ tables buffed up with some awesome tools ( _Kinect_, APIs and so on) and located on the three campus of __Aalto University__.
 
 They prove to be the archetypal platform for the kind of game that __AaltoWindraw__ is.
 

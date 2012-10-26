@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AaltoWindraw", "AaltoWindraw.csproj", "{B10D87EE-355F-4CCB-8BCE-F7971B59AE0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FooWpfApplication", "..\FooWpfApplication\FooWpfApplication.csproj", "{15D73EDB-D063-4AAD-A4C4-29A35BE7F846}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,10 +13,6 @@ Global
 		{B10D87EE-355F-4CCB-8BCE-F7971B59AE0D}.Debug|x86.Build.0 = Debug|x86
 		{B10D87EE-355F-4CCB-8BCE-F7971B59AE0D}.Release|x86.ActiveCfg = Release|x86
 		{B10D87EE-355F-4CCB-8BCE-F7971B59AE0D}.Release|x86.Build.0 = Release|x86
-		{15D73EDB-D063-4AAD-A4C4-29A35BE7F846}.Debug|x86.ActiveCfg = Debug|x86
-		{15D73EDB-D063-4AAD-A4C4-29A35BE7F846}.Debug|x86.Build.0 = Debug|x86
-		{15D73EDB-D063-4AAD-A4C4-29A35BE7F846}.Release|x86.ActiveCfg = Release|x86
-		{15D73EDB-D063-4AAD-A4C4-29A35BE7F846}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

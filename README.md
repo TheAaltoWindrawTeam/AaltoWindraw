@@ -1,4 +1,4 @@
-__Aalto Windraw__
+__AaltoWindraw__
 =============
 
 Overview

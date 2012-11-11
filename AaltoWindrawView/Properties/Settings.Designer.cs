@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AaltoWindraw.Properties
+namespace AaltoWindrawView.Properties
 {
 
 

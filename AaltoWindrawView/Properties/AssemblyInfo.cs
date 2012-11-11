@@ -8,12 +8,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AaltoWindrawView")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AaltoWindraw")]
+[assembly: AssemblyDescription("AaltoWindraw then AaltoWinguess!")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AaltoWindrawView")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("The AaltoWindraw Team")]
+[assembly: AssemblyProduct("AaltoWindraw")]
+[assembly: AssemblyCopyright("Copyright © The AaltoWindraw Team 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

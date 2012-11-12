@@ -11,31 +11,29 @@ namespace AaltoWindraw
     namespace Drawing
     {
         [Serializable]
-        class Dot : ISerializable
+        public class Dot : ISerializable
         {
             private readonly Point position; // Coordinates of the point on the whiteboard
             private readonly Color color;    // Color of the point
             private readonly Double radius;  // Radius of the point
-            private readonly Double opacity;  // Opacity of the point
 
 
             // Disable default constructor
             private Dot() { }
 
-            public Dot(Double pX, Double pY, Color pColor, Double pRadius, Double pOpacity)
+            public Dot(Double pX, Double pY, Color pColor, Double pRadius)
             {
                 position = new Point(pX, pY);
                 color = pColor;
                 radius = pRadius;
-                opacity = pOpacity;
             }
 
-            public Dot( SerializationInfo info, StreamingContext ctxt )
+            public Dot(SerializationInfo info, StreamingContext ctxt)
             {
                 position = (Point)info.GetValue("Position", typeof(Point));
-                color = (Color)info.GetValue("Color", typeof(Color));
+                byte[] tempColor = (byte[])info.GetValue("Color", typeof(byte[]));
+                color = Color.FromArgb(tempColor[0], tempColor[1], tempColor[2], tempColor[3]);
                 radius = info.GetDouble("Radius");
-                opacity = info.GetDouble("Opacity");
             }
 
             public Point Position
@@ -47,19 +45,16 @@ namespace AaltoWindraw
             public Double Radius
             { get { return radius; } }
 
-            public Double Opacity
-            { get { return opacity; } }
-
-            public void GetObjectData( SerializationInfo info, StreamingContext ctxt )
+            public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
             {
-              info.AddValue("Position", this.position, typeof(Point));
-              info.AddValue("Color", this.color, typeof(Color));
-              info.AddValue("Radius", this.radius);
-              info.AddValue("Opacity", this.opacity);
+                info.AddValue("Position", this.position, typeof(Point));
+                byte[] tempColor = { this.color.A, this.color.R, this.color.G, this.color.B };
+                info.AddValue("Color", tempColor, typeof(byte[]));
+                info.AddValue("Radius", this.radius);
             }
-          }
-
-
         }
+
+
     }
+}
 

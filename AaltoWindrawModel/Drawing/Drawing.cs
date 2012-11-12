@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
@@ -7,35 +8,54 @@ using System.Runtime.Serialization;
 
 namespace AaltoWindraw
 {
-     namespace Drawing
+    namespace Drawing
     {
         [Serializable]
-        class Drawing : ISerializable
+        public class Drawing : ISerializable
         {
+            // Extension of a Drawing file (used for storage only)
+            public const string FILE_EXTENSION = ".draw";
+            public const string FILE_FORMAT = "{0}_{1}_{2:00}{3:00}{4:00}{5:00}{6:00}{7:00}";
+
             private string name;    // Name of the drawing
             private string author;  // Name of the author of the drawing
             private DateTime timestamp; // Date of the drawing
             private string item;    // Item represented by the drawing
             private Color background;    // Background of the drawing
-            private Dictionary<int, List<Dot>> frames;    // Set of frames forming the animation (int stands for index - or time)
-            private int length;  // Number of frames of the dynamic drawing
+            private List<List<Dot>> frames;   // Set of Dots forming the animation
 
 
             // Following attributes should not be serialized
+            private List<Dot> currentStroke;
             private int currentFrame;
-            private List<Dot> currentDots;
+
+            /*
+             * Read-only attribute is to be used as a lock on the Drawing.
+             * 
+             * In case of a new drawing, readOnly is set to false and the
+             * user can add Dots to the Drawing by clicking.
+             * When the user chooses to save, the attribute is set to true
+             * and no further modifications to the Drawing should be 
+             * expected (nor allowed).
+             * 
+             * In case of reading an existing drawing, the attribute is set
+             * to true and the Drawing should not be modified in any way.
+             */
             private bool readOnly;
 
-            public Drawing()
+            public Drawing(string item)
             {
-                currentFrame = 0;
-                currentDots = new List<Dot>();
-                frames = new Dictionary<int, List<Dot>> ();
-                readOnly = false;
+                this.item = item;
 
-//dicMyDic.Add("key",28);
-                // Access like this
-                //Dot d = frames[12];
+                currentFrame = 0;
+                frames = new List<List<Dot>>();
+                currentStroke = new List<Dot>();
+                readOnly = false;
+                this.author = null;
+                
+                //TODO replace following placeholders with relevant values
+                this.author = "Foo";
+                this.background = Colors.WhiteSmoke;
             }
 
             // Constructor for deserialization - should be used by serializer
@@ -45,12 +65,10 @@ namespace AaltoWindraw
                 author = info.GetString("Author");
                 timestamp = (DateTime)info.GetValue("Timestamp", typeof(DateTime));
                 item = info.GetString("Item");
-                background = (Color)info.GetValue("Color", typeof(Color));
-                frames = (Dictionary<int, List<Dot>>)info.GetValue("Frames", typeof(Dictionary<int, List<Dot>>));
-
-                //FIXME this thing should not be implementation-specific... Isn't there a mere GetInt() method ?!
-                length = info.GetInt32("Length");
-
+                byte[] tempBgColor = (byte[])info.GetValue("Background", typeof(byte[]));
+                background = Color.FromArgb(tempBgColor[0], tempBgColor[1], tempBgColor[2], tempBgColor[3]);
+                frames = (List<List<Dot>>)info.GetValue("Frames", typeof(List<List<Dot>>));
+                
                 readOnly = true;
             }
 
@@ -61,7 +79,7 @@ namespace AaltoWindraw
                 get { return name; }
             }
             
-            // Getter and setter for name attribute
+            // Getter and setter for author attribute
             public string Author
             { 
                 set { author = value; }
@@ -89,19 +107,32 @@ namespace AaltoWindraw
                 get { return background; }
             }
 
-            // Update the content of the drawing for step to next frame
-            public void Update()
+            // Returns the file name used for storing the drawing into a file
+            public string FileName()
             {
-                if(!readOnly)
-                {
-                    frames.Add(currentFrame++, currentDots);
-                    currentDots = new List<Dot>();
-                }
+                return this.readOnly ? 
+                    this.Name + FILE_EXTENSION
+                    : null;
+            }
+
+            // Getter for frames
+            // First, we just store one Dot per frame in currentDots 
+            // and we need it to be sure it's done correctly
+            public List<List<Dot>> Frames
+            {
+                get { return frames; }
             }
 
             public void AddDot(Dot dot)
             {
-                currentDots.Add(dot);
+                currentStroke.Add(dot);
+            }
+
+            public void NextStroke()
+            {
+                this.frames.Add(currentStroke);
+                this.currentStroke = new List<Dot>();
+                this.currentFrame++;
             }
 
             // Save the drawing in its current state (should not be updated after this!)
@@ -109,10 +140,21 @@ namespace AaltoWindraw
             {
                 if(!readOnly)
                 {
-                    length = currentFrame - 1;
                     timestamp = DateTime.Now;
+                    name = DefineName();
+                    readOnly = true;
+                    Console.WriteLine(timestamp);
+                    Console.WriteLine(name);
+                    Console.WriteLine(FileName());
                 }
-                readOnly = true;
+            }
+
+            private string DefineName()
+            {
+                return String.Format(FILE_FORMAT,
+                    this.item, this.author, 
+                    this.timestamp.Year, this.timestamp.Month, this.timestamp.Day, 
+                    this.timestamp.Hour, this.timestamp.Minute, this.timestamp.Second);
             }
 
             // Serialize the drawing (used by serializer)
@@ -122,13 +164,10 @@ namespace AaltoWindraw
                 info.AddValue("Author", author);
                 info.AddValue("Timestamp", timestamp, typeof(DateTime));
                 info.AddValue("Item", item);
-                info.AddValue("Background", background, typeof(Color));
-                info.AddValue("Frames", frames, typeof(Dictionary<int, List<Dot>>));
-                info.AddValue("Length", length);
+                byte[] tempBgColor = { background.A, background.R, background.G, background.B };
+                info.AddValue("Background", tempBgColor, typeof(byte[]));
+                info.AddValue("Frames", frames, typeof(List<List<Dot>>));
             }
           }
-
-        
-         
     }
 }

@@ -1,10 +1,146 @@
-﻿<s:SurfaceWindow x:Class="AaltoWindrawView.DrawingWindow"
+﻿<s:SurfaceWindow
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:s="http://schemas.microsoft.com/surface/2008"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="AaltoWindrawView.DrawingWindow"
     Title="AaltoWindrawView"
+	WindowStyle = "None"
+	WindowState = "Maximized"
     >
-  <Grid>
+	<s:SurfaceWindow.Resources>
+	</s:SurfaceWindow.Resources>
+	
+	<Grid x:Name="Layout_Global" Background="White" RenderTransformOrigin="0.5,0.5">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.015*"/>
+			<ColumnDefinition Width="0.467*"/>
+			<ColumnDefinition Width="0.317*"/>
+			<ColumnDefinition Width="0.186*"/>
+			<ColumnDefinition Width="0.015*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0*"/>
+			<RowDefinition Height="0.075*"/>
+			<RowDefinition Height="0.012*"/>
+			<RowDefinition Height="0.824*"/>
+			<RowDefinition Height="0.074*"/>
+			<RowDefinition Height="0.015*"/>
+		</Grid.RowDefinitions>
+		
+		<Rectangle x:Name="Footer_Background" Grid.ColumnSpan="5" Fill="#FFE5E5E5" Grid.Row="4" Grid.RowSpan="2"/>
+  	
+		<StackPanel Grid.Column="2" Margin="36.41,8.374,0,10.428" Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" d:LayoutOverrides="Height" VerticalAlignment="Center">
+			<TextBlock x:Name="Step2" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0"><Run Language="fr-fr" Text="2. Save"/></TextBlock>
+			<Button Content="Button" Style="{DynamicResource ButtonFloppyDisk}" Margin="0,0,10,0" Height="23.123"/>
+			<TextBox TextWrapping="NoWrap" Text="Enter your name" FontFamily="Segoe UI Light" FontSize="13.333" Width="163.319" Margin="0,0,10,0" Height="23.123"/>
+			<Button Content="Save" Style="{DynamicResource YellowButton}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+		</StackPanel>
+		
+		<StackPanel x:Name="Footer_Stackpanel_Left" Grid.Column="1" Margin="0" Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+			<TextBlock x:Name="Footer_Consigne" TextWrapping="Wrap" FontSize="20" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0"><Run Language="fr-fr" Text="What is it?"/></TextBlock>
+			<TextBox x:Name="Footer_PlayerTypedAnswer" TextWrapping="NoWrap" Text="Enter here the answer" FontFamily="Segoe UI Light" FontSize="13.333" Width="145.13" Margin="0,0,10,0" Height="27.6"/>
+			<Button x:Name="Footer_AnswerButton" Content="Guess" Style="{DynamicResource YellowButton}" Width="75" Margin="0,0,10,0"/>
+			<TextBlock x:Name="Footer_Timer" FontSize="23" FontFamily="Segoe UI Light" Foreground="#FF979797" Margin="0,0,10,0"><Run Language="fr-fr" Text="00:00:00"/></TextBlock>
+		</StackPanel>
+		
+		<StackPanel x:Name="Footer_Stackpanel_Right" Grid.Column="2" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+			<Button x:Name="Footer_Icon_Loupe" Content="Button" Height="Auto" Style="{DynamicResource ButtonMagnifyingGlass}" Width="23.293" Margin="0,0,10,0"/>
+			<TextBox x:Name="Footer_SearchText" TextWrapping="NoWrap" Text="Find a drawing/user" FontFamily="Segoe UI Light" FontSize="13.333" Width="158.667" Margin="0,0,10,0"/>
+			<Button x:Name="Footer_SearchButton" Content="Search" Style="{DynamicResource YellowButton}" Width="73.843" VerticalAlignment="Center"/>
+		</StackPanel>
+		
+		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" >
+			<s:SurfaceInkCanvas x:Name="InkCanvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White"/>
+		</Border>
+		
+		<StackPanel x:Name="StackPanel_IconsTopRight" Grid.Column="3" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,3,0" Grid.ColumnSpan="2" Height="27">
+			<Button x:Name="Button_Home" Content="Button" Style="{DynamicResource ButtonHome}"/>
+			<Button x:Name="Button_Settings" Content="Button" Style="{DynamicResource ButtonSettings}" Margin="8,0,0,0"/>
+			<Button x:Name="Button_About" Content="Button" Style="{DynamicResource ButtonQuestion}" Margin="8,0,0,0"/>
+			<Button x:Name="Button_Close" Content="Button" Style="{DynamicResource ButtonClose}" Click="OnClickCloseButton" Margin="8,0,0,0"/>
+		</StackPanel>
+		
+		<StackPanel x:Name="StackPanel_Header" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Orientation="Horizontal" VerticalAlignment="Center">
+			<Button x:Name="Logo_Icon" Content="Button" HorizontalAlignment="Left" Height="Auto" Style="{DynamicResource ButtonTitle}" Width="46.525" VerticalAlignment="Center" BorderThickness="0" Margin="0,0,5,0"/>
+			<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+				<TextBlock x:Name="Logo_Title" HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Segoe UI Light" FontSize="26.667" Foreground="#FF676767" VerticalAlignment="Center" Height="29.9"><Run Language="fr-fr" Text="AaltoWindraw"/></TextBlock>
+				<TextBlock x:Name="Logo_Subtitle" HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Segoe UI Light" Foreground="#FF999999" Text="For Aalto Window Platform"/>
+			</StackPanel>
+			<TextBlock x:Name="GameMode" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="Black" Margin="20,0,10,0"><Run Language="fr-fr" Text="1. Draw"/></TextBlock>
+			<TextBlock x:Name="DrawingToGuess" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="#FF979797" Margin="0,0,10,0"><Run Language="fr-fr" Text="Batman"/></TextBlock>
+			<Button x:Name="Button_Another" Content="Another?" Style="{DynamicResource YellowButton}" Width="Auto" Height="25"/>
+		</StackPanel>
+		
+		<StackPanel x:Name="StackPanel_ToolboxOnTheRight" Grid.Column="3" Grid.Row="3" Orientation="Vertical" Margin="10,0,0,0">
+			<Expander x:Name="Expander_Palette" Header="Palette" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+							<Button Name="BrushRed" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}"/>
+							<Button Name="BrushOrange" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}"/>
+							<Button Name="BrushYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}"/>
+							<Button Name="BrushBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}"/>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Background" Header="Background" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+							<Button Name="BgRed" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}"/>
+							<Button Name="BgOrange" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}"/>
+							<Button Name="BgYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}"/>
+							<Button Name="BgBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}"/>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Brush" Header="Brush" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5" Margin="0">
+					<StackPanel VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
+						<StackPanel Orientation="Horizontal" Margin="10,0">
+							<TextBlock Foreground="#FFAFAFAF" Background="Transparent">Size</TextBlock>
+							<s:SurfaceSlider Orientation="Horizontal" Width="175.19" />
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Chat" Header="Chat" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Height="93.017" Margin="4">
+						<TextBlock Foreground="#FFAFAFAF" Background="Transparent">Not implemented for the moment</TextBlock>
+					</StackPanel>
+				</Grid>
+			</Expander>
+		
+			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="124" Name="DebugBox" BorderBrush="#FFA70000" d:LayoutOverrides="GridBox, VerticalMargin" BorderThickness="0" Foreground="White" Background="#FF393939" >
+				<TextBlock Name="DebugText" TextWrapping="NoWrap"/>
+			</s:SurfaceScrollViewer>
 
-  </Grid>
+		</StackPanel>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+	
+
+	</Grid>
 </s:SurfaceWindow>

@@ -1,0 +1,571 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+	<!-- Les entrées du dictionnaire de ressources sont définies ici. -->
+	
+            <Style x:Key="YellowButton" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Rectangle x:Name="rectangle" Fill="#FFFECB05" Stroke="Black" StrokeThickness="0"/>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Stroke" TargetName="rectangle" Value="#FFFECB05"/>
+                                    <Setter Property="StrokeThickness" TargetName="rectangle" Value="0"/>
+                                </Trigger>
+                                <Trigger Property="IsDefaulted" Value="True"/>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Fill" TargetName="rectangle" Value="#FFFFE747"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Fill" TargetName="rectangle" Value="#FFFE9705"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Fill" TargetName="rectangle" Value="#FFB2B2B2"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+            </Style>
+            <Style x:Key="ColorButtonStyle-Red" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Rectangle x:Name="rectangle" Fill="#FFCE1414" Stroke="Black" StrokeThickness="0" Margin="4"/>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="rectangle" Value="#FFEF5050"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ColorButtonStyle-Blue" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Rectangle x:Name="rectangle" Fill="#FF4747FF" Stroke="Black" StrokeThickness="0" Margin="4"/>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="rectangle" Value="#FF7A95FF"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ColorButtonStyle-Orange" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Rectangle x:Name="rectangle" Fill="#FFFF7500" Stroke="#FFFF7500" StrokeThickness="0" Margin="4"/>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="rectangle" Value="#FFFFA02C"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ColorButtonStyle-Yellow" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Rectangle x:Name="rectangle" Fill="#FFFCDC10" Stroke="Black" StrokeThickness="0" Margin="4"/>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True">
+            						<Setter Property="StrokeThickness" TargetName="rectangle" Value="1"/>
+            					</Trigger>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="rectangle" Value="#FFFFE747"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonClose" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Viewbox>
+				
+            						<Canvas x:Name="icon_croix" HorizontalAlignment="Left" Height="51.838" UseLayoutRounding="False" VerticalAlignment="Top" Width="51.838">
+            							<Rectangle x:Name="rectangle" Fill="White" Height="51.838" Width="51.838"/>
+            							<Canvas x:Name="Calque_1" Height="51.838" Canvas.Left="0" Canvas.Top="-0.838" Width="51.838" HorizontalAlignment="Center" VerticalAlignment="Center">
+            								<Path x:Name="path" Data="F1M8.3088,-0.838200000000001L0.000799999999999912,7.4708L17.6098,25.0808L-0.000199999999999534,42.6908L8.3088,50.9998L25.9188,33.3898L43.5298,50.9998L51.8378,42.6908L34.2278,25.0818L51.8378,7.4718L43.5298,-0.837200000000001L25.9188,16.7718z" Fill="#FFFECB06" Height="51.838" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.838" HorizontalAlignment="Center"/>
+            							</Canvas>
+					
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="path" Value="White"/>
+            						<Setter Property="Fill" TargetName="rectangle" Value="#FFFECB06"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonQuestion" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            					<Viewbox>
+				
+            						<Canvas x:Name="icon_question2" HorizontalAlignment="Left" Height="51.917" UseLayoutRounding="False" VerticalAlignment="Top" Width="51.917">
+            							<Canvas x:Name="Calque_1" Height="51.917" Canvas.Left="0" Canvas.Top="-0.917" Width="51.917">
+            								<Path x:Name="path" Data="F1M0,51L51.917,51L51.917,-0.917000000000002L0,-0.917000000000002z" Fill="White" Height="51.917" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.917"/>
+            								<Path x:Name="path1" Data="F1M20.155,50.917L31.521,50.917L31.521,39.431L20.155,39.431z M31.521,35.198L20.155,35.198L20.155,34.231C20.155,26.492,23.057,23.59,27.895,20.93C31.279,19.238,32.73,17.544,32.73,14.642C32.73,11.257,30.07,9.323,25.959,9.323C21.606,9.323,18.462,11.257,18.462,15.851L6.854,15.851L6.854,14.401C6.854,4.728,15.318,-0.835000000000001,25.959,-0.835000000000001C37.324,-0.835000000000001,45.063,4.485,45.063,14.401C44.58,20.689,40.711,24.074,37.083,26.734C32.973,29.637,31.521,31.088,31.521,34.957z" Fill="#FFFECB06" Height="51.752" Canvas.Left="6.854" Stretch="Fill" Canvas.Top="0.082" Width="38.209"/>
+            							</Canvas>
+            						</Canvas>
+				
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="path" Value="#FFFECB06"/>
+            						<Setter Property="Fill" TargetName="path1" Value="White"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonSettings" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            					<Viewbox>
+            						<Canvas x:Name="icon_settings" HorizontalAlignment="Left" Height="51.951" UseLayoutRounding="False" VerticalAlignment="Top" Width="51.917">
+            							<Canvas x:Name="Calque_1" Height="51.951" Canvas.Left="0" Width="51.917">
+            								<Path x:Name="path" Data="F1M0,50.966L51.917,50.966L51.917,-0.951000000000001L0,-0.951000000000001z" Fill="White" Height="51.917" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.917"/>
+            								<Path x:Name="path1" Data="F1M34.5732,28.6572C32.5942,33.4332,27.1182,35.7012,22.3412,33.7222C17.5642,31.7442,15.2962,26.2682,17.2752,21.4922C19.2532,16.7152,24.7292,14.4472,29.5062,16.4252C34.2832,18.4042,36.5522,23.8802,34.5732,28.6572 M40.6182,3.1052L31.2092,-0.7928L28.5552,5.6132C26.8122,5.3762,25.0712,5.3732,23.3672,5.5992L20.7082,-0.820800000000002L11.3002,3.0762L13.9592,9.4962C12.6162,10.5262,11.4032,11.7372,10.3482,13.1112L3.9252,10.4502L0.0281999999999982,19.8592L6.4512,22.5202C6.2222,24.2562,6.2272,25.9892,6.4572,27.6852L0.0981999999999985,30.3182L3.9962,39.7272L10.3782,37.0842C11.4162,38.4292,12.6392,39.6422,14.0242,40.6962L11.3702,47.1012L20.7802,51.0002L23.4482,44.5572C25.1392,44.7732,26.8262,44.7682,28.4782,44.5492L31.1372,50.9702L40.5482,47.0722L37.8872,40.6522C39.2312,39.6232,40.4442,38.4112,41.4992,37.0372L47.9232,39.6972L51.8192,30.2892L45.3952,27.6282C45.6192,25.9292,45.6222,24.2342,45.4072,22.5742L51.8892,19.8892L47.9932,10.4802L41.5342,13.1552C40.5122,11.8142,39.3132,10.6022,37.9502,9.5472z" Fill="#FFFECB06" Height="51.821" Canvas.Left="0.028" Stretch="Fill" Canvas.Top="0.13" Width="51.861">
+            									<Path.Clip>
+            										<PathGeometry Figures="M0,-0.951 L51.917,-0.951 L51.917,51 L0,51 z">
+            											<PathGeometry.Transform>
+            												<MatrixTransform Matrix="1,0,0,1,-0.0282000005245209,0.820800006389618"/>
+            											</PathGeometry.Transform>
+            										</PathGeometry>
+            									</Path.Clip>
+            								</Path>
+            							</Canvas>
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="path" Value="#FFFECB06"/>
+            						<Setter Property="Fill" TargetName="path1" Value="White"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonTitle" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Viewbox>
+            						<Canvas x:Name="icon_logo" HorizontalAlignment="Left" Height="59.992" UseLayoutRounding="False" VerticalAlignment="Top" Width="80.273">
+            							<Canvas x:Name="Calque_1" Height="59.992" Canvas.Left="0.001" Canvas.Top="-0.992" Width="80.273">
+            								<Path Data="M38.6357,13.6387L16.9037,2.4277C17.6427,0.2987,19.8927,-1.5223,23.1127,-0.850300000000001C25.4477,-0.362299999999999,28.0147,1.5117,30.7007,2.9447C35.2017,5.3467,41.3467,6.8587,38.6357,13.6387" Fill="#FFFECB06" Height="14.631" Canvas.Left="16.903" Stretch="Fill" Canvas.Top="0.977" Width="22.398"/>
+            								<Path Data="M21.5596,7.4292L7.0716,35.7162L1.2076,32.7832L15.6956,4.4972z" Fill="#FFFECB06" Height="31.219" Canvas.Left="1.207" Stretch="Fill" Canvas.Top="6.466" Width="20.352"/>
+            								<Path Data="M29.4941,11.5688L15.0061,39.8558L9.1411,36.9228L23.6301,8.6358z" Fill="#FFFECB06" Height="31.22" Canvas.Left="9.141" Stretch="Fill" Canvas.Top="10.605" Width="20.353"/>
+            								<Path Data="M3.1055,46.4102C5.7545,47.6102,8.1985,49.0212,10.6945,50.3772C12.6225,48.8552,14.9335,47.7172,16.9035,46.2372C12.0445,44.0232,7.7195,41.2772,2.7595,39.1662C3.0105,41.8242,3.0695,43.7032,3.1055,46.4102 M0.000500000000000167,34.8532L21.7325,46.0642L1.2085,59.0002z" Fill="#FFFECB06" Height="24.147" Stretch="Fill" Canvas.Top="36.822" Width="21.732"/>
+            								<Path Data="M37.6006,15.708L22.9406,43.994L17.0756,41.062L31.7366,12.776z" Fill="#FFFECB06" Height="31.218" Canvas.Left="17.075" Stretch="Fill" Canvas.Top="14.745" Width="20.525"/>
+            								<Path Data="F1M61.2803,-0.811500000000002L47.1053,-0.811500000000002L47.1053,13.6465L53.9103,13.6465C53.9103,18.1825,51.0743,21.0165,47.1053,21.0165L47.1053,27.5375C55.3263,27.2535,61.2803,21.8675,61.2803,11.3785z" Fill="#FFFECB06" Height="28.349" Canvas.Left="47.105" Stretch="Fill" Canvas.Top="1.158" Width="14.175"/>
+            								<Path Data="F1M80.2734,-0.811500000000002L66.0994,-0.811500000000002L66.0994,13.6465L72.9024,13.6465C72.9024,18.1825,70.0684,21.0165,66.0994,21.0165L66.0994,27.5375C74.3204,27.2535,80.2734,21.8675,80.2734,11.3785z" Fill="#FFFECB06" Height="28.349" Canvas.Left="66.099" Stretch="Fill" Canvas.Top="1.158" Width="14.174"/>
+            							</Canvas>
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True"/>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonMagnifyingGlass" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Viewbox>
+            						<Canvas x:Name="icon_magnifyingglass" HorizontalAlignment="Left" Height="51.671" UseLayoutRounding="False" VerticalAlignment="Top" Width="51.648">
+            							<Canvas x:Name="Calque_1" Height="51.671" Canvas.Left="0" Canvas.Top="-0.671" Width="51.648">
+            								<Path Data="F1M10.1514,25.9448C5.6044,21.3998,5.6044,14.0258,10.1514,9.4798C14.6974,4.9318,22.0704,4.9328,26.6164,9.4798C31.1634,14.0268,31.1644,21.3978,26.6164,25.9448C22.0704,30.4908,14.6974,30.4908,10.1514,25.9448 M48.7644,41.4148L36.4664,31.0608L37.7024,29.8248L34.4684,26.5908C38.3304,19.6028,37.3104,10.6408,31.3814,4.7138C24.2044,-2.4652,12.5644,-2.4672,5.3844,4.7138C-1.7946,11.8928,-1.7946,23.5328,5.3844,30.7118C11.3124,36.6398,20.2764,37.6588,27.2634,33.7968L30.4974,37.0308L31.6054,35.9228L41.9594,48.2218C41.9594,48.2218,46.0704,53.5338,50.1384,49.4668C54.2064,45.3988,48.7644,41.4148,48.7644,41.4148" Fill="#FFFECB06" Height="51.671" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.648"/>
+            							</Canvas>
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True"/>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonFloppyDisk" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Viewbox>
+            						<Canvas x:Name="icon_save" HorizontalAlignment="Left" Height="42.045" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.045">
+            							<Canvas x:Name="Calque_1" Height="36.675" Canvas.Left="2.685" Canvas.Top="2.64" Width="36.675">
+            								<Path Data="F1M34.812,37.019L7.263,37.019L7.263,20.978L34.812,20.978z M11.809,5.034L30.236,5.034L30.236,17.536L11.809,17.536z M30.112,2.64L2.685,2.64L2.685,39.315L39.36,39.315L39.36,11.888z" Fill="#FFFECB06" Height="36.675" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="36.675"/>
+            								<Path Data="F1M32.539,25.552L9.542,25.552L9.542,23.207L32.539,23.207z" Fill="#FFFECB06" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="20.567" Width="22.997"/>
+            								<Path Data="F1M32.539,30.186L9.542,30.186L9.542,27.841L32.539,27.841z" Fill="#FFFECB06" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="25.201" Width="22.997"/>
+            								<Path Data="F1M32.539,34.766L9.542,34.766L9.542,32.421L32.539,32.421z" Fill="#FFFECB06" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="29.781" Width="22.997"/>
+            								<Path Data="F1M27.905,6.561L23.326,6.561L23.326,15.248L27.905,15.248z" Fill="#FFFECB06" Height="8.687" Canvas.Left="20.641" Stretch="Fill" Canvas.Top="3.921" Width="4.579"/>
+            							</Canvas>
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True"/>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonHome" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Viewbox>
+            						<Canvas x:Name="icon_house" HorizontalAlignment="Left" Height="52.118" UseLayoutRounding="False" VerticalAlignment="Top" Width="51.917">
+            							<Canvas x:Name="Calque_1" Height="52.118" Canvas.Left="0" Canvas.Top="-0.117" Width="51.917">
+            								<Rectangle x:Name="rectangle" Fill="White" Height="52.118" Width="51.917"/>
+            								<Path x:Name="path" Data="F1M33.752,46.0625L18.164,46.0625L18.164,38.6875C18.168,34.3875,21.653,30.9025,25.955,30.9025C30.257,30.9025,33.741,34.3875,33.745,38.6875L33.752,38.6875z M25.958,-0.1175L15.601,11.8695L15.601,9.1325L9.851,9.1325L9.851,18.5235L0,29.9235L8.112,29.9235L8.112,52.0005L43.804,52.0005L43.804,29.9235L51.917,29.9235z" Fill="#FFFECB06" Height="52.118" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.917"/>
+            							</Canvas>
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Fill" TargetName="rectangle" Value="#FFFECB06"/>
+            						<Setter Property="Fill" TargetName="path" Value="White"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ButtonPalette" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Viewbox>
+            						<Canvas x:Name="icon_palette" HorizontalAlignment="Left" Height="50.223" UseLayoutRounding="False" VerticalAlignment="Top" Width="49.375">
+            							<Canvas x:Name="Calque_1" Height="50.222" Canvas.Left="0" Canvas.Top="-0.223" Width="49.376">
+            								<Path Data="F1M40.249,36.2637C37.108,36.2637,34.561,33.7167,34.561,30.5757C34.561,27.4347,37.108,24.8887,40.249,24.8887C43.392,24.8887,45.937,27.4347,45.937,30.5757C45.937,33.7167,43.392,36.2637,40.249,36.2637 M26.749,26.3077C23.608,26.3077,21.062,23.7617,21.062,20.6197C21.062,17.4787,23.608,14.9327,26.749,14.9327C29.892,14.9327,32.436,17.4787,32.436,20.6197C32.436,23.7617,29.892,26.3077,26.749,26.3077 M23.374,43.3697C20.233,43.3697,17.687,40.8247,17.687,37.6827C17.687,34.5407,20.233,31.9947,23.374,31.9947C26.516,31.9947,29.061,34.5407,29.061,37.6827C29.061,40.8247,26.516,43.3697,23.374,43.3697 M12.999,31.9947C9.858,31.9947,7.312,29.4487,7.312,26.3077C7.312,23.1667,9.858,20.6197,12.999,20.6197C16.141,20.6197,18.687,23.1667,18.687,26.3077C18.687,29.4487,16.141,31.9947,12.999,31.9947 M4.562,10.8077C4.562,7.6667,7.108,5.1197,10.249,5.1197C13.391,5.1197,15.937,7.6667,15.937,10.8077C15.937,13.9487,13.391,16.4947,10.249,16.4947C7.108,16.4947,4.562,13.9487,4.562,10.8077 M38.311,12.2447C31.604,9.7087,25.259,12.0027,23.937,9.9947C21.03,5.5807,17.92,-2.5203,8.087,0.395699999999998C-1.746,3.3127,-1.438,20.2447,2.812,30.6197C7.062,40.9947,27.437,63.8697,45.062,38.3697C54.671,24.4687,46.351,15.2847,38.311,12.2447" Fill="#FFFFFFFF" Height="50.222" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="49.376"/>
+            							</Canvas>
+            						</Canvas>
+            					</Viewbox>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True"/>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsPressed" Value="True"/>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type ToggleButton}">
+            				<Border Padding="{TemplateBinding Padding}">
+            					<Grid Background="Transparent" SnapsToDevicePixels="False">
+            						<Grid.RowDefinitions>
+            							<RowDefinition Height="19"/>
+            							<RowDefinition Height="*"/>
+            						</Grid.RowDefinitions>
+            						<Grid>
+            							<Grid.LayoutTransform>
+            								<TransformGroup>
+            									<TransformGroup.Children>
+            										<TransformCollection>
+            											<RotateTransform Angle="-90"/>
+            										</TransformCollection>
+            									</TransformGroup.Children>
+            								</TransformGroup>
+            							</Grid.LayoutTransform>
+            							<Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
+            							<Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+            						</Grid>
+            						<ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
+            					</Grid>
+            				</Border>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsChecked" Value="true">
+            						<Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
+            					</Trigger>
+            					<Trigger Property="IsMouseOver" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#222"/>
+            					</Trigger>
+            					<Trigger Property="IsPressed" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
+            						<Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
+            					</Trigger>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ExpanderUpHeaderStyle" TargetType="{x:Type ToggleButton}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type ToggleButton}">
+            				<Border Padding="{TemplateBinding Padding}">
+            					<Grid Background="Transparent" SnapsToDevicePixels="False">
+            						<Grid.ColumnDefinitions>
+            							<ColumnDefinition Width="19"/>
+            							<ColumnDefinition Width="*"/>
+            						</Grid.ColumnDefinitions>
+            						<Grid>
+            							<Grid.LayoutTransform>
+            								<TransformGroup>
+            									<TransformGroup.Children>
+            										<TransformCollection>
+            											<RotateTransform Angle="180"/>
+            										</TransformCollection>
+            									</TransformGroup.Children>
+            								</TransformGroup>
+            							</Grid.LayoutTransform>
+            							<Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
+            							<Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+            						</Grid>
+            						<ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+            					</Grid>
+            				</Border>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsChecked" Value="true">
+            						<Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
+            					</Trigger>
+            					<Trigger Property="IsMouseOver" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#222"/>
+            					</Trigger>
+            					<Trigger Property="IsPressed" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
+            						<Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
+            					</Trigger>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ExpanderLeftHeaderStyle" TargetType="{x:Type ToggleButton}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type ToggleButton}">
+            				<Border Padding="{TemplateBinding Padding}">
+            					<Grid Background="Transparent" SnapsToDevicePixels="False">
+            						<Grid.RowDefinitions>
+            							<RowDefinition Height="19"/>
+            							<RowDefinition Height="*"/>
+            						</Grid.RowDefinitions>
+            						<Grid>
+            							<Grid.LayoutTransform>
+            								<TransformGroup>
+            									<TransformGroup.Children>
+            										<TransformCollection>
+            											<RotateTransform Angle="90"/>
+            										</TransformCollection>
+            									</TransformGroup.Children>
+            								</TransformGroup>
+            							</Grid.LayoutTransform>
+            							<Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
+            							<Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+            						</Grid>
+            						<ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
+            					</Grid>
+            				</Border>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsChecked" Value="true">
+            						<Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
+            					</Trigger>
+            					<Trigger Property="IsMouseOver" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#222"/>
+            					</Trigger>
+            					<Trigger Property="IsPressed" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
+            						<Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
+            					</Trigger>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ExpanderHeaderFocusVisual">
+            	<Setter Property="Control.Template">
+            		<Setter.Value>
+            			<ControlTemplate>
+            				<Border>
+            					<Rectangle Margin="0" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+            				</Border>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type ToggleButton}">
+            				<Border Padding="{TemplateBinding Padding}">
+            					<Grid Background="Transparent" SnapsToDevicePixels="False">
+            						<Grid.ColumnDefinitions>
+            							<ColumnDefinition Width="19"/>
+            							<ColumnDefinition Width="*"/>
+            						</Grid.ColumnDefinitions>
+            						<Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="White" VerticalAlignment="Center" Width="19"/>
+            						<Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="White" StrokeThickness="2" VerticalAlignment="Center"/>
+            						<ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+            					</Grid>
+            				</Border>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsChecked" Value="true">
+            						<Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
+            					</Trigger>
+            					<Trigger Property="IsMouseOver" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="#FFFE9705"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="#FFFE9722"/>
+            					</Trigger>
+            					<Trigger Property="IsPressed" Value="true">
+            						<Setter Property="Stroke" TargetName="circle" Value="White"/>
+            						<Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+            						<Setter Property="Stroke" TargetName="arrow" Value="White"/>
+            					</Trigger>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ExpanderStyle1" TargetType="{x:Type Expander}">
+            	<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            	<Setter Property="Background" Value="Transparent"/>
+            	<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            	<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            	<Setter Property="BorderBrush" Value="Transparent"/>
+            	<Setter Property="BorderThickness" Value="1"/>
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Expander}">
+            				<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="true">
+            					<DockPanel>
+            						<ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            						<ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Bottom" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            					</DockPanel>
+            				</Border>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsExpanded" Value="true">
+            						<Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+            					</Trigger>
+            					<Trigger Property="ExpandDirection" Value="Right">
+            						<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
+            						<Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
+            						<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderRightHeaderStyle}"/>
+            					</Trigger>
+            					<Trigger Property="ExpandDirection" Value="Up">
+            						<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
+            						<Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
+            						<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}"/>
+            					</Trigger>
+            					<Trigger Property="ExpandDirection" Value="Left">
+            						<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
+            						<Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
+            						<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderLeftHeaderStyle}"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="false">
+            						<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            					</Trigger>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+	
+			
+</ResourceDictionary>

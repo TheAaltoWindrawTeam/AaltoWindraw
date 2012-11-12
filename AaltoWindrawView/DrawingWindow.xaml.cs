@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -99,5 +99,10 @@ namespace AaltoWindrawView
         {
             //TODO: disable audio, animations here
         }
+		
+		private void OnClickCloseButton(object sender, RoutedEventArgs e){
+			Close();
+		}
+		
     }
 }

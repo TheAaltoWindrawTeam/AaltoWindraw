@@ -123,6 +123,11 @@ namespace AaltoWindraw
                 get { return frames; }
             }
 
+            public bool ReadOnly
+            {
+                get { return readOnly; }
+            }
+
             public void AddDot(Dot dot)
             {
                 currentStroke.Add(dot);

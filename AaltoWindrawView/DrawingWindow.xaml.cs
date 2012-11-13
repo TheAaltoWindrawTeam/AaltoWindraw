@@ -74,8 +74,6 @@ namespace AaltoWindraw
             InitializeComponent();
             AddWindowAvailabilityHandlers();
             currentDrawing = new Drawing.Drawing(item);
-            //XYCoord.Content = Mouse.GetPosition(icanvas);
-            //canvas.AddHandler(SurfaceInkCanvas.TouchDownEvent, new EventHandler<TouchEventArgs>(OnTouchDown), true);
             
             saveTimer = new System.Windows.Threading.DispatcherTimer();
             saveTimer.Tick += new EventHandler(SaveFrame);
@@ -85,8 +83,15 @@ namespace AaltoWindraw
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
         }
 
+        private void onMouseMove(object sender, MouseEventArgs e)
+        {
+            //DebugText.Text += "HAAAAAAAA";
+            position = e.GetPosition(canvas);
+        }
+
         private void OnMouseDown(object sender, RoutedEventArgs e)
         {
+            if (currentDrawing.ReadOnly) return;
             DebugText.Text += "hahaha\n";
             SaveFrame(sender, e);
             saveTimer.Start();
@@ -94,16 +99,16 @@ namespace AaltoWindraw
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
+            if (currentDrawing.ReadOnly) return;
             saveTimer.Stop();
             currentDrawing.NextStroke();
         }
 
-        // TODO : the offset due to the palette (100 pix) is hard-coded. Change it (see "position.X-100")
         // TODO : add the color (+ radius, + opacity)
         private void SaveFrame(object sender, EventArgs e)
         {
-            DebugText.Text = ""+counter++;
-            Drawing.Dot p = new Drawing.Dot(position.X - 100, position.Y, canvas.DefaultDrawingAttributes.Color, 1.0);
+            DebugText.Text = "save "+counter++ + " " + position.X + " " + position.Y;
+            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, 1.0);
             currentDrawing.AddDot(p);
         }
 
@@ -189,6 +194,7 @@ namespace AaltoWindraw
 		private void DoDraw()
         {
             ClearBoard();
+            currentDrawing.Save();
             canvas.Background = new SolidColorBrush(currentDrawing.Background);
             newStroke = true;
             frameEnumerator = currentDrawing.Frames.GetEnumerator();
@@ -226,8 +232,9 @@ namespace AaltoWindraw
                 canvas.Strokes.Add(stroke);
 
                 newStroke = !currentStrokeDotEnumerator.MoveNext();
+
+                DebugText.Text = "draw " + counter++;
             }
-            DebugText.Text = ""+counter++;
         }
 
         private void Reset(object sender, RoutedEventArgs e)
@@ -309,11 +316,14 @@ namespace AaltoWindraw
 
         private void ChangeBackgroundColor(Color c)
         {
+            if (currentDrawing.ReadOnly) return;
             canvas.Background = new SolidColorBrush(c);
+            currentDrawing.Background = c;
         }
 
         private void ChangeBrushColor(Color c)
         {
+            if (currentDrawing.ReadOnly) return;
             canvas.DefaultDrawingAttributes.Color = c;
         }
 

@@ -56,15 +56,20 @@ namespace AaltoWindraw
 
         /* The item attribute should be defined beforehand by the user.
          * Sequencing is as follow:
-         * - User chooses to draw (from main menu)
-         * - A new MainWindow appears with an overlay
+         * - User chooses to draw (from HomeWindow)
+         * - A new DrawingWindow appears with an overlay
          * - The overlay shows some cards (say around 4)
          * - After the user has chosen a card (by clicking) the overlay disappears
          * - The item attribute is defined by user's choice
-         * - Let's roll (MainWindow is visible and usable)
+         * - Let's roll (DrawingWindow is visible and usable)
          */
-        private string item = "Batman";
+        private string item;
 
+        /* For the moment, hard coded, but actually needs to be from a database
+         * (or file if we are lazy)
+         */
+        //TODO
+        private String[] arrayOfRandomWords;
 		
         /// <summary>
         /// Default constructor.
@@ -73,6 +78,11 @@ namespace AaltoWindraw
         {
             InitializeComponent();
             AddWindowAvailabilityHandlers();
+            
+            //TODO: replace by Database
+            arrayOfRandomWords=new String[]{"Batman","Mickey","A cat","Tintin","Maria Wojciechowska"};
+            PickRandomName();
+
             currentDrawing = new Drawing.Drawing(item);
             //XYCoord.Content = Mouse.GetPosition(icanvas);
             //canvas.AddHandler(SurfaceInkCanvas.TouchDownEvent, new EventHandler<TouchEventArgs>(OnTouchDown), true);
@@ -87,7 +97,6 @@ namespace AaltoWindraw
 
         private void OnMouseDown(object sender, RoutedEventArgs e)
         {
-            DebugText.Text += "hahaha\n";
             SaveFrame(sender, e);
             saveTimer.Start();
         }
@@ -102,7 +111,7 @@ namespace AaltoWindraw
         // TODO : add the color (+ radius, + opacity)
         private void SaveFrame(object sender, EventArgs e)
         {
-            DebugText.Text = ""+counter++;
+            DebugText2.Text = ""+counter++;
             Drawing.Dot p = new Drawing.Dot(position.X - 100, position.Y, canvas.DefaultDrawingAttributes.Color, 1.0);
             currentDrawing.AddDot(p);
         }
@@ -174,8 +183,14 @@ namespace AaltoWindraw
         }
 		
 		private void OnClickCloseButton(object sender, RoutedEventArgs e){
-			Close();
+			//TODO: actually close the application. For the moment : only close window
+            Close();
 		}
+
+        private void OnClickHomeButton(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 		
 		private void Draw(object sender, RoutedEventArgs e){
 			DoDraw();
@@ -183,7 +198,9 @@ namespace AaltoWindraw
 
         private void LoadAnotherDrawing(object sender, RoutedEventArgs e)
         {
-            DebugText.Text += "ghghghj\n";
+            PrintDebug("Load Another Drawing (not implemented)");
+            ClearBoard();
+            PickRandomName();
         }
 		
 		private void DoDraw()
@@ -221,13 +238,16 @@ namespace AaltoWindraw
                 var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
                 drawingAttributes.Color = d.Color;
                 drawingAttributes.Width = d.Radius;
+                drawingAttributes.Height = d.Radius;
+               
+
                 Stroke stroke = new Stroke(strokePoints, drawingAttributes);
                 this.lastPointDrawn = newPointDrawn;
                 canvas.Strokes.Add(stroke);
 
                 newStroke = !currentStrokeDotEnumerator.MoveNext();
             }
-            DebugText.Text = ""+counter++;
+            DebugText2.Text = ""+counter++;
         }
 
         private void Reset(object sender, RoutedEventArgs e)
@@ -239,7 +259,7 @@ namespace AaltoWindraw
         //clear the board
         private void ClearBoard()
         {
-            DebugText.Text = "Cleared";
+            PrintDebug("Cleared");
             canvas.Strokes.Clear();
             counter = 0;
         }
@@ -280,8 +300,7 @@ namespace AaltoWindraw
             }
             catch (Exception ex)
             {
-                DebugText.Text += ex.ToString();
-                //Console.WriteLine(ex.ToString());
+                //PrintDebug(ex.ToString());
                 return false;
             }
             return true;
@@ -339,17 +358,45 @@ namespace AaltoWindraw
 
         private void SetBrushRadius(double radius)
         {
-            DebugText.Text += "Size=" + radius + "\n";
+            Double newSize = Math.Round(radius,0);
+            PrintDebug("Selected Size="+ newSize);
             //TODO Change drawing radius
             var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
-            drawingAttributes.Width = radius;
-            drawingAttributes.Height = radius;
+            drawingAttributes.Width = newSize;
+            drawingAttributes.Height = newSize;
+            
+            //PrintDebug("drawingAttributes.Height="+drawingAttributes.Width);
             canvas.DefaultDrawingAttributes = drawingAttributes;
+
+            canvas.DefaultDrawingAttributes.Height = newSize;
+            //PrintDebug("canvas.DefaultDrawingAttributes.Height=" + canvas.DefaultDrawingAttributes.Height);
         }
 
         private void OnSlideValueChanged(object sender, EventArgs e)
         {
             SetBrushRadius(BrushRadiusSlider.Value);
+        }
+
+        // Print in the text panel in the application
+        private void PrintDebug(String s)
+        {
+            try
+            {
+                DebugText.Text += s + "\n";
+            }
+            catch (Exception e)
+            {
+                //NOTHING
+            }
+        }
+
+        //TODO: replace with popup and database
+        private void PickRandomName()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, arrayOfRandomWords.Length);
+            DrawingToGuess.Text = arrayOfRandomWords[randomNumber];
+            item = arrayOfRandomWords[randomNumber];
         }
        
     }

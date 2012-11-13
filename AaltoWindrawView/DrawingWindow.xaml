@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="AaltoWindraw.DrawingWindow"
 
-    Title="AaltoWindrawView"
+    Title="Draw"
 	WindowStyle = "None"
 	WindowState = "Maximized"
     >
@@ -31,18 +31,13 @@
 		
 		<Rectangle x:Name="Footer_Background" Grid.ColumnSpan="5" Fill="#FFE5E5E5" Grid.Row="4" Grid.RowSpan="2"/>
   	
-		<StackPanel Grid.Column="2" Margin="36.41,8.374,0,10.428" Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" d:LayoutOverrides="Height" VerticalAlignment="Center">
-			<TextBlock x:Name="Step2" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0"><Run Language="fr-fr" Text="2. Save"/></TextBlock>
+
+		
+		<StackPanel x:Name="Footer_Stackpanel_Left" Grid.Column="1" Margin="0" Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+			<TextBlock x:Name="Step2" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0" VerticalAlignment="Center"><Run Language="fr-fr" Text="2. Save"/></TextBlock>
 			<Button Content="Button" Style="{DynamicResource ButtonFloppyDisk}" Margin="0,0,10,0" Height="23.123"/>
 			<TextBox TextWrapping="NoWrap" Text="Enter your name" FontFamily="Segoe UI Light" FontSize="13.333" Width="163.319" Margin="0,0,10,0" Height="23.123"/>
 			<Button Content="Save" Style="{DynamicResource YellowButton}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-		</StackPanel>
-		
-		<StackPanel x:Name="Footer_Stackpanel_Left" Grid.Column="1" Margin="0" Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
-			<TextBlock x:Name="Footer_Consigne" TextWrapping="Wrap" FontSize="20" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0"><Run Language="fr-fr" Text="What is it?"/></TextBlock>
-			<TextBox x:Name="Footer_PlayerTypedAnswer" TextWrapping="NoWrap" Text="Enter here the answer" FontFamily="Segoe UI Light" FontSize="13.333" Width="145.13" Margin="0,0,10,0" Height="27.6"/>
-			<Button x:Name="Footer_AnswerButton" Content="Guess" Style="{DynamicResource YellowButton}" Width="75" Margin="0,0,10,0"/>
-			<TextBlock x:Name="Footer_Timer" FontSize="20" FontFamily="Segoe UI Light" Foreground="#FF979797" Margin="0,0,10,0"><Run Language="fr-fr" Text="00:00:00"/></TextBlock>
 		</StackPanel>
 		
 		<StackPanel x:Name="Footer_Stackpanel_Right" Grid.Column="2" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -52,17 +47,22 @@
 		</StackPanel>
 		
 		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" >
-            <s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp"/>
+            <s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp">
+            	 <s:SurfaceInkCanvas.DefaultDrawingAttributes>
+        			<DrawingAttributes Color="DarkGreen" Width="5" Height="20" FitToCurve="True" IsHighlighter="False" />
+    			</s:SurfaceInkCanvas.DefaultDrawingAttributes>
+
+			</s:SurfaceInkCanvas>
 		</Border>
 		
 		<StackPanel x:Name="StackPanel_IconsTopRight" Grid.Column="3" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,3,0" Grid.ColumnSpan="2" Height="27">
-			<Button x:Name="Button_Home" Content="Button" Style="{DynamicResource ButtonHome}"/>
+            <Button x:Name="Button_Home" Content="Button" Style="{DynamicResource ButtonHome}" Click="OnClickHomeButton"/>
 			<Button x:Name="Button_Settings" Content="Button" Style="{DynamicResource ButtonSettings}" Margin="8,0,0,0"/>
 			<Button x:Name="Button_About" Content="Button" Style="{DynamicResource ButtonQuestion}" Margin="8,0,0,0"/>
 			<Button x:Name="Button_Close" Content="Button" Style="{DynamicResource ButtonClose}" Click="OnClickCloseButton" Margin="8,0,0,0"/>
 		</StackPanel>
 		
-		<StackPanel x:Name="StackPanel_Header" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Orientation="Horizontal" VerticalAlignment="Center">
+		<StackPanel x:Name="StackPanel_Header" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="Auto" Orientation="Horizontal" VerticalAlignment="Center">
 			<Button x:Name="Logo_Icon" Content="Button" HorizontalAlignment="Left" Height="Auto" Style="{DynamicResource ButtonTitle}" Width="46.525" VerticalAlignment="Center" BorderThickness="0" Margin="0,0,5,0"/>
 			<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
 				<TextBlock x:Name="Logo_Title" HorizontalAlignment="Left" TextWrapping="Wrap" FontFamily="Segoe UI Light" FontSize="26.667" Foreground="#FF676767" VerticalAlignment="Center" Height="29.9"><Run Language="fr-fr" Text="AaltoWindraw"/></TextBlock>
@@ -105,7 +105,7 @@
 					<StackPanel VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
 						<StackPanel Orientation="Horizontal" Margin="10,0">
 							<TextBlock Foreground="#FFAFAFAF" Background="Transparent">Size</TextBlock>
-                            <s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" Width="175.19" Value="50" Maximum="100" SmallChange="1" LargeChange="10" Minimum="1" Foreground="White" Thumb.DragCompleted="OnSlideValueChanged"/>
+                            <s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" Width="175.19" Value="50" Maximum="100" SmallChange="1" LargeChange="10" Minimum="1" Foreground="White" Thumb.DragCompleted="OnSlideValueChanged" ValueChanged="OnSlideValueChanged"/>
 						</StackPanel>
 					</StackPanel>
 				</Grid>
@@ -122,8 +122,12 @@
 			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="200" Name="DebugBox" BorderBrush="#FFA70000" d:LayoutOverrides="GridBox, VerticalMargin" BorderThickness="0" Foreground="White" Background="#FF393939" >
 				<TextBlock Name="DebugText" TextWrapping="NoWrap"/>
 			</s:SurfaceScrollViewer>
-			
-			<Button x:Name="ButtonReset" Content="Reset" Style="{DynamicResource YellowButton}"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0" Click="Reset"/>
+
+            <s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="15" Name="DebugBox2" BorderBrush="#FFA70000" d:LayoutOverrides="GridBox, VerticalMargin" BorderThickness="0" Foreground="White" Background="#FF393939" >
+                <TextBlock Name="DebugText2" TextWrapping="NoWrap"/>
+            </s:SurfaceScrollViewer>
+
+            <Button x:Name="ButtonReset" Content="Reset" Style="{DynamicResource YellowButton}"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0" Click="Reset"/>
 			<Button x:Name="ButtonDraw" Content="Draw" Style="{DynamicResource YellowButton}"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0" Click="Draw"/>
 			<Button x:Name="ButtonSaveDrawing" Content="SaveDrawing" Style="{DynamicResource YellowButton}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0" Click="SaveDrawing"/>
 			<Button x:Name="ButtonOpenDrawing" Content="OpenDrawing" Style="{DynamicResource YellowButton}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0" Click="OpenDrawing"/>

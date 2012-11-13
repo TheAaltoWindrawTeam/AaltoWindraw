@@ -47,12 +47,7 @@
 		</StackPanel>
 		
 		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" >
-            <s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp">
-            	 <s:SurfaceInkCanvas.DefaultDrawingAttributes>
-        			<DrawingAttributes Color="DarkGreen" Width="5" Height="20" FitToCurve="True" IsHighlighter="False" />
-    			</s:SurfaceInkCanvas.DefaultDrawingAttributes>
-
-			</s:SurfaceInkCanvas>
+			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp" PreviewMouseMove="onMouseMove"/>
 		</Border>
 		
 		<StackPanel x:Name="StackPanel_IconsTopRight" Grid.Column="3" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,3,0" Grid.ColumnSpan="2" Height="27">
@@ -107,6 +102,7 @@
 							<TextBlock Foreground="#FFAFAFAF" Background="Transparent">Size</TextBlock>
                             <s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" Width="175.19" Value="50" Maximum="100" SmallChange="1" LargeChange="10" Minimum="1" Foreground="White" Thumb.DragCompleted="OnSlideValueChanged" ValueChanged="OnSlideValueChanged"/>
 						</StackPanel>
+
 					</StackPanel>
 				</Grid>
 			</Expander>

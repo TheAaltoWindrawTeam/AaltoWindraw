@@ -84,8 +84,6 @@ namespace AaltoWindraw
             PickRandomName();
 
             currentDrawing = new Drawing.Drawing(item);
-            //XYCoord.Content = Mouse.GetPosition(icanvas);
-            //canvas.AddHandler(SurfaceInkCanvas.TouchDownEvent, new EventHandler<TouchEventArgs>(OnTouchDown), true);
             
             saveTimer = new System.Windows.Threading.DispatcherTimer();
             saveTimer.Tick += new EventHandler(SaveFrame);
@@ -95,24 +93,31 @@ namespace AaltoWindraw
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
         }
 
+        private void onMouseMove(object sender, MouseEventArgs e)
+        {
+            //DebugText.Text += "HAAAAAAAA";
+            position = e.GetPosition(canvas);
+        }
+
         private void OnMouseDown(object sender, RoutedEventArgs e)
         {
+            if (currentDrawing.ReadOnly) return;
             SaveFrame(sender, e);
             saveTimer.Start();
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
+            if (currentDrawing.ReadOnly) return;
             saveTimer.Stop();
             currentDrawing.NextStroke();
         }
 
-        // TODO : the offset due to the palette (100 pix) is hard-coded. Change it (see "position.X-100")
         // TODO : add the color (+ radius, + opacity)
         private void SaveFrame(object sender, EventArgs e)
         {
-            DebugText2.Text = ""+counter++;
-            Drawing.Dot p = new Drawing.Dot(position.X - 100, position.Y, canvas.DefaultDrawingAttributes.Color, 1.0);
+            DebugText2.Text = "save "+counter++ + " " + position.X + " " + position.Y;
+            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
             currentDrawing.AddDot(p);
         }
 
@@ -192,7 +197,9 @@ namespace AaltoWindraw
             Close();
         }
 		
-		private void Draw(object sender, RoutedEventArgs e){
+        private void Draw(object sender, RoutedEventArgs e)
+        {
+            currentDrawing.Save();
 			DoDraw();
 		}
 
@@ -239,15 +246,14 @@ namespace AaltoWindraw
                 drawingAttributes.Color = d.Color;
                 drawingAttributes.Width = d.Radius;
                 drawingAttributes.Height = d.Radius;
-               
-
                 Stroke stroke = new Stroke(strokePoints, drawingAttributes);
                 this.lastPointDrawn = newPointDrawn;
                 canvas.Strokes.Add(stroke);
 
                 newStroke = !currentStrokeDotEnumerator.MoveNext();
+
+                DebugText2.Text = "draw " + counter++ + " " + d.Radius;
             }
-            DebugText2.Text = ""+counter++;
         }
 
         private void Reset(object sender, RoutedEventArgs e)
@@ -286,7 +292,7 @@ namespace AaltoWindraw
 
         private void OpenDrawing(object sender, RoutedEventArgs e)
         {
-            if (DoOpenDrawing("Batman_Foo_20121111203058.draw"))
+            if (DoOpenDrawing("Batman_Foo_20121113183315.draw"))
                 DoDraw();
         }
 
@@ -328,11 +334,14 @@ namespace AaltoWindraw
 
         private void ChangeBackgroundColor(Color c)
         {
+            if (currentDrawing.ReadOnly) return;
             canvas.Background = new SolidColorBrush(c);
+            currentDrawing.Background = c;
         }
 
         private void ChangeBrushColor(Color c)
         {
+            if (currentDrawing.ReadOnly) return;
             canvas.DefaultDrawingAttributes.Color = c;
         }
 
@@ -358,18 +367,11 @@ namespace AaltoWindraw
 
         private void SetBrushRadius(double radius)
         {
-            Double newSize = Math.Round(radius,0);
+			Double newSize = Math.Round(radius,0);
             PrintDebug("Selected Size="+ newSize);
-            //TODO Change drawing radius
-            var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
-            drawingAttributes.Width = newSize;
-            drawingAttributes.Height = newSize;
-            
-            //PrintDebug("drawingAttributes.Height="+drawingAttributes.Width);
-            canvas.DefaultDrawingAttributes = drawingAttributes;
-
+            canvas.DefaultDrawingAttributes.Width  = newSize;
             canvas.DefaultDrawingAttributes.Height = newSize;
-            //PrintDebug("canvas.DefaultDrawingAttributes.Height=" + canvas.DefaultDrawingAttributes.Height);
+            canvas.UsesTouchShape = false;
         }
 
         private void OnSlideValueChanged(object sender, EventArgs e)
@@ -386,7 +388,7 @@ namespace AaltoWindraw
             }
             catch (Exception e)
             {
-                //NOTHING
+                Console.WriteLine(e.ToString());
             }
         }
 

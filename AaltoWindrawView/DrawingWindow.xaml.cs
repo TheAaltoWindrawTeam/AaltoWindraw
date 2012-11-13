@@ -108,7 +108,7 @@ namespace AaltoWindraw
         private void SaveFrame(object sender, EventArgs e)
         {
             DebugText.Text = "save "+counter++ + " " + position.X + " " + position.Y;
-            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, 1.0);
+            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
             currentDrawing.AddDot(p);
         }
 
@@ -181,8 +181,10 @@ namespace AaltoWindraw
 		private void OnClickCloseButton(object sender, RoutedEventArgs e){
 			Close();
 		}
-		
-		private void Draw(object sender, RoutedEventArgs e){
+
+        private void Draw(object sender, RoutedEventArgs e)
+        {
+            currentDrawing.Save();
 			DoDraw();
 		}
 
@@ -194,7 +196,6 @@ namespace AaltoWindraw
 		private void DoDraw()
         {
             ClearBoard();
-            currentDrawing.Save();
             canvas.Background = new SolidColorBrush(currentDrawing.Background);
             newStroke = true;
             frameEnumerator = currentDrawing.Frames.GetEnumerator();
@@ -227,13 +228,14 @@ namespace AaltoWindraw
                 var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
                 drawingAttributes.Color = d.Color;
                 drawingAttributes.Width = d.Radius;
+                drawingAttributes.Height = d.Radius;
                 Stroke stroke = new Stroke(strokePoints, drawingAttributes);
                 this.lastPointDrawn = newPointDrawn;
                 canvas.Strokes.Add(stroke);
 
                 newStroke = !currentStrokeDotEnumerator.MoveNext();
 
-                DebugText.Text = "draw " + counter++;
+                DebugText.Text = "draw " + counter++ + " " + d.Radius;
             }
         }
 
@@ -273,7 +275,7 @@ namespace AaltoWindraw
 
         private void OpenDrawing(object sender, RoutedEventArgs e)
         {
-            if (DoOpenDrawing("Batman_Foo_20121111203058.draw"))
+            if (DoOpenDrawing("Batman_Foo_20121113183315.draw"))
                 DoDraw();
         }
 
@@ -349,12 +351,15 @@ namespace AaltoWindraw
 
         private void SetBrushRadius(double radius)
         {
-            DebugText.Text += "Size=" + radius + "\n";
+            if (DebugText != null) DebugText.Text += "Size=" + radius + "\n";
             //TODO Change drawing radius
-            var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
-            drawingAttributes.Width = radius;
-            drawingAttributes.Height = radius;
-            canvas.DefaultDrawingAttributes = drawingAttributes;
+            //var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
+            //drawingAttributes.Width = radius;
+            //drawingAttributes.Height = radius;
+            //canvas.DefaultDrawingAttributes = drawingAttributes;
+            canvas.DefaultDrawingAttributes.Width  = radius;
+            canvas.DefaultDrawingAttributes.Height = radius;
+            canvas.UsesTouchShape = false;
         }
 
         private void OnSlideValueChanged(object sender, EventArgs e)

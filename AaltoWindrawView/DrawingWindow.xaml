@@ -105,7 +105,7 @@
 					<StackPanel VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
 						<StackPanel Orientation="Horizontal" Margin="10,0">
 							<TextBlock Foreground="#FFAFAFAF" Background="Transparent">Size</TextBlock>
-                            <s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" Width="175.19" Value="50" Maximum="100" SmallChange="1" LargeChange="10" Minimum="1" Foreground="White" Thumb.DragCompleted="OnSlideValueChanged"/>
+                            <s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" Width="175.19" Value="50" Maximum="100" SmallChange="1" LargeChange="10" Minimum="1" Foreground="White" ValueChanged="OnSlideValueChanged"/>
                         </StackPanel>
 					</StackPanel>
 				</Grid>

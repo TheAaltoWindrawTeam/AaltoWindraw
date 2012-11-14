@@ -566,6 +566,26 @@
             		</Setter.Value>
             	</Setter>
             </Style>
+            <Style x:Key="ToggleButtonPopup" TargetType="{x:Type ToggleButton}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type ToggleButton}">
+            				<Grid>
+            					<Viewbox>
+				
+            						<Canvas x:Name="icon_question2" HorizontalAlignment="Left" Height="51.917" UseLayoutRounding="False" VerticalAlignment="Top" Width="51.917">
+            							<Canvas x:Name="Calque_1" Height="51.917" Canvas.Left="0" Canvas.Top="-0.917" Width="51.917">
+            								<Path x:Name="path" Data="F1M0,51L51.917,51L51.917,-0.917000000000002L0,-0.917000000000002z" Fill="White" Height="51.917" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.917"/>
+            								<Path x:Name="path1" Data="F1M20.155,50.917L31.521,50.917L31.521,39.431L20.155,39.431z M31.521,35.198L20.155,35.198L20.155,34.231C20.155,26.492,23.057,23.59,27.895,20.93C31.279,19.238,32.73,17.544,32.73,14.642C32.73,11.257,30.07,9.323,25.959,9.323C21.606,9.323,18.462,11.257,18.462,15.851L6.854,15.851L6.854,14.401C6.854,4.728,15.318,-0.835000000000001,25.959,-0.835000000000001C37.324,-0.835000000000001,45.063,4.485,45.063,14.401C44.58,20.689,40.711,24.074,37.083,26.734C32.973,29.637,31.521,31.088,31.521,34.957z" Fill="#FFFECB06" Height="51.752" Canvas.Left="6.854" Stretch="Fill" Canvas.Top="0.082" Width="38.209"/>
+            							</Canvas>
+            						</Canvas>
+				
+            					</Viewbox>
+            				</Grid>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
 	
 			
 </ResourceDictionary>

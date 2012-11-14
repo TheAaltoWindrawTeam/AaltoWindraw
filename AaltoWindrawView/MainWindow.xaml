@@ -1,0 +1,13 @@
+﻿<s:SurfaceWindow x:Class="AaltoWindraw.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
+    Title="AaltoWindrawView"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    WindowStyle="None">
+  <Grid x:Name="MainWindowGrid" >
+    <!-- Keep empty and use methods to fill with Pages-->
+	
+  </Grid>
+</s:SurfaceWindow>

@@ -59,11 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="AboutPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DrawingWindow.xaml">
+    <Page Include="DrawingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -74,15 +77,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawingWindow.xaml.cs">
-      <DependentUpon>DrawingWindow.xaml</DependentUpon>
+    <Compile Include="DrawingPage.xaml.cs">
+      <DependentUpon>DrawingPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="GuessingWindow.xaml">
+    <Page Include="GuessingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomeWindow.xaml">
+    <Page Include="HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -92,11 +99,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GuessingWindow.xaml.cs">
-      <DependentUpon>GuessingWindow.xaml</DependentUpon>
+    <Compile Include="GuessingPage.xaml.cs">
+      <DependentUpon>GuessingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HomeWindow.xaml.cs">
-      <DependentUpon>HomeWindow.xaml</DependentUpon>
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

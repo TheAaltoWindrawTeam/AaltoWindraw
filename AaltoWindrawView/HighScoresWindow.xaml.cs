@@ -19,14 +19,14 @@ using Microsoft.Surface.Presentation.Input;
 namespace AaltoWindrawView
 {
     /// <summary>
-    /// Interaction logic for GuessingWindow.xaml
+    /// Interaction logic for HighScoresWindow.xaml
     /// </summary>
-    public partial class GuessingWindow : SurfaceWindow
+    public partial class HighScoresWindow : SurfaceWindow
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public GuessingWindow()
+        public HighScoresWindow()
         {
             InitializeComponent();
 
@@ -99,17 +99,5 @@ namespace AaltoWindrawView
         {
             //TODO: disable audio, animations here
         }
-
-        private void OnClickHomeButton(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-
-        private void OnClickCloseButton(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
     }
 }

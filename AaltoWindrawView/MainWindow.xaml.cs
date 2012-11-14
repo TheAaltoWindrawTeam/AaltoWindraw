@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,22 +16,23 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 
-namespace AaltoWindrawView
+namespace AaltoWindraw
 {
     /// <summary>
-    /// Interaction logic for HomeWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class HomeWindow : SurfaceWindow
+    public partial class MainWindow : SurfaceWindow
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public HomeWindow()
+        public MainWindow()
         {
             InitializeComponent();
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
+            SetPage(new HomePage());
         }
 
         /// <summary>
@@ -100,27 +101,10 @@ namespace AaltoWindrawView
             //TODO: disable audio, animations here
         }
 
-        private void OnClickCloseButton(object sender, RoutedEventArgs e)
+        public void SetPage(Page p)
         {
-            Close();
+            this.Content = p;
         }
-
-        private void OpenDrawingWindow(object sender, RoutedEventArgs e)
-        {
-            Window w = new AaltoWindraw.DrawingWindow();
-            w.Show();
-        }
-
-        private void OnClickAboutUsButton(object sender, RoutedEventArgs e)
-        {
-            Window w = new AaltoWindrawView.AboutPopup();
-            w.ShowDialog();
-        }
-
-        private void OpenGuessingWindow(object sender, RoutedEventArgs e)
-        {
-            Window w = new AaltoWindrawView.GuessingWindow();
-            w.Show();
-        }
+		
     }
 }

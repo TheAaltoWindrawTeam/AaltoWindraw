@@ -23,9 +23,9 @@ using System.IO;
 namespace AaltoWindraw
 {
     /// <summary>
-    /// Interaction logic for DrawingWindow.xaml
+    /// Interaction logic for DrawingPage.xaml
     /// </summary>
-    public partial class DrawingWindow : SurfaceWindow
+    public partial class DrawingPage
     {
 
         // Global
@@ -75,10 +75,9 @@ namespace AaltoWindraw
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public DrawingWindow()
+        public DrawingPage()
         {
             InitializeComponent();
-            AddWindowAvailabilityHandlers();
             
             //TODO: replace by Database
             arrayOfRandomWords=new String[]{"Batman","Mickey Mouse","A cat","Tintin","Donald Duck", "A wild Pikachu"};
@@ -92,6 +91,7 @@ namespace AaltoWindraw
             drawTimer = new System.Windows.Threading.DispatcherTimer();
             drawTimer.Tick += new EventHandler(DrawFrame);
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
+			DrawingGlobalLayout.Children.Add(new AboutPopup());
         }
 
         private void onMouseMove(object sender, MouseEventArgs e)
@@ -122,80 +122,13 @@ namespace AaltoWindraw
             currentDrawing.AddDot(p);
         }
 
-        /// <summary>
-        /// Occurs when the window is about to close. 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            // Remove handlers for window availability events
-            RemoveWindowAvailabilityHandlers();
-        }
-
-        /// <summary>
-        /// Adds handlers for window availability events.
-        /// </summary>
-        private void AddWindowAvailabilityHandlers()
-        {
-            // Subscribe to surface window availability events
-            ApplicationServices.WindowInteractive += OnWindowInteractive;
-            ApplicationServices.WindowNoninteractive += OnWindowNoninteractive;
-            ApplicationServices.WindowUnavailable += OnWindowUnavailable;
-        }
-
-        /// <summary>
-        /// Removes handlers for window availability events.
-        /// </summary>
-        private void RemoveWindowAvailabilityHandlers()
-        {
-            // Unsubscribe from surface window availability events
-            ApplicationServices.WindowInteractive -= OnWindowInteractive;
-            ApplicationServices.WindowNoninteractive -= OnWindowNoninteractive;
-            ApplicationServices.WindowUnavailable -= OnWindowUnavailable;
-        }
-
-        /// <summary>
-        /// This is called when the user can interact with the application's window.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowInteractive(object sender, EventArgs e)
-        {
-            //TODO: enable audio, animations here
-        }
-
-        /// <summary>
-        /// This is called when the user can see but not interact with the application's window.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowNoninteractive(object sender, EventArgs e)
-        {
-            //TODO: Disable audio here if it is enabled
-
-            //TODO: optionally enable animations here
-        }
-
-        /// <summary>
-        /// This is called when the application's window is not visible or interactive.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowUnavailable(object sender, EventArgs e)
-        {
-            //TODO: disable audio, animations here
-        }
-		
 		private void OnClickCloseButton(object sender, RoutedEventArgs e){
-			//TODO: actually close the application. For the moment : only close window
-            Close();
+            ((MainWindow)this.Parent).Close();
 		}
 
         private void OnClickHomeButton(object sender, RoutedEventArgs e)
         {
-            Close();
+            ((MainWindow)this.Parent).SetPage(new HomePage());
         }
 		
         private void Draw(object sender, RoutedEventArgs e)

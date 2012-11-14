@@ -15,27 +15,33 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
-using System.Windows.Controls.Primitives;
 
 namespace AaltoWindraw
 {
     /// <summary>
-    /// Interaction logic for AboutPopup.xaml
+    /// Interaction logic for GuessingPage.xaml
     /// </summary>
-    public partial class AboutPopup : Popup
+    public partial class GuessingPage
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public AboutPopup()
+        public GuessingPage()
         {
             InitializeComponent();
-
-            AboutContent.Text =
-                "This project is part of the course T-111.5350 Multimedia Programming at Aalto University.\n"+
-                "Basically, it is a port of classic boardgame Pictionary to the Aalto Window platform.";
-			 AboutLicense.Text = "GNU General Public License.";
+			GuessingGlobalLayout.Children.Add(new AboutPopup());
         }
-        
+
+        private void OnClickHomeButton(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)this.Parent).SetPage(new HomePage());
+        }
+
+
+        private void OnClickCloseButton(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)this.Parent).Close();
+        }
+
     }
 }

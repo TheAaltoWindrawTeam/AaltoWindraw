@@ -1,25 +1,15 @@
-﻿<s:SurfaceWindow x:Class="AaltoWindrawView.AboutPopup"
+﻿<Popup
+    x:Class="AaltoWindraw.AboutPopup"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:s="http://schemas.microsoft.com/surface/2008"
-    Title="AaltoWindrawView"
-    WindowStartupLocation="CenterScreen"
-    WindowStyle="None">
-  <Grid Background="White">
-  	<Grid.ColumnDefinitions>
-  		<ColumnDefinition Width="0.251*"/>
-  		<ColumnDefinition Width="0.519*"/>
-  		<ColumnDefinition Width="0.23*"/>
-  	</Grid.ColumnDefinitions>
-
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.157*"/>
-                <RowDefinition Height="0.663*"/>
-                <RowDefinition Height="0.18*"/>
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="400" Orientation="Vertical" VerticalAlignment="Center">
+	Name="popupAbout" AllowsTransparency="True"
+	Placement="Center"
+	IsOpen="{Binding ElementName=popupOpen, Path=IsChecked}" OpacityMask="White"
+	>
+	<Border BorderBrush="#FFABABAB" BorderThickness="2" Background="White">
+  <Grid Background="White" Margin="20" >
+           <StackPanel HorizontalAlignment="Center" Width="400" Orientation="Vertical" VerticalAlignment="Center">
 
 
                 <StackPanel Orientation="Horizontal">
@@ -31,13 +21,10 @@
                 </StackPanel>
 
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0"><Run Language="fr-fr" Text="About us"/></TextBlock>
-                <TextBlock x:Name="AboutUsContent" TextWrapping="WrapWithOverflow" FontSize="18" FontFamily="Segoe UI Light" Foreground="#FF979797" Margin="0,0,10,10"><Run Language="fr-fr" Text="Batman"/></TextBlock>
-                <Button x:Name="AboutUsButtonOK" Content="OK" Style="{DynamicResource YellowButton}" Width="100" Height="25" Click="OnOkClick"/>
+                <TextBlock x:Name="AboutContent" TextWrapping="WrapWithOverflow" FontSize="18" FontFamily="Segoe UI Light" Foreground="#FF979797" Margin="0,0,10,10"><Run Language="fr-fr" Text="Batman"/></TextBlock>
+               <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="32" FontFamily="Segoe UI Light" Foreground="Black" Margin="0,0,10,0"><Run Language="fr-fr" Text="License"/></TextBlock>
+			   <TextBlock x:Name="AboutLicense" TextWrapping="WrapWithOverflow" FontSize="18" FontFamily="Segoe UI Light" Foreground="#FF979797" Margin="0,0,10,10"><Run Language="fr-fr" Text="Batman"/></TextBlock>
             </StackPanel>
-
-
-
-
-
-    </Grid>
-</s:SurfaceWindow>
+        </Grid>
+		</Border>
+</Popup>

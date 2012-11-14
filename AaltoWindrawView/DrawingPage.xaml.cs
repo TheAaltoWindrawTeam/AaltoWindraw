@@ -193,7 +193,10 @@ namespace AaltoWindraw
         private void Reset(object sender, RoutedEventArgs e)
         {
             ClearBoard();
+            drawTimer.Stop();
             currentDrawing = new Drawing.Drawing(item);
+            currentDrawing.Background = ((SolidColorBrush)canvas.Background).Color;
+
         }
 
         //clear the board

@@ -42,7 +42,7 @@
 		
 		<StackPanel x:Name="Footer_Stackpanel_Left" Grid.Column="1" Margin="0" Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
 			<TextBox TextWrapping="NoWrap" Text="" FontFamily="Segoe UI Light" FontSize="13.333" Width="300" Margin="0,0,10,0" Height="23.123"/>
-			<Button Content="I know!" Style="{DynamicResource YellowButton}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,25,0"/>
+			<Button x:Name="StartStop" Content="I know!" Style="{DynamicResource YellowButton}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,25,0" Click="OnClickStartStop"/>
 			<TextBlock x:Name="GuessTimer" Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" Text="00:00:00" FontFamily="Segoe UI Light" FontSize="21.333" Foreground="#FF959595"/>
 		</StackPanel>
 		

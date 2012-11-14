@@ -18,6 +18,7 @@ using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using AaltoWindraw.Drawing;
 using AaltoWindraw.Utilities;
+using System.IO;
 
 namespace AaltoWindraw
 {
@@ -80,7 +81,7 @@ namespace AaltoWindraw
             AddWindowAvailabilityHandlers();
             
             //TODO: replace by Database
-            arrayOfRandomWords=new String[]{"Batman","Mickey","A cat","Tintin","Maria Wojciechowska"};
+            arrayOfRandomWords=new String[]{"Batman","Mickey Mouse","A cat","Tintin","Donald Duck", "A wild Pikachu"};
             PickRandomName();
 
             currentDrawing = new Drawing.Drawing(item);
@@ -292,7 +293,13 @@ namespace AaltoWindraw
 
         private void OpenDrawing(object sender, RoutedEventArgs e)
         {
-            if (DoOpenDrawing("Batman_Foo_20121113183315.draw"))
+            DirectoryInfo dir = new DirectoryInfo(DRAWING_FOLDER);
+            FileInfo[] files = dir.GetFiles("*"+Drawing.Drawing.FILE_EXTENSION);
+
+            Random random = new Random();
+            int randomNumber = random.Next(0, files.Length);
+
+            if (DoOpenDrawing(files[randomNumber].Name))
                 DoDraw();
         }
 
@@ -306,7 +313,7 @@ namespace AaltoWindraw
             }
             catch (Exception ex)
             {
-                //PrintDebug(ex.ToString());
+                PrintDebug(ex.ToString());
                 return false;
             }
             return true;

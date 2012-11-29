@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\Libraries\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AaltoWindrawModel\AaltoWindrawModel.csproj">
+      <Project>{C12D2D2C-AA2D-4D13-A6B1-9D232AA82309}</Project>
+      <Name>AaltoWindrawModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

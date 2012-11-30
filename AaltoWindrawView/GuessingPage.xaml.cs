@@ -62,6 +62,9 @@ namespace AaltoWindraw
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
             
             OpenDrawing();
+
+            // No drawing in this phase
+            canvas.EditingMode = SurfaceInkEditingMode.None;
         }
 
         private void OnClickHomeButton(object sender, RoutedEventArgs e)

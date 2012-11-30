@@ -41,7 +41,7 @@ namespace AaltoWindraw
         private bool newStroke;
         private IEnumerator<List<Drawing.Dot>> frameEnumerator;
         private IEnumerator<Drawing.Dot> currentStrokeDotEnumerator;
-        
+
         //private List<Drawing.Dot>.Enumerator currentStrokeDotEnumerator;
 
         // TODO replace by proper entry in Properties or such
@@ -71,71 +71,74 @@ namespace AaltoWindraw
          */
         //TODO
         private String[] arrayOfRandomWords;
-		
+
         /// <summary>
         /// Default constructor.
         /// </summary>
         public DrawingPage()
         {
             InitializeComponent();
-            
+
             //TODO: replace by Database
-            arrayOfRandomWords=new String[]{"Batman","Mickey Mouse","A cat","Tintin","Donald Duck", "A wild Pikachu"};
+            arrayOfRandomWords = new String[] { "Batman", "Mickey Mouse", "A cat", "Tintin", "Donald Duck", "A wild Pikachu" };
             PickRandomName();
 
             currentDrawing = new Drawing.Drawing(item);
-            
+
             saveTimer = new System.Windows.Threading.DispatcherTimer();
             saveTimer.Tick += new EventHandler(SaveFrame);
             saveTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_SAVE);
             drawTimer = new System.Windows.Threading.DispatcherTimer();
             drawTimer.Tick += new EventHandler(DrawFrame);
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
-			DrawingGlobalLayout.Children.Add(new AboutPopup());
+            DrawingGlobalLayout.Children.Add(new AboutPopup());
+
+            ChangeBrushColor(Colors.Black);
         }
+
+        // // // // --------------- \\ \\ \\ \\
+        // // // // Event Listeners \\ \\ \\ \\
+        // // // // --------------- \\ \\ \\ \\
 
         private void onMouseMove(object sender, MouseEventArgs e)
         {
-            //DebugText.Text += "HAAAAAAAA";
             position = e.GetPosition(canvas);
         }
 
-        private void OnMouseDown(object sender, RoutedEventArgs e)
+        private void onTouchMove(object sender, TouchEventArgs e)
         {
-            if (currentDrawing.ReadOnly) return;
-            SaveFrame(sender, e);
-            saveTimer.Start();
+            position = e.GetTouchPoint(canvas).Position;
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs e)
+        {
+            Start_Drawing(sender, e);
+        }
+
+        private void OnTouchDown(object sender, TouchEventArgs e)
+        {
+            Start_Drawing(sender, e);
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            if (currentDrawing.ReadOnly) return;
-            saveTimer.Stop();
-            currentDrawing.NextStroke();
+            Stop_Drawing();
         }
 
-        // TODO : add the color (+ radius, + opacity)
-        private void SaveFrame(object sender, EventArgs e)
+        private void OnTouchUp(object sender, TouchEventArgs e)
         {
-            DebugText2.Text = "save "+counter++ + " " + position.X + " " + position.Y;
-            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
-            currentDrawing.AddDot(p);
+            Stop_Drawing();
         }
 
-		private void OnClickCloseButton(object sender, RoutedEventArgs e){
+        private void OnClickCloseButton(object sender, RoutedEventArgs e)
+        {
             ((MainWindow)this.Parent).Close();
-		}
+        }
 
         private void OnClickHomeButton(object sender, RoutedEventArgs e)
         {
             ((MainWindow)this.Parent).SetPage(new HomePage());
         }
-		
-        private void Draw(object sender, RoutedEventArgs e)
-        {
-            currentDrawing.Save();
-			DoDraw();
-		}
 
         private void LoadAnotherDrawing(object sender, RoutedEventArgs e)
         {
@@ -143,10 +146,45 @@ namespace AaltoWindraw
             ClearBoard();
             PickRandomName();
         }
-		
-		private void DoDraw()
+
+
+        // // // // --------------- \\ \\ \\ \\
+        // // // // Clear the board \\ \\ \\ \\
+        // // // // --------------- \\ \\ \\ \\
+
+        private void Reset(object sender, RoutedEventArgs e)
         {
             ClearBoard();
+            drawTimer.Stop();
+            canvas.EditingMode = SurfaceInkEditingMode.Ink;
+            currentDrawing = new Drawing.Drawing(item);
+            currentDrawing.Background = ((SolidColorBrush)canvas.Background).Color;
+
+        }
+
+        //clear the board
+        private void ClearBoard()
+        {
+            PrintDebug("Cleared");
+            canvas.Strokes.Clear();
+            counter = 0;
+        }
+
+
+        // // // // -------------------- \\ \\ \\ \\
+        // // // // Draw Current drawing \\ \\ \\ \\ TEMPORARY PART
+        // // // // -------------------- \\ \\ \\ \\
+
+        private void Draw(object sender, RoutedEventArgs e)
+        {
+            currentDrawing.Save();
+            DoDraw();
+        }
+
+        private void DoDraw()
+        {
+            ClearBoard();
+            canvas.EditingMode = SurfaceInkEditingMode.None;
             canvas.Background = new SolidColorBrush(currentDrawing.Background);
             newStroke = true;
             frameEnumerator = currentDrawing.Frames.GetEnumerator();
@@ -190,21 +228,44 @@ namespace AaltoWindraw
             }
         }
 
-        private void Reset(object sender, RoutedEventArgs e)
-        {
-            ClearBoard();
-            drawTimer.Stop();
-            currentDrawing = new Drawing.Drawing(item);
-            currentDrawing.Background = ((SolidColorBrush)canvas.Background).Color;
 
+
+        // // // // ------------ \\ \\ \\ \\
+        // // // // Save Drawing \\ \\ \\ \\ ADD DATABASE
+        // // // // ------------ \\ \\ \\ \\
+
+
+        //TODO: replace with popup and database
+        // Choose the subject to draw
+        private void PickRandomName()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, arrayOfRandomWords.Length);
+            DrawingToGuess.Text = arrayOfRandomWords[randomNumber];
+            item = arrayOfRandomWords[randomNumber];
         }
 
-        //clear the board
-        private void ClearBoard()
+        private void Start_Drawing(object sender, EventArgs e)
         {
-            PrintDebug("Cleared");
-            canvas.Strokes.Clear();
-            counter = 0;
+            if (currentDrawing.ReadOnly) return;
+            // Save the current point once, and the timer will save it again every REFRESH_TIME_SAVE seconds
+            SaveFrame(sender, e);
+            saveTimer.Start();
+        }
+
+        private void Stop_Drawing()
+        {
+            if (currentDrawing.ReadOnly) return;
+            saveTimer.Stop();
+            currentDrawing.NextStroke();
+        }
+
+        // TODO : add the color (+ radius, + opacity)
+        private void SaveFrame(object sender, EventArgs e)
+        {
+            DebugText2.Text = "save " + counter++ + " " + position.X + " " + position.Y;
+            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
+            currentDrawing.AddDot(p);
         }
 
         private void SaveDrawing(object sender, RoutedEventArgs e)
@@ -227,10 +288,14 @@ namespace AaltoWindraw
             return true;
         }
 
+        // // // // ------------ \\ \\ \\ \\
+        // // // // Open Drawing \\ \\ \\ \\ TEMPORARY PART
+        // // // // ------------ \\ \\ \\ \\
+
         private void OpenDrawing(object sender, RoutedEventArgs e)
         {
             DirectoryInfo dir = new DirectoryInfo(DRAWING_FOLDER);
-            FileInfo[] files = dir.GetFiles("*"+Drawing.Drawing.FILE_EXTENSION);
+            FileInfo[] files = dir.GetFiles("*" + Drawing.Drawing.FILE_EXTENSION);
 
             Random random = new Random();
             int randomNumber = random.Next(0, files.Length);
@@ -255,6 +320,17 @@ namespace AaltoWindraw
             return true;
         }
 
+        // // // // ----------------- \\ \\ \\ \\
+        // // // // Change background \\ \\ \\ \\
+        // // // // ----------------- \\ \\ \\ \\
+
+        private void ChangeBackgroundColor(Color c)
+        {
+            if (currentDrawing.ReadOnly) return;
+            canvas.Background = new SolidColorBrush(c);
+            currentDrawing.Background = c;
+        }
+
         private void BackgroundBlue(object sender, RoutedEventArgs e)
         {
             ChangeBackgroundColor(Colors.Blue);
@@ -275,16 +351,13 @@ namespace AaltoWindraw
             ChangeBackgroundColor(Colors.Yellow);
         }
 
-        private void ChangeBackgroundColor(Color c)
-        {
-            if (currentDrawing.ReadOnly) return;
-            canvas.Background = new SolidColorBrush(c);
-            currentDrawing.Background = c;
-        }
+
+        // // // // ------------------ \\ \\ \\ \\
+        // // // // Change brush color \\ \\ \\ \\
+        // // // // ------------------ \\ \\ \\ \\
 
         private void ChangeBrushColor(Color c)
         {
-            if (currentDrawing.ReadOnly) return;
             canvas.DefaultDrawingAttributes.Color = c;
         }
 
@@ -308,11 +381,15 @@ namespace AaltoWindraw
             ChangeBrushColor(Colors.Blue);
         }
 
+        // // // // ----------------- \\ \\ \\ \\
+        // // // // Change brush size \\ \\ \\ \\
+        // // // // ----------------- \\ \\ \\ \\
+
         private void SetBrushRadius(double radius)
         {
-			Double newSize = Math.Round(radius,0);
-            PrintDebug("Selected Size="+ newSize);
-            canvas.DefaultDrawingAttributes.Width  = newSize;
+            Double newSize = Math.Round(radius, 0);
+            PrintDebug("Selected Size=" + newSize);
+            canvas.DefaultDrawingAttributes.Width = newSize;
             canvas.DefaultDrawingAttributes.Height = newSize;
             canvas.UsesTouchShape = false;
         }
@@ -321,6 +398,11 @@ namespace AaltoWindraw
         {
             SetBrushRadius(BrushRadiusSlider.Value);
         }
+
+
+        // // // // ------------- \\ \\ \\ \\
+        // // // // Miscellaneous \\ \\ \\ \\
+        // // // // ------------- \\ \\ \\ \\
 
         // Print in the text panel in the application
         private void PrintDebug(String s)
@@ -335,14 +417,7 @@ namespace AaltoWindraw
             }
         }
 
-        //TODO: replace with popup and database
-        private void PickRandomName()
-        {
-            Random random = new Random();
-            int randomNumber = random.Next(0, arrayOfRandomWords.Length);
-            DrawingToGuess.Text = arrayOfRandomWords[randomNumber];
-            item = arrayOfRandomWords[randomNumber];
-        }
-       
+
+
     }
 }

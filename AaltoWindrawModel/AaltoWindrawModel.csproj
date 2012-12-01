@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -55,6 +55,7 @@
     <Compile Include="Drawing\Dot.cs" />
     <Compile Include="Drawing\Drawing.cs" />
     <Compile Include="ClientProgram.cs" />
+    <Compile Include="Highscores\Highscore.cs" />
     <Compile Include="Network\Client.cs" />
     <Compile Include="Network\Commons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

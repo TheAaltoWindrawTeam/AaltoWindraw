@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AaltoWindrawServer.Server;
+using AaltoWindraw.Server;
 
-namespace AaltoWindrawServer
+namespace AaltoWindraw
 {
-    class Program
+    class ServerProgram
     {
         static void Main(string[] args)
         {
             Server.Server server = new Server.Server();
             Console.WriteLine("Welcome to AaltoWindraw server application");
-            if (!server.start())
-            {
-                Console.WriteLine("Server failed to start");
-            }
-            Console.WriteLine("That's all, folks! Type anything to continue...");
+            server.start();
+            
+            Console.WriteLine("That's all, folks! Type ENTER to continue...");
             Console.ReadLine();
         }
     }

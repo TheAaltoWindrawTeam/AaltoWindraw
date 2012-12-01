@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AaltoWindrawModel
+namespace AaltoWindraw.Network
 {
-    class Program
+    public class Commons
     {
-        static void Main(string[] args)
-        {
+        public enum PacketType{
+            DRAWING_REQUEST
         }
     }
 }

@@ -8,7 +8,7 @@
     <ProjectGuid>{C12D2D2C-AA2D-4D13-A6B1-9D232AA82309}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AaltoWindrawModel</RootNamespace>
+    <RootNamespace>AaltoWindraw</RootNamespace>
     <AssemblyName>AaltoWindrawModel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AaltoWindraw.ClientProgram</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Lidgren.Network">
       <HintPath>..\Libraries\Lidgren.Network.dll</HintPath>
@@ -51,9 +54,25 @@
   <ItemGroup>
     <Compile Include="Drawing\Dot.cs" />
     <Compile Include="Drawing\Drawing.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ClientProgram.cs" />
+    <Compile Include="Network\Client.cs" />
+    <Compile Include="Network\Commons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\FileSerializer.cs" />
+    <Compile Include="Utilities\Hash.cs" />
+    <Compile Include="Utilities\MD5HashGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

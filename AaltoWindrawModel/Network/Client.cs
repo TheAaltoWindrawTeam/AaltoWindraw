@@ -22,6 +22,8 @@ namespace AaltoWindraw.Network
 
         public Client()
         {
+            isConnected = false;
+
             // Remember that appIdentifier has to be the same between client and server
             config = new NetPeerConfiguration(Properties.Resources.application_protocol_name);
 
@@ -30,6 +32,8 @@ namespace AaltoWindraw.Network
 
         public void Start()
         {
+            if (isConnected)
+                return;
 
             Console.WriteLine("Connection to " 
                 + Properties.Resources.server_address 
@@ -51,6 +55,9 @@ namespace AaltoWindraw.Network
         
         public void Stop()
         {
+            if (!isConnected)
+                return;
+
             Console.WriteLine("Gracefully closing the connection...");
 
             client.Disconnect(Properties.Resources.bye_message);

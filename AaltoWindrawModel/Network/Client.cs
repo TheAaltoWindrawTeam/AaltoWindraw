@@ -51,6 +51,8 @@ namespace AaltoWindraw.Network
             client.Connect(Properties.Resources.server_address,
                  Int32.Parse(Properties.Resources.default_port)
                  , outMsg);
+            isConnected = true;
+
         }
         
         public void Stop()
@@ -61,6 +63,7 @@ namespace AaltoWindraw.Network
             Console.WriteLine("Gracefully closing the connection...");
 
             client.Disconnect(Properties.Resources.bye_message);
+            isConnected = false;
 
             Console.WriteLine("The connection was successfully closed");
         }

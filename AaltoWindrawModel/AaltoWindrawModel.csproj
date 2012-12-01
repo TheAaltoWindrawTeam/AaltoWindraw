@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -39,6 +39,9 @@
   <ItemGroup>
     <Reference Include="Lidgren.Network">
       <HintPath>..\Libraries\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Libraries\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -67,6 +70,7 @@
     <Compile Include="Utilities\FileSerializer.cs" />
     <Compile Include="Utilities\Hash.cs" />
     <Compile Include="Utilities\MD5HashGenerator.cs" />
+    <Compile Include="Utilities\NetSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -19,9 +19,5 @@ namespace AaltoWindraw.Highscores
             this.drawingItem = item;
             this.scorerName = user;
         }
-
-        public Highscore()
-        {
-        }
     }
 }

@@ -115,6 +115,15 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 10.
+        /// </summary>
+        public static string maximum_attempts {
+            get {
+                return ResourceManager.GetString("maximum_attempts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 100.
         /// </summary>
         public static string maximum_connections {

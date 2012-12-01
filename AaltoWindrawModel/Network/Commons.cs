@@ -15,9 +15,10 @@ namespace AaltoWindraw.Network
             SEND_SCORE,
             SEND_DRAWING,
 
-            SCORE_RECEIVED,
-            DRAWING_RECEIVED,
-            DRAWING_NOT_RECEIVED,
+            SCORE_STORED,
+            SCORE_NOT_STORED,
+            DRAWING_STORED,
+            DRAWING_NOT_STORED,
         }
     }
 }

@@ -7,6 +7,7 @@ using AaltoWindraw;
 using AaltoWindraw.Properties;
 using AaltoWindraw.Network;
 using AaltoWindraw.Highscores;
+using AaltoWindraw.Utilities;
 
 namespace AaltoWindraw.Server
 {
@@ -47,7 +48,7 @@ namespace AaltoWindraw.Server
 
 			server.Start();
 			
-			Console.WriteLine("AaltoWindraw server started successfully");
+			Log("AaltoWindraw server started successfully");
 
 			while (true)
 			{
@@ -75,8 +76,6 @@ namespace AaltoWindraw.Server
 
                     // Let's add this connection to the list...
 				    string campus = incomingMsg.ReadString();
-				   
-				    Console.WriteLine("Connection opened from "+campus);
 
 				    // Approve client's connection (a kind of agreement)
 				    incomingMsg.SenderConnection.Approve();
@@ -95,14 +94,14 @@ namespace AaltoWindraw.Server
                             string drawingName = incomingMsg.ReadString();
 
                             // TODO get one correct drawing from drawingName
-                            // Sth like db.things.find({name:drawingName}).toArray()[rand.Next(0, n)];
+                            // Sth like:
+                            // drawing = db.things.find({name:drawingName}).toArray()[rand.Next(0, n)];
 
                             // Create new message
                            outMsg = server.CreateMessage();
 
 							// Write drawing data
-                            //TODO implement real drawing search
-							outMsg.WriteAllProperties(drawing);
+                            outMsg.Write(NetSerializer.Serialize(drawing));
 
                             //Write a hash of the drawing to check if communication was successful (maybe overkill?)
                             outMsg.Write(Utilities.Hash.ComputeHash(drawing));
@@ -114,14 +113,16 @@ namespace AaltoWindraw.Server
 
                         case (byte)Network.Commons.PacketType.SEND_SCORE:
 
-                            Highscore highscore = new Highscore();
-                            incomingMsg.ReadAllProperties(highscore);
+                            Highscore highscore = NetSerializer.DeSerialize<Highscore>(incomingMsg.ReadString());
 
                             //TODO implement storing a score...
+                            bool scoreCorrectlyStored = true;
 
                             outMsg = server.CreateMessage();
 
-                            outMsg.Write((byte)Network.Commons.PacketType.SCORE_RECEIVED);
+                            outMsg.Write(scoreCorrectlyStored ?
+                                (byte)Network.Commons.PacketType.SCORE_STORED :
+                                (byte)Network.Commons.PacketType.SCORE_NOT_STORED);
 
                             server.SendMessage(outMsg, incomingMsg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
 
@@ -146,9 +147,7 @@ namespace AaltoWindraw.Server
 
                         case (byte)Network.Commons.PacketType.SEND_DRAWING:
 
-                            drawing = new Drawing.Drawing();
-
-                            incomingMsg.ReadAllProperties(drawing);
+                            drawing = NetSerializer.DeSerialize<Drawing.Drawing>(incomingMsg.ReadString());
 
                             string hash = incomingMsg.ReadString();
 
@@ -160,13 +159,13 @@ namespace AaltoWindraw.Server
 
                             if(hash.Equals(localHash))
                             {
-                                outMsg.Write((byte)Network.Commons.PacketType.DRAWING_RECEIVED);
+                                outMsg.Write((byte)Network.Commons.PacketType.DRAWING_STORED);
 
                                 //TODO add drawing to DB
                             }
                             else
                             {
-                                outMsg.Write((byte)Network.Commons.PacketType.DRAWING_NOT_RECEIVED);
+                                outMsg.Write((byte)Network.Commons.PacketType.DRAWING_NOT_STORED);
                             }
 
                             server.SendMessage(outMsg, incomingMsg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
@@ -199,23 +198,13 @@ namespace AaltoWindraw.Server
 
                 case NetIncomingMessageType.StatusChanged:
 
-                    //TODO get rid of following line the day it gets useless
-                    Console.WriteLine("New state for "
-                    + GetTableName(incomingMsg.SenderEndpoint)
-                    + ": "
-                    + incomingMsg.SenderConnection.Status);
-
                     switch (incomingMsg.SenderConnection.Status)
                     {
                         case NetConnectionStatus.Connected:
-                            AddTable(incomingMsg.SenderEndpoint);
-                            break;
                         case NetConnectionStatus.Connecting:
                             AddTable(incomingMsg.SenderEndpoint);
                             break;
                         case NetConnectionStatus.Disconnected:
-                            RemoveTable(incomingMsg.SenderEndpoint);
-                            break;
                         case NetConnectionStatus.Disconnecting:
                             RemoveTable(incomingMsg.SenderEndpoint);
                             break;
@@ -228,10 +217,9 @@ namespace AaltoWindraw.Server
 					
                     // Messages received but not managed
                     // They are far from scarce!
-					Console.WriteLine("Not Important Message? "+incomingMsg.ToString());
                     byte[] buf = new byte[incomingMsg.LengthBytes];
                     incomingMsg.ReadBytes(buf, 0, incomingMsg.LengthBytes);
-                    Console.WriteLine("Content: "+System.Text.Encoding.ASCII.GetString(buf) + "\n");
+                    Log(incomingMsg.MessageType+": "+System.Text.Encoding.ASCII.GetString(buf));
 					break;
 			}
 		}
@@ -265,14 +253,25 @@ namespace AaltoWindraw.Server
         {
             string table = GetTableName(ip);
             if (!connectedTables.Contains(table))
+            {
                 connectedTables.Add(table);
+                Log("Connection opened from " + table);
+            }
         }
 
         private void RemoveTable(System.Net.IPEndPoint ip)
         {
             string table = GetTableName(ip);
             if (connectedTables.Contains(table))
+            {
                 this.connectedTables.Remove(table);
+                Log("Connection closed from " + table);
+            }
+        }
+
+        private void Log(string s)
+        {
+            Console.WriteLine(s);
         }
 	}
 

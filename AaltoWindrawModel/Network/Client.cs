@@ -6,6 +6,7 @@ using Lidgren.Network;
 using AaltoWindraw;
 using AaltoWindraw.Properties;
 using AaltoWindraw.Network;
+using AaltoWindraw.Utilities;
 
 namespace AaltoWindraw.Network
 {
@@ -14,6 +15,10 @@ namespace AaltoWindraw.Network
         
         NetClient client;
         NetPeerConfiguration config;
+        NetOutgoingMessage outMsg;
+        NetIncomingMessage inMsg;
+
+        private bool isConnected;
 
         public Client()
         {
@@ -25,93 +30,165 @@ namespace AaltoWindraw.Network
 
         public void Start()
         {
-            Console.WriteLine("Starting client...");
+
+            Console.WriteLine("Connection to " 
+                + Properties.Resources.server_address 
+                + ", sending local name (" 
+                + Properties.Resources.client_name 
+                + ")...");
 
             client.Start();
 
-            NetOutgoingMessage outmsg = client.CreateMessage();
+            outMsg = client.CreateMessage();
 
             // Write campus name
-            outmsg.Write(Properties.Resources.client_name);
-
-            Console.WriteLine("Connection to server, sending local name...");
+            outMsg.Write(Properties.Resources.client_name);
 
             client.Connect(Properties.Resources.server_address,
                  Int32.Parse(Properties.Resources.default_port)
-                 , outmsg);
-
-            Console.WriteLine("Client started successfully");
+                 , outMsg);
         }
         
         public void Stop()
         {
-            Console.WriteLine("Gracefully closing the client...");
+            Console.WriteLine("Gracefully closing the connection...");
 
             client.Disconnect(Properties.Resources.bye_message);
 
-            Console.WriteLine("The client was successfully closed");
+            Console.WriteLine("The connection was successfully closed");
         }
 
-        //TODO implement this, you fool!
-        public List<String> GetDrawingNamesFromServer()
-        {
-            return null;
+        public List<string> GetItemsFromServer()
+        {            
+            List<string> items = new List<string>();
+            
+            outMsg = client.CreateMessage();
+            outMsg.Write((byte)Commons.PacketType.ITEMS_REQUEST);
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+            inMsg = NextDataMessageFromServer();
+
+            int itemsCount = inMsg.ReadInt32();
+            for (int i = 0; i < itemsCount; i++)
+            {
+                items.Add(inMsg.ReadString());
+            }
+
+            return items;
         }
 
         public Drawing.Drawing GetDrawingFromServer(string drawingName)
         {
             Drawing.Drawing drawing = new Drawing.Drawing(drawingName);
-            string inHash = null;
+            string inHash = "";
 
-            this.Start();
+            int attempt = 0;
 
             do
             {
 
             // Send request to server
-            NetOutgoingMessage outMsg = client.CreateMessage();
+            outMsg = client.CreateMessage();
             outMsg.Write((byte)Commons.PacketType.DRAWING_REQUEST);
             outMsg.Write(drawingName);
             client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
             // Read response (and drawing inside it)
-            NetIncomingMessage inMsg = GetNextMessageFromServer();
-            inMsg.ReadAllProperties(drawing);
+            inMsg = NextDataMessageFromServer();
+            drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
             inHash = inMsg.ReadString();
 
             }   // Re-do as long as the drawing is not equal to its hash on the server
-            while(inHash != Utilities.Hash.ComputeHash(drawing));
-
-            this.Stop();
+            while (inHash != Utilities.Hash.ComputeHash(drawing) && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
 
             return drawing;
         }
 
-        //TODO implement this, you fool!
-        public bool SaveScoreToServer(string drawingName, string scorer, int score)
+        public bool SaveScoreToServer(Drawing.Drawing drawing, string scorer, ulong score)
         {
-            return false;
+            int attempt = 0;
+            bool saveOk = false;
+            Highscores.Highscore highscore = new Highscores.Highscore(drawing.Item, drawing.Author, scorer, score);
+
+            do{
+                // Send request to server
+                outMsg = client.CreateMessage();
+                outMsg.Write((byte)Commons.PacketType.SEND_SCORE);
+                outMsg.Write(NetSerializer.Serialize(highscore));
+                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+                // Read response (check if sending ok)
+                inMsg = NextDataMessageFromServer();
+
+                saveOk = inMsg.ReadByte() == (byte)Commons.PacketType.SCORE_STORED;
+            }
+            while(!saveOk && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
+
+            return saveOk;
         }
 
-        //TODO implement this, you fool!
-        public List<String> GetConnectedTablesFromServer()
+        public List<string> GetConnectedTablesFromServer()
         {
-            return null;
+            List<string> connectedTables = new List<string>();
+
+            // Send request to server
+            outMsg = client.CreateMessage();
+            outMsg.Write((byte)Commons.PacketType.WHO_REQUEST);
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+            // Read response (list of tables)
+            inMsg = NextDataMessageFromServer();
+            int tablesCount = inMsg.ReadInt32();
+            for (int i = 0; i < tablesCount; i++)
+            {
+                connectedTables.Add(inMsg.ReadString());
+            }
+
+            return connectedTables;
         }
 
-        //TODO implement this, you fool!
         public bool SaveDrawingToServer(Drawing.Drawing drawing)
         {
-            return false;
+            int attempt = 0;
+            bool saveOk = false;
+
+            do
+            {
+                // Send request to server
+                outMsg = client.CreateMessage();
+                outMsg.Write((byte)Commons.PacketType.SEND_DRAWING);
+                outMsg.Write(NetSerializer.Serialize(drawing));
+                outMsg.Write(Hash.ComputeHash(drawing));
+                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+                // Read response (check if sending ok)
+                inMsg = NextDataMessageFromServer();
+
+                saveOk = inMsg.ReadByte() == (byte)Commons.PacketType.DRAWING_STORED;
+            }
+            while (!saveOk && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
+
+            return saveOk;
         }
 
-        private NetIncomingMessage GetNextMessageFromServer()
+        private NetIncomingMessage NextDataMessageFromServer()
         {
             NetIncomingMessage incomingMsg;
-            while ((incomingMsg = client.ReadMessage()) == null)
+            while ((incomingMsg = client.ReadMessage()) == null || incomingMsg.MessageType != NetIncomingMessageType.Data) ;
+            return incomingMsg;
+        }
+
+        //TODO remove following line when no more debug is intended
+        private void DebugNextDataMessageFromServer()
+        {
+            NetIncomingMessage incomingMsg;
+            while ((incomingMsg = client.ReadMessage()) == null || incomingMsg.MessageType != NetIncomingMessageType.Data)
             {
             }
-            return incomingMsg;
+            Console.Write(incomingMsg.LengthBytes+"  ");
+            byte[] buf = new byte[incomingMsg.LengthBytes];
+            incomingMsg.ReadBytes(buf, 0, incomingMsg.LengthBytes);
+            Console.WriteLine("Content: " + System.Text.Encoding.ASCII.GetString(buf) + "\n");
         }
 
     }

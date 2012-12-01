@@ -41,15 +41,6 @@ namespace AaltoWindraw
              */
             private bool readOnly;
 
-            /*
-             * Empty constructor
-             * Should only be used for serialization purpose
-             * (like during client/server communication)
-             */
-            public Drawing()
-            {
-            }
-
             public Drawing(string item)
             {
                 this.item = item;

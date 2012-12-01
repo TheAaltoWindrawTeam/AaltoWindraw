@@ -236,9 +236,18 @@ namespace AaltoWindraw.Server
 			}
 		}
 
+        //TODO implement proper item lookup
         private List<string> GetItemsList()
         {
-            throw new NotImplementedException();
+            List<string> result = new List<string>();
+            result.Add("Batman");
+            result.Add("Mickey Mouse");
+            result.Add("A cat");
+            result.Add("Tintin");
+            result.Add("Donald Duck");
+            result.Add("A wild Pikachu");
+
+            return result;
         }
 
         private string GetTableName(System.Net.IPEndPoint ip)

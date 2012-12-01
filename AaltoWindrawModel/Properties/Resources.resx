@@ -132,6 +132,14 @@
     <value>12319</value>
     <comment>Figures for AWS letters</comment>
   </data>
+  <data name="drawing_file_extension" xml:space="preserve">
+    <value>.draw</value>
+    <comment>used for export/storage only</comment>
+  </data>
+  <data name="drawing_file_format" xml:space="preserve">
+    <value>{0}_{1}_{2:00}{3:00}{4:00}{5:00}{6:00}{7:00}</value>
+    <comment>used for export/storage only</comment>
+  </data>
   <data name="maximum_connections" xml:space="preserve">
     <value>100</value>
     <comment>Totally arbitrary and untested</comment>

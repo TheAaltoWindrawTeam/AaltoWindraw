@@ -97,6 +97,24 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .draw.
+        /// </summary>
+        public static string drawing_file_extension {
+            get {
+                return ResourceManager.GetString("drawing_file_extension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}_{1}_{2:00}{3:00}{4:00}{5:00}{6:00}{7:00}.
+        /// </summary>
+        public static string drawing_file_format {
+            get {
+                return ResourceManager.GetString("drawing_file_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 100.
         /// </summary>
         public static string maximum_connections {

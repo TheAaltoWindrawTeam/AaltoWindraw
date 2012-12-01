@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Runtime.Serialization;
+using AaltoWindraw.Properties;
 
 namespace AaltoWindraw
 {
@@ -13,9 +14,6 @@ namespace AaltoWindraw
         [Serializable]
         public class Drawing : ISerializable
         {
-            // Extension of a Drawing file (used for storage only)
-            public const string FILE_EXTENSION = ".draw";
-            public const string FILE_FORMAT = "{0}_{1}_{2:00}{3:00}{4:00}{5:00}{6:00}{7:00}";
 
             private string name;    // Name of the drawing
             private string author;  // Name of the author of the drawing
@@ -119,8 +117,8 @@ namespace AaltoWindraw
             // Returns the file name used for storing the drawing into a file
             public string FileName()
             {
-                return this.readOnly ? 
-                    this.Name + FILE_EXTENSION
+                return this.readOnly ?
+                    this.Name + Properties.Resources.drawing_file_extension
                     : null;
             }
 
@@ -165,7 +163,7 @@ namespace AaltoWindraw
 
             private string DefineName()
             {
-                return String.Format(FILE_FORMAT,
+                return String.Format(Properties.Resources.drawing_file_format,
                     this.item, this.author, 
                     this.timestamp.Year, this.timestamp.Month, this.timestamp.Day, 
                     this.timestamp.Hour, this.timestamp.Minute, this.timestamp.Second);

@@ -45,14 +45,14 @@
 		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" >
 			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" 
                                 PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp" PreviewMouseMove="onMouseMove"
-                                PreviewTouchMove="onTouchMove" PreviewTouchUp="OnTouchUp" PreviewTouchDown="OnTouchDown"/>
+                                PreviewTouchDown="OnTouchDown" PreviewTouchUp="OnTouchUp" PreviewTouchMove="onTouchMove"/>
 		</Border>
 		
 		<StackPanel x:Name="StackPanel_IconsTopRight" Grid.Column="3" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,3,0" Grid.ColumnSpan="2" Height="27">
-            <Button x:Name="Button_Home" Content="Button" Style="{DynamicResource ButtonHome}" Click="OnClickHomeButton"/>
+            <Button x:Name="Button_Home" Content="Button" Style="{DynamicResource ButtonHome}" Click="OnClickHomeButton" TouchEnter="OnClickHomeButton"/>
 			<Button x:Name="Button_Settings" Content="Button" Style="{DynamicResource ButtonSettings}" Margin="8,0,0,0"/>
 			<ToggleButton  Name="popupOpen" Style="{DynamicResource ToggleButtonPopup}" Margin="8,0,0,0" IsChecked="False"/>
-			<Button x:Name="Button_Close" Content="Button" Style="{DynamicResource ButtonClose}" Click="OnClickCloseButton" Margin="8,0,0,0"/>
+			<Button x:Name="Button_Close" Content="Button" Style="{DynamicResource ButtonClose}" Click="OnClickCloseButton" TouchEnter="OnClickCloseButton" Margin="8,0,0,0"/>
 		</StackPanel>
 		
 		<StackPanel x:Name="StackPanel_Header" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="Auto" Orientation="Horizontal" VerticalAlignment="Center">

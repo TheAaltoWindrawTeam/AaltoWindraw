@@ -46,6 +46,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\SampledStroke.cs" />
     <Compile Include="Drawing\Dot.cs" />
     <Compile Include="Drawing\Drawing.cs" />
     <Compile Include="Program.cs" />

@@ -113,7 +113,7 @@ public class MD5HashGenerator
 		catch (ArgumentNullException ane)
 		{
 			//If something occured during serialization, this method is called with an null argument. 
-			Console.WriteLine("Hash has not been generated.");
+            Console.WriteLine("Hash has not been generated. Message: " + ane.Message);
 			return null;
 		}
 	}

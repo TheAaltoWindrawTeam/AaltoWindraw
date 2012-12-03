@@ -237,13 +237,7 @@ namespace AaltoWindraw.Network
             // Read response
             inMsg = NextDataMessageFromServer();
 
-            int count = inMsg.ReadInt32();
-            for (int i = 0; i < count; i++)
-            {
-                result.Add(NetSerializer.DeSerialize<Highscores.Highscore>(inMsg.ReadString()));
-            }
-
-            return result;
+            return NetSerializer.DeSerialize<List<Highscores.Highscore>>(inMsg.ReadString());
         }
 
         private NetIncomingMessage NextDataMessageFromServer()

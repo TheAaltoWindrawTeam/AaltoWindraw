@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
@@ -10,7 +11,7 @@ namespace AaltoWindraw
     namespace Drawing
     {
         [Serializable]
-        class SampledStroke : ISerializable
+        public class SampledStroke : ISerializable
         {
 
             // This class contain a particular type of stroke

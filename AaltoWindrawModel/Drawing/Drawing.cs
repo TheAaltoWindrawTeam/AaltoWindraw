@@ -22,11 +22,11 @@ namespace AaltoWindraw
             private DateTime timestamp; // Date of the drawing
             private string item;    // Item represented by the drawing
             private Color background;    // Background of the drawing
-            private List<List<Dot>> frames;   // Set of Dots forming the animation
+            private List<SampledStroke> strokes;   // Set of Dots forming the animation
 
 
             // Following attributes should not be serialized
-            private List<Dot> currentStroke;
+            private SampledStroke currentStroke;
             private int currentFrame;
 
             /*
@@ -48,18 +48,18 @@ namespace AaltoWindraw
                 this.item = item;
 
                 currentFrame = 0;
-                frames = new List<List<Dot>>();
-                currentStroke = new List<Dot>();
+                strokes = new List<SampledStroke>();
+                currentStroke = new SampledStroke(currentFrame);
                 readOnly = false;
                 this.author = null;
-                
+
                 //TODO replace following placeholders with relevant values
                 this.author = "Foo";
                 this.background = Colors.WhiteSmoke;
             }
 
             // Constructor for deserialization - should be used by serializer
-            public Drawing( SerializationInfo info, StreamingContext ctxt )
+            public Drawing(SerializationInfo info, StreamingContext ctxt)
             {
                 name = info.GetString("Name");
                 author = info.GetString("Author");
@@ -67,42 +67,42 @@ namespace AaltoWindraw
                 item = info.GetString("Item");
                 byte[] tempBgColor = (byte[])info.GetValue("Background", typeof(byte[]));
                 background = Color.FromArgb(tempBgColor[0], tempBgColor[1], tempBgColor[2], tempBgColor[3]);
-                frames = (List<List<Dot>>)info.GetValue("Frames", typeof(List<List<Dot>>));
-                
+                strokes = (List<SampledStroke>)info.GetValue("Strokes", typeof(List<SampledStroke>));
+
                 readOnly = true;
             }
 
             // Getter and setter for name attribute
             public string Name
-            { 
+            {
                 set { name = value; }
                 get { return name; }
             }
-            
+
             // Getter and setter for author attribute
             public string Author
-            { 
+            {
                 set { author = value; }
                 get { return author; }
             }
-            
+
             // Getter and setter for timestamp attribute
             public DateTime Timestamp
-            { 
+            {
                 set { timestamp = value; }
                 get { return timestamp; }
             }
-            
+
             // Getter and setter for item attribute
             public string Item
-            { 
+            {
                 set { item = value; }
                 get { return item; }
             }
-            
+
             // Getter and setter for background attribute
             public Color Background
-            { 
+            {
                 set { background = value; }
                 get { return background; }
             }
@@ -110,17 +110,15 @@ namespace AaltoWindraw
             // Returns the file name used for storing the drawing into a file
             public string FileName()
             {
-                return this.readOnly ? 
+                return this.readOnly ?
                     this.Name + FILE_EXTENSION
                     : null;
             }
 
-            // Getter for frames
-            // First, we just store one Dot per frame in currentDots 
-            // and we need it to be sure it's done correctly
-            public List<List<Dot>> Frames
+            // Getter for strokes (TODO: is an enumerator enough ?)
+            public IEnumerator<SampledStroke> EnumStrokes
             {
-                get { return frames; }
+                get { return strokes.GetEnumerator(); }
             }
 
             public bool ReadOnly
@@ -128,26 +126,43 @@ namespace AaltoWindraw
                 get { return readOnly; }
             }
 
+            public int CurrentFrame
+            {
+                get { return currentFrame; }
+            }
+
+            public void NewFrame()
+            {
+                this.currentFrame++;
+            }
+
             public void AddDot(Dot dot)
             {
-                currentStroke.Add(dot);
+                currentStroke.AddDot(dot);
+                NewFrame();  // TODO : with multitouch, we can add several dots in the same frame
             }
 
             public void NextStroke()
             {
-                this.frames.Add(currentStroke);
-                this.currentStroke = new List<Dot>();
-                this.currentFrame++;
+                this.strokes.Add(currentStroke);
+                this.currentStroke = new SampledStroke(currentFrame);
+                NewFrame(); // TODO : the same, adding a dots is not supposed to change the current frame
+            }
+
+            public void reinit()
+            {
+                currentFrame = 0;
             }
 
             // Save the drawing in its current state (should not be updated after this!)
             public void Save()
             {
-                if(!readOnly)
+                if (!readOnly)
                 {
                     timestamp = DateTime.Now;
                     name = DefineName();
                     readOnly = true;
+                    reinit();
                     Console.WriteLine(timestamp);
                     Console.WriteLine(name);
                     Console.WriteLine(FileName());
@@ -157,13 +172,13 @@ namespace AaltoWindraw
             private string DefineName()
             {
                 return String.Format(FILE_FORMAT,
-                    this.item, this.author, 
-                    this.timestamp.Year, this.timestamp.Month, this.timestamp.Day, 
+                    this.item, this.author,
+                    this.timestamp.Year, this.timestamp.Month, this.timestamp.Day,
                     this.timestamp.Hour, this.timestamp.Minute, this.timestamp.Second);
             }
 
             // Serialize the drawing (used by serializer)
-            public void GetObjectData( SerializationInfo info, StreamingContext ctxt )
+            public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
             {
                 info.AddValue("Name", name);
                 info.AddValue("Author", author);
@@ -171,8 +186,8 @@ namespace AaltoWindraw
                 info.AddValue("Item", item);
                 byte[] tempBgColor = { background.A, background.R, background.G, background.B };
                 info.AddValue("Background", tempBgColor, typeof(byte[]));
-                info.AddValue("Frames", frames, typeof(List<List<Dot>>));
+                info.AddValue("Strokes", strokes, typeof(List<SampledStroke>));
             }
-          }
+        }
     }
 }

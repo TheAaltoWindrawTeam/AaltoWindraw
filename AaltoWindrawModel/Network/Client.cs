@@ -18,11 +18,11 @@ namespace AaltoWindraw.Network
         NetOutgoingMessage outMsg;
         NetIncomingMessage inMsg;
 
-        private bool isConnected;
+        private bool connected;
 
         public Client()
         {
-            isConnected = false;
+            connected = false;
 
             // Remember that appIdentifier has to be the same between client and server
             config = new NetPeerConfiguration(Properties.Resources.application_protocol_name);
@@ -30,9 +30,14 @@ namespace AaltoWindraw.Network
             client = new NetClient(config);
         }
 
+        public bool isConnected()
+        {
+            return this.connected;
+        }
+
         public void Start()
         {
-            if (isConnected)
+            if (connected)
                 return;
 
             Console.WriteLine("Connection to " 
@@ -51,19 +56,19 @@ namespace AaltoWindraw.Network
             client.Connect(Properties.Resources.server_address,
                  Int32.Parse(Properties.Resources.default_port)
                  , outMsg);
-            isConnected = true;
+            connected = true;
 
         }
         
         public void Stop()
         {
-            if (!isConnected)
+            if (!connected)
                 return;
 
             Console.WriteLine("Gracefully closing the connection...");
 
             client.Disconnect(Properties.Resources.bye_message);
-            isConnected = false;
+            connected = false;
 
             Console.WriteLine("The connection was successfully closed");
         }

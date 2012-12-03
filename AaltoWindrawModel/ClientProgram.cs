@@ -38,7 +38,15 @@ namespace AaltoWindraw
 
 
             Console.Write("Saving drawing: ");
-            Console.WriteLine(client.SaveDrawingToServer(drawing)); 
+            Console.WriteLine(client.SaveDrawingToServer(drawing));
+
+            List<Highscores.Highscore> hs = client.GetHighscoresFromServer();
+            Console.WriteLine(hs.Count);
+            hs.ForEach(h => Console.WriteLine(h.score));
+
+            Console.WriteLine("isHiscore? " + client.CheckScore(drawing, 143432));
+
+            Console.WriteLine("finally add item: " + client.AddItemToServer("Basshunter"));
 
             Console.WriteLine("That's all, folks! Type ENTER to continue...");
             Console.ReadLine();

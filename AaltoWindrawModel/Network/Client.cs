@@ -186,6 +186,66 @@ namespace AaltoWindraw.Network
             return saveOk;
         }
 
+        /*
+         * Check if a score is a highscore for a given drawing
+         * Return true if this is a highscore (hence score may be saved once scorer
+         * name is known)
+         */
+        public bool CheckScore(Drawing.Drawing drawing, ulong score)
+        {
+            // Send request to server
+            this.outMsg = client.CreateMessage();
+            this.outMsg.Write((byte)Commons.PacketType.IS_HIGHSCORE_REQUEST);
+            this.outMsg.Write(drawing.Item);
+            this.outMsg.Write(drawing.Author);
+            this.outMsg.Write(NetSerializer.Serialize(drawing.Timestamp));
+            this.outMsg.Write(score);
+
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+            // Read response (check if highscore)
+            inMsg = NextDataMessageFromServer();
+
+            return inMsg.ReadByte() == (byte)Commons.PacketType.IS_HIGHSCORE;
+        }
+
+        public bool AddItemToServer(string item)
+        {
+            // Send request to server
+            this.outMsg = client.CreateMessage();
+            this.outMsg.Write((byte)Commons.PacketType.SEND_ITEM);
+            this.outMsg.Write(item);
+
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+            // Read response (check if highscore)
+            inMsg = NextDataMessageFromServer();
+
+            return inMsg.ReadByte() == (byte)Commons.PacketType.ITEM_SAVED;
+        }
+
+        public List<Highscores.Highscore> GetHighscoresFromServer()
+        {
+            List<Highscores.Highscore> result = new List<Highscores.Highscore>();
+
+            // Send request to server
+            this.outMsg = client.CreateMessage();
+            this.outMsg.Write((byte)Commons.PacketType.HIGHSCORES_REQUEST);
+
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+            // Read response
+            inMsg = NextDataMessageFromServer();
+
+            int count = inMsg.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(NetSerializer.DeSerialize<Highscores.Highscore>(inMsg.ReadString()));
+            }
+
+            return result;
+        }
+
         private NetIncomingMessage NextDataMessageFromServer()
         {
             NetIncomingMessage incomingMsg;

@@ -191,6 +191,80 @@ namespace AaltoWindraw.Server
                             server.SendMessage(outMsg, incomingMsg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
 
                             break;  // End of ITEMS_REQUEST part
+
+
+                        case (byte)Network.Commons.PacketType.IS_HIGHSCORE_REQUEST:
+
+                            string item = incomingMsg.ReadString();
+                            string author = incomingMsg.ReadString();
+                            DateTime timestamp = NetSerializer.DeSerialize<DateTime>(incomingMsg.ReadString());
+                            ulong score = incomingMsg.ReadUInt64();
+
+                            // Check into DB
+                            bool isHighscore = true;
+
+                            
+                            // Send answer
+                            outMsg = server.CreateMessage();
+
+                            if (isHighscore)
+                            {
+                                outMsg.Write((byte)Network.Commons.PacketType.IS_HIGHSCORE);
+                            }
+                            else
+                            {
+                                outMsg.Write((byte)Network.Commons.PacketType.IS_NOT_HIGHSCORE);
+                            }
+
+                            server.SendMessage(outMsg, incomingMsg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+
+                            break;  // End of IS_HIGHSCORE_REQUEST part
+
+
+                        case (byte)Network.Commons.PacketType.SEND_ITEM:
+
+                            string itemSent = incomingMsg.ReadString();
+
+                            // Check if item is already in the database
+                            // (or if there is a similar enough one)
+                            bool isAdded = true;
+
+
+                            outMsg = server.CreateMessage();
+
+
+                            if (isAdded)
+                            {
+                                outMsg.Write((byte)Network.Commons.PacketType.ITEM_SAVED);
+                                // Add item to DB
+                            }
+                            else
+                            {
+                                outMsg.Write((byte)Network.Commons.PacketType.ITEM_NOT_SAVED);
+                            }
+
+                            server.SendMessage(outMsg, incomingMsg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+
+                            break;  // End of SEND_ITEM part
+
+
+                        case (byte)Network.Commons.PacketType.HIGHSCORES_REQUEST:
+
+                            List<Highscore> highscores = GetHighscoresList();
+
+                            // Send a list of highscores
+                            outMsg = server.CreateMessage();
+
+                            outMsg.Write(highscores.Count);
+
+                            foreach(Highscore hs in highscores)
+                            {
+                                outMsg.Write(NetSerializer.Serialize(hs));
+                            }
+
+                            server.SendMessage(outMsg, incomingMsg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+
+                            break;  // End of HIGHSCORES_REQUEST part
 					}
 
 					break;  // End of Data part
@@ -223,6 +297,13 @@ namespace AaltoWindraw.Server
 					break;
 			}
 		}
+
+        //TODO implement proper highscore lookup
+        private List<Highscore> GetHighscoresList()
+        {
+            List<Highscore> result = new List<Highscore>();
+            return result;
+        }
 
         //TODO implement proper item lookup
         private List<string> GetItemsList()

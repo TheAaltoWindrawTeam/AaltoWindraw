@@ -33,15 +33,9 @@ namespace AaltoWindraw
 
         // Variable for saving the drawing
         private System.Windows.Threading.DispatcherTimer saveTimer;
-        private Point position;
 
         // Variable for printing the saved drawing
         private System.Windows.Threading.DispatcherTimer drawTimer;
-        //private StylusPoint lastPointDrawn;
-        //private bool newStroke;
-        //private IEnumerator<List<Drawing.Dot>> frameEnumerator;
-        //private IEnumerator<Drawing.Dot> currentStrokeDotEnumerator;
-
         bool remainingStrokes;
         private IEnumerator<SampledStroke> strokesEnum; // return the next sampledStroke to start to be drawn
         private List<IEnumerator<Dot>> dotPointerList;  // countain the current SampledStrokes, to be finished to be drawn
@@ -53,9 +47,6 @@ namespace AaltoWindraw
         private const int REFRESH_TIME_SAVE = 10;
         private const int REFRESH_TIME_DRAW = 10;
         private const string DRAWING_FOLDER = @"..\..\..\Drawings\";
-
-        // for testing
-        private int counter = 0;
 
         //TODO replace following placeholders by relevant values
 
@@ -106,31 +97,36 @@ namespace AaltoWindraw
 
         private void onMouseMove(object sender, MouseEventArgs e)
         {
-            position = e.GetPosition(canvas);
+            if (e.LeftButton == MouseButtonState.Pressed)
+                currentDrawing.MoveStroke(e.GetPosition(canvas));
         }
 
         private void onTouchMove(object sender, TouchEventArgs e)
         {
-            position = e.GetTouchPoint(canvas).Position;
+            currentDrawing.MoveStroke(e.GetTouchPoint(canvas).Position);
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
+            currentDrawing.BeginStroke(e.GetPosition(canvas));
             Start_Drawing(sender, e);
         }
 
         private void OnTouchDown(object sender, TouchEventArgs e)
         {
+            currentDrawing.BeginStroke(e.GetTouchPoint(canvas).Position);
             Start_Drawing(sender, e);
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
+            currentDrawing.CompleteStroke(e.GetPosition(canvas));
             Stop_Drawing();
         }
 
         private void OnTouchUp(object sender, TouchEventArgs e)
         {
+            currentDrawing.CompleteStroke(e.GetTouchPoint(canvas).Position);
             Stop_Drawing();
         }
 
@@ -171,7 +167,6 @@ namespace AaltoWindraw
         {
             PrintDebug("Cleared");
             canvas.Strokes.Clear();
-            counter = 0;
         }
 
 
@@ -197,7 +192,6 @@ namespace AaltoWindraw
             dotPointerList = new List<IEnumerator<Dot>>();
             drawTimer.Start();
             currentDrawing.reinit();
-            counter = 0;
         }
 
         // TODO : add opacity
@@ -269,23 +263,35 @@ namespace AaltoWindraw
         {
             if (currentDrawing.ReadOnly) return;
             // Save the current point once, and the timer will save it again every REFRESH_TIME_SAVE seconds
-            SaveFrame(sender, e);
-            saveTimer.Start();
+            if (!saveTimer.IsEnabled)
+            {
+                SaveFrame(sender, e);
+                saveTimer.Start();
+            }
         }
 
+        // useless for now, but will be useful later for completing the end of the strokes
         private void Stop_Drawing()
         {
             if (currentDrawing.ReadOnly) return;
-            saveTimer.Stop();
-            currentDrawing.NextStroke();
+            if (currentDrawing.IsPaused())
+            {
+                //saveTimer.Stop();
+                //currentDrawing.NextStroke();
+            }
         }
 
         // TODO : add the color (+ radius, + opacity)
         private void SaveFrame(object sender, EventArgs e)
         {
-            DebugText2.Text = "save " + counter++ + " " + position.X + " " + position.Y;
-            Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
-            currentDrawing.AddDot(p);
+            //DebugText2.Text = "save " + counter++ + " " + position.X + " " + position.Y;
+            //Drawing.Dot p = new Drawing.Dot(position.X, position.Y, canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
+            //currentDrawing.AddDot(p);
+            currentDrawing.SaveFrame(canvas.DefaultDrawingAttributes.Color, canvas.DefaultDrawingAttributes.Width);
+            if (currentDrawing.IsPaused())
+            {
+                saveTimer.Stop();
+            }
         }
 
         private void SaveDrawing(object sender, RoutedEventArgs e)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using System.Runtime.Serialization;
+using System.Windows;
 
 namespace AaltoWindraw
 {
@@ -26,7 +27,7 @@ namespace AaltoWindraw
 
 
             // Following attributes should not be serialized
-            private SampledStroke currentStroke;
+            private List<SampledStroke> currentStrokes;
             private int currentFrame;
 
             /*
@@ -49,7 +50,7 @@ namespace AaltoWindraw
 
                 currentFrame = 0;
                 strokes = new List<SampledStroke>();
-                currentStroke = new SampledStroke(currentFrame);
+                currentStrokes = new List<SampledStroke>();
                 readOnly = false;
                 this.author = null;
 
@@ -131,34 +132,80 @@ namespace AaltoWindraw
                 get { return currentFrame; }
             }
 
+            // TODO : to be deleted (still useful for drawing but there are probably other better way)
             public void NewFrame()
             {
                 this.currentFrame++;
             }
 
-            public void AddDot(Dot dot)
-            {
-                currentStroke.AddDot(dot);
-                NewFrame();  // TODO : with multitouch, we can add several dots in the same frame
-            }
-
-            public void NextStroke()
-            {
-                this.strokes.Add(currentStroke);
-                this.currentStroke = new SampledStroke(currentFrame);
-                NewFrame(); // TODO : the same, adding a dots is not supposed to change the current frame
-            }
-
+            // TODO : to be deleted (same as NewFrame)
             public void reinit()
             {
                 currentFrame = 0;
             }
+
+            private int FindClosest(Point d)
+            {
+                int val = 0;
+                double dist = Math.Sqrt(Math.Pow(this.currentStrokes[0].Position.X - d.X, 2) +
+                                        Math.Pow(this.currentStrokes[0].Position.Y - d.Y, 2));
+                // we assume that there is at least one element in currentStrokes
+                // ie BeginStroke has been called more than CompleteStroke
+
+                for (int i = 1; i < currentStrokes.Count; i++)
+                {
+                    double temp = Math.Sqrt(Math.Pow(this.currentStrokes[i].Position.X - d.X, 2) +
+                                            Math.Pow(this.currentStrokes[i].Position.Y - d.Y, 2));
+                    if (temp < dist)
+                    {
+                        dist = temp;
+                        val = i;
+                    }
+                }
+
+                return val;
+            }
+
+            public void BeginStroke(Point d)
+            {
+                currentStrokes.Add(new SampledStroke(currentFrame, d));
+            }
+
+            public void CompleteStroke(Point d)
+            {
+                if (currentStrokes.Count == 0) return; // should never happen
+                int index = FindClosest(d);
+                strokes.Add(currentStrokes[index]);
+                currentStrokes.RemoveAt(index);
+            }
+
+            // TODO : add condition to be sure we ignore weird points
+            public void MoveStroke(Point d)
+            {
+                if (currentStrokes.Count == 0) return; // should never happen
+                int index = FindClosest(d);
+                currentStrokes[index].Position = d;
+            }
+
+            public void SaveFrame(Color pColor, double pRadius)
+            {
+                foreach (SampledStroke ss in currentStrokes) {
+                    ss.NewDot(pColor, pRadius);
+                }
+                NewFrame();
+            }
+
+            public bool IsPaused() {
+                return currentStrokes.Count == 0;
+            }
+
 
             // Save the drawing in its current state (should not be updated after this!)
             public void Save()
             {
                 if (!readOnly)
                 {
+                    strokes = strokes.OrderBy(x => x.Beginning).ToList();
                     timestamp = DateTime.Now;
                     name = DefineName();
                     readOnly = true;

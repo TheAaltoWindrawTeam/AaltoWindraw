@@ -15,7 +15,6 @@ namespace AaltoWindraw
         public ClientProgram()
         {
             client = new Client();
-            client.Start();
         }
 
         public void AddItem(string item)
@@ -95,42 +94,44 @@ namespace AaltoWindraw
         {
             ClientProgram cp = new ClientProgram();
 
-            List<string> result = new List<string>();
-            result.Add("Batman");
-            result.Add("Mickey Mouse");
-            result.Add("A cat");
-            result.Add("Tintin");
-            result.Add("Donald Duck");
-            result.Add("A wild Pikachu");
-            result.ForEach(it => cp.AddItem(it));
+            if (cp.client.Start())
+            {
+                List<string> result = new List<string>();
+                result.Add("Batman");
+                result.Add("Mickey Mouse");
+                result.Add("A cat");
+                result.Add("Tintin");
+                result.Add("Donald Duck");
+                result.Add("A wild Pikachu");
+                result.ForEach(it => cp.AddItem(it));
 
-            cp.SaveDrawing(result.First());
+                cp.SaveDrawing(result.First());
 
-            cp.ShowItems();
+                cp.ShowItems();
 
-            Drawing.Drawing d = cp.GetDrawing(result.First());
-            cp.GetDrawing(result.Last());
+                Drawing.Drawing d = cp.GetDrawing(result.First());
+                cp.GetDrawing(result.Last());
 
-            Drawing.Drawing d2 = cp.GetDrawingById(d.ID);
-            cp.GetDrawingById("foobar");
+                Drawing.Drawing d2 = cp.GetDrawingById(d.ID);
+                cp.GetDrawingById("foobar");
 
-            Console.WriteLine("id equal ? " + (d.ID == d2.ID));
-            Console.WriteLine("object equal ? " + d.Equals(d2));
+                Console.WriteLine("id equal ? " + (d.ID == d2.ID));
+                Console.WriteLine("object equal ? " + d.Equals(d2));
 
-            cp.SaveScore(d, 12);
+                cp.SaveScore(d, 12);
 
 
-            cp.ShowTables();
+                cp.ShowTables();
 
-            cp.ShowHighscores();
+                cp.ShowHighscores();
 
-            cp.CheckScore(d, 1);
-            cp.CheckScore(d, 14355);
-
+                cp.CheckScore(d, 1);
+                cp.CheckScore(d, 14355);
+            }
             Console.WriteLine("That's all, folks! Type ENTER to continue...");
             Console.ReadLine();
             cp.client.Stop();
-
+            
         }
 
     }

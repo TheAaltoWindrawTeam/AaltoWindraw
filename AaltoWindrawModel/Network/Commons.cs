@@ -9,6 +9,7 @@ namespace AaltoWindraw.Network
     {
         public enum PacketType{
             // Requests from client
+            PING,
             DRAWING_REQUEST,
             DRAWING_BY_ID_REQUEST,
             WHO_REQUEST,
@@ -22,6 +23,7 @@ namespace AaltoWindraw.Network
             SEND_ITEM,
 
             // Responses from server
+            PONG,
             IS_HIGHSCORE,
             IS_NOT_HIGHSCORE,
 

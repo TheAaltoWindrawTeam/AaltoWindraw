@@ -160,7 +160,7 @@
     <comment>Path to the mongoDB executable</comment>
   </data>
   <data name="server_address" xml:space="preserve">
-    <value>127.0.0.1</value>
+    <value>82.130.8.192</value>
     <comment>TODO change it in favor of a REAL IP (no domain!)</comment>
   </data>
   <data name="string_distance_threshold" xml:space="preserve">

@@ -160,7 +160,7 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 127.0.0.1.
+        ///   Looks up a localized string similar to 82.130.8.192.
         /// </summary>
         public static string server_address {
             get {

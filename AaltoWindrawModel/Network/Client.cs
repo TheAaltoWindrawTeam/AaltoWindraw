@@ -7,6 +7,8 @@ using AaltoWindraw;
 using AaltoWindraw.Properties;
 using AaltoWindraw.Network;
 using AaltoWindraw.Utilities;
+using System.Net;
+using System.Net.Sockets;
 
 namespace AaltoWindraw.Network
 {
@@ -17,6 +19,7 @@ namespace AaltoWindraw.Network
         NetPeerConfiguration config;
         NetOutgoingMessage outMsg;
         NetIncomingMessage inMsg;
+        IPEndPoint serverEndPoint;
 
         private bool connected;
 
@@ -26,8 +29,10 @@ namespace AaltoWindraw.Network
 
             // Remember that appIdentifier has to be the same between client and server
             config = new NetPeerConfiguration(Properties.Resources.application_protocol_name);
-
             client = new NetClient(config);
+
+            serverEndPoint = new IPEndPoint(NetUtility.Resolve(Properties.Resources.server_address),
+                               Int32.Parse(Properties.Resources.default_port));
         }
 
         public bool isConnected()
@@ -35,11 +40,20 @@ namespace AaltoWindraw.Network
             return this.connected;
         }
 
-        public void Start()
+        public bool Start()
         {
             if (connected)
-                return;
-
+            {
+                Console.WriteLine("Client is already connected");
+                return false;
+            }
+            
+            if (!CheckServerAvailability())
+            {
+                Console.WriteLine("Server seems to be down... Try again later!");
+                return false;
+            }
+            
             Console.WriteLine("Connection to " 
                 + Properties.Resources.server_address 
                 + ", sending local name (" 
@@ -53,18 +67,15 @@ namespace AaltoWindraw.Network
             // Write campus name
             outMsg.Write(Properties.Resources.client_name);
 
-            client.Connect(Properties.Resources.server_address,
-                 Int32.Parse(Properties.Resources.default_port)
-                 , outMsg);
-
+            NetConnection nc = client.Connect(serverEndPoint, outMsg);
             connected = true;
-
+            return connected;
         }
         
-        public void Stop()
+        public bool Stop()
         {
             if (!connected)
-                return;
+                return false;
 
             Console.WriteLine("Gracefully closing the connection...");
 
@@ -73,6 +84,22 @@ namespace AaltoWindraw.Network
             connected = false;
 
             Console.WriteLine("The connection was successfully closed");
+            return !connected;
+        }
+
+        public bool CheckServerAvailability()
+        {
+            try
+            {
+                TcpClient ucs = new TcpClient();
+                ucs.Connect(serverEndPoint);
+                ucs.Close();
+                return true;
+            }
+            catch (SocketException)
+            {
+                return false;
+            }
         }
 
         public List<string> GetItemsFromServer()

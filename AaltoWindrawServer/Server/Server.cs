@@ -9,6 +9,8 @@ using AaltoWindraw.Network;
 using AaltoWindraw.Highscores;
 using AaltoWindraw.Utilities;
 using AaltoWindraw.Database;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace AaltoWindraw.Server
 {
@@ -49,6 +51,9 @@ namespace AaltoWindraw.Server
             server = new NetServer(config);
 
             server.Start();
+
+            Thread upThread = new Thread(new ThreadStart(TellAvailability));
+            upThread.Start();
 
             while (true)
             {
@@ -114,8 +119,9 @@ namespace AaltoWindraw.Server
                         case NetConnectionStatus.None:
                             break;
                     }
-					
-					break;  // End of StatusChanged part
+
+                    break;  // End of StatusChanged part
+
 				default:
 					
                     // Messages received but not managed
@@ -251,6 +257,20 @@ namespace AaltoWindraw.Server
             if (connectedTables.Contains(table))
             {
                 this.connectedTables.Remove(table);
+            }
+        }
+
+        private static void TellAvailability()
+        {
+            TcpListener listener = new TcpListener(NetUtility.Resolve(Properties.Resources.server_address), int.Parse(Properties.Resources.default_port));
+            listener.Start();
+
+            while (true)
+            {
+                // Is someone trying to call us? Well answer!
+                TcpClient tempClient = listener.AcceptTcpClient();
+                tempClient.Close();
+                Thread.Sleep(1200);
             }
         }
 	}

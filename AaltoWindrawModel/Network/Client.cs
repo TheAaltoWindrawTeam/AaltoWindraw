@@ -56,6 +56,7 @@ namespace AaltoWindraw.Network
             client.Connect(Properties.Resources.server_address,
                  Int32.Parse(Properties.Resources.default_port)
                  , outMsg);
+
             connected = true;
 
         }
@@ -68,50 +69,78 @@ namespace AaltoWindraw.Network
             Console.WriteLine("Gracefully closing the connection...");
 
             client.Disconnect(Properties.Resources.bye_message);
+            client.Shutdown(Properties.Resources.bye_message);
             connected = false;
 
             Console.WriteLine("The connection was successfully closed");
         }
 
         public List<string> GetItemsFromServer()
-        {            
-            List<string> items = new List<string>();
-            
+        {
             outMsg = client.CreateMessage();
             outMsg.Write((byte)Commons.PacketType.ITEMS_REQUEST);
             client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
             inMsg = NextDataMessageFromServer();
 
-            int itemsCount = inMsg.ReadInt32();
-            for (int i = 0; i < itemsCount; i++)
-            {
-                items.Add(inMsg.ReadString());
-            }
-
-            return items;
+            return NetSerializer.DeSerialize<List<string>>(inMsg.ReadString());
         }
 
         public Drawing.Drawing GetDrawingFromServer(string drawingName)
         {
-            Drawing.Drawing drawing = new Drawing.Drawing(drawingName);
+            Drawing.Drawing drawing = null;
             string inHash = "";
-
             int attempt = 0;
 
             do
             {
+                // Send request to server
+                outMsg = client.CreateMessage();
+                outMsg.Write((byte)Commons.PacketType.DRAWING_REQUEST);
+                outMsg.Write(drawingName);
+                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
-            // Send request to server
-            outMsg = client.CreateMessage();
-            outMsg.Write((byte)Commons.PacketType.DRAWING_REQUEST);
-            outMsg.Write(drawingName);
-            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+                // Read response (and drawing inside it)
+                inMsg = NextDataMessageFromServer();
+                if (inMsg.ReadByte().Equals((byte)Network.Commons.PacketType.NO_DRAWING_FOUND))
+                    break;
+                // Somehow serialization do not take into account the ID...
+                // So here's a hack
+                string id = inMsg.ReadString();
+                drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
+                drawing.ID = id;
+                inHash = inMsg.ReadString();
 
-            // Read response (and drawing inside it)
-            inMsg = NextDataMessageFromServer();
-            drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
-            inHash = inMsg.ReadString();
+            }   // Re-do as long as the drawing is not equal to its hash on the server
+            while (inHash != Utilities.Hash.ComputeHash(drawing) && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
+
+            return drawing;
+        }
+
+        public Drawing.Drawing GetDrawingFromServerById(string drawingID)
+        {
+            Drawing.Drawing drawing = null;
+            string inHash = "";
+            int attempt = 0;
+
+            do
+            {
+                // Send request to server
+                outMsg = client.CreateMessage();
+                outMsg.Write((byte)Commons.PacketType.DRAWING_BY_ID_REQUEST);
+                outMsg.Write(drawingID);
+                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+
+                // Read response (and drawing inside it)
+                inMsg = NextDataMessageFromServer();
+                if (inMsg.ReadByte().Equals((byte)Network.Commons.PacketType.NO_DRAWING_FOUND))
+                    break;
+                // Somehow serialization do not take into account the ID...
+                // So here's a hack
+                string id = inMsg.ReadString();
+                drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
+                drawing.ID = id;
+                inHash = inMsg.ReadString();
 
             }   // Re-do as long as the drawing is not equal to its hash on the server
             while (inHash != Utilities.Hash.ComputeHash(drawing) && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
@@ -123,7 +152,7 @@ namespace AaltoWindraw.Network
         {
             int attempt = 0;
             bool saveOk = false;
-            Highscores.Highscore highscore = new Highscores.Highscore(drawing.Item, drawing.Author, scorer, score);
+            Highscores.Highscore highscore = new Highscores.Highscore(drawing, scorer, score, DateTime.Now);
 
             do{
                 // Send request to server
@@ -166,6 +195,7 @@ namespace AaltoWindraw.Network
         {
             int attempt = 0;
             bool saveOk = false;
+            drawing.Save();
 
             do
             {
@@ -196,9 +226,7 @@ namespace AaltoWindraw.Network
             // Send request to server
             this.outMsg = client.CreateMessage();
             this.outMsg.Write((byte)Commons.PacketType.IS_HIGHSCORE_REQUEST);
-            this.outMsg.Write(drawing.Item);
-            this.outMsg.Write(drawing.Author);
-            this.outMsg.Write(NetSerializer.Serialize(drawing.Timestamp));
+            this.outMsg.Write(drawing.ID);
             this.outMsg.Write(score);
 
             client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
@@ -245,19 +273,6 @@ namespace AaltoWindraw.Network
             NetIncomingMessage incomingMsg;
             while ((incomingMsg = client.ReadMessage()) == null || incomingMsg.MessageType != NetIncomingMessageType.Data) ;
             return incomingMsg;
-        }
-
-        //TODO remove following line when no more debug is intended
-        private void DebugNextDataMessageFromServer()
-        {
-            NetIncomingMessage incomingMsg;
-            while ((incomingMsg = client.ReadMessage()) == null || incomingMsg.MessageType != NetIncomingMessageType.Data)
-            {
-            }
-            Console.Write(incomingMsg.LengthBytes+"  ");
-            byte[] buf = new byte[incomingMsg.LengthBytes];
-            incomingMsg.ReadBytes(buf, 0, incomingMsg.LengthBytes);
-            Console.WriteLine("Content: " + System.Text.Encoding.ASCII.GetString(buf) + "\n");
         }
 
     }

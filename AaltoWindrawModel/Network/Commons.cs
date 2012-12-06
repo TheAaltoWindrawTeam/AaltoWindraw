@@ -10,6 +10,7 @@ namespace AaltoWindraw.Network
         public enum PacketType{
             // Requests from client
             DRAWING_REQUEST,
+            DRAWING_BY_ID_REQUEST,
             WHO_REQUEST,
             ITEMS_REQUEST,
             HIGHSCORES_REQUEST,
@@ -24,6 +25,8 @@ namespace AaltoWindraw.Network
             IS_HIGHSCORE,
             IS_NOT_HIGHSCORE,
 
+            DRAWING_FOUND,
+            NO_DRAWING_FOUND,
             SCORE_STORED,
             SCORE_NOT_STORED,
             DRAWING_STORED,

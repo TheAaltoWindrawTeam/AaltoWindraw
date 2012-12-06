@@ -37,8 +37,14 @@
     <StartupObject>AaltoWindraw.ClientProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="gfoidl.StringSearching">
+      <HintPath>..\Libraries\gfoidl.StringSearching.dll</HintPath>
+    </Reference>
     <Reference Include="Lidgren.Network">
       <HintPath>..\Libraries\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Libraries\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Libraries\Newtonsoft.Json.dll</HintPath>
@@ -71,6 +77,7 @@
     <Compile Include="Utilities\Hash.cs" />
     <Compile Include="Utilities\MD5HashGenerator.cs" />
     <Compile Include="Utilities\NetSerializer.cs" />
+    <Compile Include="Utilities\StringDistanceEvaluator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

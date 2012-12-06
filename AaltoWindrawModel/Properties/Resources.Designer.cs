@@ -88,6 +88,24 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to aaltowindrawdb.
+        /// </summary>
+        public static string db_name {
+            get {
+                return ResourceManager.GetString("db_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ..\..\..\Database.
+        /// </summary>
+        public static string db_path {
+            get {
+                return ResourceManager.GetString("db_path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 12319.
         /// </summary>
         public static string default_port {
@@ -133,11 +151,29 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ..\..\..\own_resources\mongodb\mongod.exe.
+        /// </summary>
+        public static string mongodb_exe {
+            get {
+                return ResourceManager.GetString("mongodb_exe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 127.0.0.1.
         /// </summary>
         public static string server_address {
             get {
                 return ResourceManager.GetString("server_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.1.
+        /// </summary>
+        public static string string_distance_threshold {
+            get {
+                return ResourceManager.GetString("string_distance_threshold", resourceCulture);
             }
         }
     }

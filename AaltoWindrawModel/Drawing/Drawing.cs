@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Media;
 using System.Runtime.Serialization;
 using AaltoWindraw.Properties;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace AaltoWindraw
 {
@@ -14,12 +15,15 @@ namespace AaltoWindraw
         [Serializable]
         public class Drawing : ISerializable
         {
-
+            private string id;  // ID of the drawing
             private string name;    // Name of the drawing
             private string author;  // Name of the author of the drawing
             private DateTime timestamp; // Date of the drawing
             private string item;    // Item represented by the drawing
-            private Color background;    // Background of the drawing
+            private byte backgroundA;    // Background of the drawing (alpha)
+            private byte backgroundR;    // Background of the drawing (red)
+            private byte backgroundG;    // Background of the drawing (green)
+            private byte backgroundB;    // Background of the drawing (blue)
             private List<List<Dot>> frames;   // Set of Dots forming the animation
 
 
@@ -53,7 +57,7 @@ namespace AaltoWindraw
                 
                 //TODO replace following placeholders with relevant values
                 this.author = "Foo";
-                this.background = Colors.WhiteSmoke;
+                this.SetBackgroundAsColor(Colors.WhiteSmoke);
             }
 
             // Constructor for deserialization - should be used by serializer
@@ -63,16 +67,27 @@ namespace AaltoWindraw
                 author = info.GetString("Author");
                 timestamp = (DateTime)info.GetValue("Timestamp", typeof(DateTime));
                 item = info.GetString("Item");
-                byte[] tempBgColor = (byte[])info.GetValue("Background", typeof(byte[]));
-                background = Color.FromArgb(tempBgColor[0], tempBgColor[1], tempBgColor[2], tempBgColor[3]);
+                byte[] bgBytes = (byte[])info.GetValue("Background", typeof(byte[]));
+                backgroundA = bgBytes[0];
+                backgroundR = bgBytes[1];
+                backgroundG = bgBytes[2];
+                backgroundB = bgBytes[3];
                 frames = (List<List<Dot>>)info.GetValue("Frames", typeof(List<List<Dot>>));
                 
                 readOnly = true;
             }
 
+            // Getter and setter for id attribute
+            [BsonId]
+            public string ID
+            {
+                set { id = value; }
+                get { return id; }
+            }
+
             // Getter and setter for name attribute
             public string Name
-            { 
+            {
                 set { name = value; }
                 get { return name; }
             }
@@ -90,19 +105,53 @@ namespace AaltoWindraw
                 set { timestamp = value; }
                 get { return timestamp; }
             }
-            
+
             // Getter and setter for item attribute
             public string Item
-            { 
+            {
                 set { item = value; }
                 get { return item; }
             }
-            
-            // Getter and setter for background attribute
-            public Color Background
-            { 
-                set { background = value; }
-                get { return background; }
+
+            // Getter and setter for background alpha attribute
+            public byte BackgroundA
+            {
+                set { backgroundA = value; }
+                get { return backgroundA; }
+            }
+
+            // Getter and setter for background red attribute
+            public byte BackgroundR
+            {
+                set { backgroundR = value; }
+                get { return backgroundR; }
+            }
+
+            // Getter and setter for background green attribute
+            public byte BackgroundG
+            {
+                set { backgroundG = value; }
+                get { return backgroundG; }
+            }
+
+            // Getter and setter for background blue attribute
+            public byte BackgroundB
+            {
+                set { backgroundB = value; }
+                get { return backgroundB; }
+            }
+
+            public void SetBackgroundAsColor(Color value)
+            {
+                backgroundA = value.A;
+                backgroundR = value.R;
+                backgroundG = value.G;
+                backgroundB = value.B;
+            }
+
+            public Color GetBackgroundAsColor()
+            {
+                return Color.FromArgb(backgroundA, backgroundR, backgroundG, backgroundB);
             }
 
             // Returns the file name used for storing the drawing into a file
@@ -146,9 +195,6 @@ namespace AaltoWindraw
                     timestamp = DateTime.Now;
                     name = DefineName();
                     readOnly = true;
-                    Console.WriteLine(timestamp);
-                    Console.WriteLine(name);
-                    Console.WriteLine(FileName());
                 }
             }
 
@@ -161,14 +207,14 @@ namespace AaltoWindraw
             }
 
             // Serialize the drawing (used by serializer)
-            public void GetObjectData( SerializationInfo info, StreamingContext ctxt )
+            public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
             {
                 info.AddValue("Name", name);
                 info.AddValue("Author", author);
                 info.AddValue("Timestamp", timestamp, typeof(DateTime));
                 info.AddValue("Item", item);
-                byte[] tempBgColor = { background.A, background.R, background.G, background.B };
-                info.AddValue("Background", tempBgColor, typeof(byte[]));
+                byte[] bgBytes = new byte[] { backgroundA, backgroundR, backgroundG, backgroundB };
+                info.AddValue("Background", bgBytes, typeof(byte[]));
                 info.AddValue("Frames", frames, typeof(List<List<Dot>>));
             }
           }

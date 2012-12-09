@@ -55,5 +55,10 @@ namespace AaltoWindraw.Highscores
             info.AddValue("Scorer", scorerName);
             info.AddValue("Timestamp", scoreTimestamp, typeof(DateTime));
         }
+
+        public static bool CompareScores(ulong userScore, ulong p)
+        {
+            return userScore < p;
+        }
     }
 }

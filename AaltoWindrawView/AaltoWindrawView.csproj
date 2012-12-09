@@ -65,6 +65,9 @@
     <Compile Include="PageContents\AddingDrawingPanel.xaml.cs">
       <DependentUpon>AddingDrawingPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageContents\AfterGuessingPanel.xaml.cs">
+      <DependentUpon>AfterGuessingPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageContents\BeforeGuessingPanel.xaml.cs">
       <DependentUpon>BeforeGuessingPanel.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
       <DependentUpon>TitlePanel.xaml</DependentUpon>
     </Compile>
     <Page Include="PageContents\AddingDrawingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\AfterGuessingPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

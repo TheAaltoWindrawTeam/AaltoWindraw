@@ -122,23 +122,18 @@ namespace AaltoWindraw.Database
             return itemList;
         }
 
-        internal bool CheckIfHighscore(string drawingId, ulong score)
+        internal Highscores.Highscore GetHighscoreById(string drawingId)
         {
-            bool isHighscore = false;
             MongoCursor<Highscores.Highscore> hs = highscores.Find(new QueryDocument("_id", drawingId));
             switch (hs.Count())
             {
                 case 0:
-                    isHighscore = true;
-                    break;
+                    return null;
                 case 1:
-                    isHighscore = hs.First().score < score;
-                    break;
+                    return hs.First();
                 default:
                     throw new Exception("Highscore check should read at most one highscore");
             }
-            return isHighscore;
-            
         }
 
         internal List<Highscores.Highscore> GetHighscores()

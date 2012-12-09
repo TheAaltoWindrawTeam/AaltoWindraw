@@ -16,6 +16,7 @@ using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
 using System.Windows.Ink;
+using AaltoWindraw.Utilities;
 
 namespace AaltoWindraw
 {
@@ -30,9 +31,13 @@ namespace AaltoWindraw
         private IEnumerator<Drawing.SampledStroke> strokesEnum; // return the next sampledStroke to start to be drawn
         private List<IEnumerator<Drawing.Dot>> dotPointerList;  // countain the current SampledStrokes, to be finished to be drawn
 
-        private const int REFRESH_TIME_DRAW = 10;
-        private const string DRAWING_FOLDER = @"..\..\..\Drawings\";
-		
+        private const int REFRESH_TIME_DRAW = 20;
+
+        private ulong Milliseconds()
+        {
+            return (ulong)currentDrawing.CurrentFrame * (ulong)REFRESH_TIME_DRAW;
+        }
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -44,28 +49,89 @@ namespace AaltoWindraw
             drawTimer.Tick += new EventHandler(DrawFrame);
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
             
+            // Hide buttons and everything
+            ButtonPlayAgain.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonCheckScore.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonTryAgain.Visibility = System.Windows.Visibility.Collapsed;
+            UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Collapsed;
+            UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Collapsed;
+            UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Collapsed;
+
             DoDraw();
 
             // No drawing in this phase
             canvas.EditingMode = SurfaceInkEditingMode.None;
         }
 
-        private void OnClickStartStop(object sender, RoutedEventArgs e)
+        private void OnClickIKnow(object sender, RoutedEventArgs e)
         {
-            if (String.Equals(StartStop.Content,"I know!"))
-            {
-                drawTimer.Stop();
-                StartStop.Content = "More?";
+            // Stop timer
+            drawTimer.Stop();
+            ButtonIKnow.Visibility = System.Windows.Visibility.Collapsed;
+            bool distant = verifyUserInput();
+            UserAttempt.IsEnabled = false;
+
+            // If close to right answer
+            if (!distant)
+            { 
+                ButtonTryAgain.Visibility = System.Windows.Visibility.Collapsed;
+                UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Visible;
+                UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Collapsed;
+                UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Collapsed;
+                ButtonCheckScore.Visibility = System.Windows.Visibility.Visible;
+                
             }
-            else if (String.Equals(StartStop.Content, "More?"))
+            // If not close to right answer
+            else
             {
-                drawTimer.Start();
-                StartStop.Content = "I know!";
+                ButtonTryAgain.Visibility = System.Windows.Visibility.Visible;
+                UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Collapsed;
+                UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Visible;
+                UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Collapsed;
+                ButtonCheckScore.Visibility = System.Windows.Visibility.Collapsed;
             }
-            else if (String.Equals(StartStop.Content, "End...")) { } // do nothing
-            else throw new Exception("Incorrect value in button StartStop in Guessing Windows");
         }
 
+        private void OnClickTryAgain(object sender, RoutedEventArgs e)
+        {
+            // Change buttons visibility
+            ButtonTryAgain.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonIKnow.Visibility = System.Windows.Visibility.Visible;
+            UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Collapsed;
+            UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Collapsed;
+            // Focus keyboard for user input
+            UserAttempt.Text = "";
+            UserAttempt.IsEnabled = true;
+            FocusTextBox(UserAttempt, e);
+            // Restart timer
+            drawTimer.Start();
+        }
+
+        private ulong ComputeUserScore()
+        {
+            return Milliseconds();
+        }
+
+        private void OnClickPlayAgain(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            ((MainWindow)Application.Current.MainWindow).NextPage(new BeforeGuessingPanel(), "Guess", "Try to guess as quickly as possible", true);
+        }
+
+        private void OnClickCheckMyScore(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).NextPage(new AfterGuessingPanel(currentDrawing, ComputeUserScore()), "Your score", "Compared to others", true);
+        }
+
+        private bool verifyUserInput()
+        {
+            String attempt = UserAttempt.Text;
+            String rightAnswer = currentDrawing.Item;
+            Console.WriteLine("Compare userattempt="+attempt+" to rightAnswer="+rightAnswer);
+            bool distant = StringDistanceEvaluator.Distant(attempt, rightAnswer);
+            Console.WriteLine("Distant? "+distant);
+            return distant;
+        }
 
         private void DoDraw()
         {
@@ -77,10 +143,16 @@ namespace AaltoWindraw
             strokesEnum = currentDrawing.EnumStrokes;
             remainingStrokes = strokesEnum.MoveNext();
             dotPointerList = new List<IEnumerator<Drawing.Dot>>();
+
             drawTimer.Start();
             currentDrawing.reinit();
         }
 
+        private void FocusTextBox(Object sender, EventArgs e)
+        {
+            //((TextBox)sender).Focus();
+            Keyboard.Focus((TextBox)sender);
+        }
 
         private void DrawFrame(Object sender, EventArgs e)
         {
@@ -121,16 +193,28 @@ namespace AaltoWindraw
             // Remove the finished strokes
             dotPointerList.RemoveAll(x => toBeRemoved.Contains(x));
             currentDrawing.NewFrame();
-            GuessTimer.Text = String.Format("{0:00}:{1:00}:{2:00}", currentDrawing.CurrentFrame / 6000,
-                                                                   (currentDrawing.CurrentFrame % 6000 / 100),
-                                                                    currentDrawing.CurrentFrame % 100);
+
+            ulong time = Milliseconds();
+            GuessTimer.Text = String.Format("{0:00}:{1:00}:{2:00}", time / 60000,
+                                                                   (time / 1000) % 60,
+                                                                    (time / 10) % 100);
 
             if (!remainingStrokes && dotPointerList.Count() == 0)
             {
                 drawTimer.Stop();
-                StartStop.Content = "End...";
+                DisableEverythingWhenDrawingIsOver();
+                UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Visible;
+                ButtonPlayAgain.Visibility = System.Windows.Visibility.Visible;
             }
 
+        }
+
+        private void DisableEverythingWhenDrawingIsOver()
+        {
+            ButtonIKnow.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonTryAgain.Visibility = System.Windows.Visibility.Collapsed;
+            UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Collapsed;
+            UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         //clear the board
@@ -139,40 +223,18 @@ namespace AaltoWindraw
             canvas.Strokes.Clear();
         }
 
-        private void OpenDrawing()
+        private void OnClickTryAnother(Object sender, RoutedEventArgs e)
         {
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(DRAWING_FOLDER);
-            System.IO.FileInfo[] files = dir.GetFiles("*" + AaltoWindraw.Properties.Resources.drawing_file_extension);
-
-            Random random = new Random();
-            int randomNumber = random.Next(0, files.Length);
-
-            //item = "Batman_Foo_20121113195124.draw";
-
-            if (DoOpenDrawing(  files[randomNumber].Name
-                              //item
-                                ))
-                DoDraw();
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            ((MainWindow)Application.Current.MainWindow).NextPage(new BeforeGuessingPanel(), "Guess", "Try to guess as quickly as possible", true);
         }
 
-        private Boolean DoOpenDrawing(string fileName)
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            // TODO check if currentDrawing == null ?
-
-            try
+            if (e.Key == Key.Return)
             {
-                currentDrawing = AaltoWindraw.Utilities.FileSerializer<AaltoWindraw.Drawing.Drawing>.DeSerialize(DRAWING_FOLDER + @fileName);
+                OnClickIKnow(sender, e);
             }
-            catch //(Exception ex)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private void OnClickTryAnother(Object sender, EventArgs e)
-        {
-            //TODO
         }
 	}
 }

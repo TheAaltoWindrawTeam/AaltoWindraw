@@ -7,7 +7,9 @@
 	x:Class="AaltoWindraw.GuessingPanel"
 	x:Name="GuessingPage"
 	FlowDirection="LeftToRight"
-	Width="Auto" Height="Auto">
+	Width="Auto" Height="Auto"
+    FocusManager.IsFocusScope="True"
+    FocusManager.FocusedElement="{Binding ElementName=UserAttempt}">
 
 
 		<Grid x:Name="LayoutRoot" Background="White">
@@ -30,12 +32,36 @@
 				/>
 		</Border>
 		
-		<StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-			<TextBlock x:Name="GuessTimer" Text="00:00:00" FontFamily="Segoe UI Light" FontSize="22" Foreground="#FF959595" HorizontalAlignment="Center"/>
-            <TextBox x:Name="UserAttempt" Tag="What is it?" Height="44" Style="{DynamicResource TextBoxGUI}" Margin="10"></TextBox>
-            <Button x:Name="StartStop" Content="I know!" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickStartStop"/>
-			
-			
+		<StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,0,0,0">
+            <TextBlock x:Name="GuessTimer" Text="00:00:00" Style="{DynamicResource TextBlock-SubTitle}" HorizontalAlignment="Center"/>
+            <TextBox x:Name="UserAttempt" Tag="What is it?" Height="44" Width="Auto" Style="{DynamicResource TextBoxGUI}" Margin="10" Focusable="True"
+			Loaded="FocusTextBox" VerticalAlignment="Stretch" KeyDown="OnKeyDownHandler"/>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+				<StackPanel x:Name="UserAttemptFeedbackRight"  Orientation="Horizontal" HorizontalAlignment="Left">
+	                <Viewbox Height="28">
+	                    <Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerUp}" VerticalAlignment="Top" Width="51.837" Margin="0,0,10,0"/>
+	                </Viewbox>
+	                <TextBlock Text="Correct !" Style="{DynamicResource TextBlock-Default}"></TextBlock>
+	            </StackPanel>
+	            <StackPanel x:Name="UserAttemptFeedbackWrong"  Orientation="Horizontal" HorizontalAlignment="Left">
+	                <Viewbox Height="28">
+	                    <Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerDown}" VerticalAlignment="Top" Width="51.837" Margin="0,0,10,0"/>
+	                </Viewbox>
+	                <TextBlock Text="Nope !" Style="{DynamicResource TextBlock-Default}"></TextBlock>
+	            </StackPanel>
+				
+				<StackPanel x:Name="UserAttemptFeedbackTooLate"  Orientation="Horizontal" HorizontalAlignment="Left">
+	                <Viewbox Height="28">
+	                    <Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerDown}" VerticalAlignment="Top" Width="51.837" Margin="0,0,10,0"/>
+	                </Viewbox>
+	                <TextBlock Text="Too late..." Style="{DynamicResource TextBlock-Default}"></TextBlock>
+	            </StackPanel>
+            </StackPanel>
+            <Button x:Name="ButtonIKnow" Content="I know!" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickIKnow"/>
+            <Button x:Name="ButtonTryAgain" Content="Try again" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickTryAgain"/>
+			<Button x:Name="ButtonPlayAgain" Content="Play again" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickPlayAgain"/>
+        	<Button x:Name="ButtonCheckScore" Content="Check my score" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickCheckMyScore"/>
+
 		</StackPanel>
 		
 	</Grid>

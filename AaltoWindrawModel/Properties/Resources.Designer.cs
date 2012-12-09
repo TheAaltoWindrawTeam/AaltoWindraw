@@ -169,7 +169,7 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 0.1.
+        ///   Recherche une chaîne localisée semblable à 0.3.
         /// </summary>
         public static string string_distance_threshold {
             get {

@@ -196,11 +196,19 @@ namespace AaltoWindraw.Server
                     outMsg.Write(NetSerializer.Serialize(db.GetItems()));
                     break;  // End of ITEMS_REQUEST part
 
-                case (byte)Network.Commons.PacketType.IS_HIGHSCORE_REQUEST:
-                    outMsg.Write(db.CheckIfHighscore(inMsg.ReadString(), inMsg.ReadUInt64())?
-                        (byte)Network.Commons.PacketType.IS_HIGHSCORE :
-                        (byte)Network.Commons.PacketType.IS_NOT_HIGHSCORE);
-                    break;  // End of IS_HIGHSCORE_REQUEST part
+                case (byte)Network.Commons.PacketType.HIGHSCORE_REQUEST:
+                    string id = inMsg.ReadString();
+                    Highscore h = db.GetHighscoreById(id);
+                    if (h == null)
+                    {
+                        outMsg.Write((byte)Network.Commons.PacketType.HIGHSCORE_NOT_FOUND);
+                    }
+                    else
+                    {
+                        outMsg.Write((byte)Network.Commons.PacketType.HIGHSCORE_FOUND);
+                        outMsg.Write(NetSerializer.Serialize(h));
+                    }
+                    break;  // End of HIGHSCORE_REQUEST part
 
                 case (byte)Network.Commons.PacketType.SEND_ITEM:
                     outMsg.Write(db.SaveItem(inMsg.ReadString()) ?

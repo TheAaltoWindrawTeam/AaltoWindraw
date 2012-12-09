@@ -11,7 +11,8 @@
 		
 		<StackPanel>
 			<TextBlock Style="{DynamicResource TextBlock-Title}" Text="Rules"></TextBlock>
-			<TextBlock Style="{DynamicResource TextBlock-SubTitle}" TextWrapping="WrapWithOverflow" Text="You will have to guess as fast as possible what will be magically drawn under your eyes" TextAlignment="Justify"></TextBlock>
+			<TextBlock Style="{DynamicResource TextBlock-SubTitle}" TextWrapping="WrapWithOverflow"
+                       Text="You will have to guess as fast as possible what will be magically drawn under your eyes. Prepare to write on keyboard!" TextAlignment="Justify"></TextBlock>
 			
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 				<TextBlock Style="{DynamicResource TextBlock-Title}" Text="Are you ready?" VerticalAlignment="Center"></TextBlock>

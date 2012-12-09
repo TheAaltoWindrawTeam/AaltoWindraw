@@ -90,7 +90,7 @@ namespace AaltoWindraw
 
         public void CheckScore(Drawing.Drawing d, ulong score)
         {
-            Console.WriteLine("is "+score+" highscore for "+d.ID+"? " + client.CheckScore(d, score));
+            //Console.WriteLine("is "+score+" highscore for "+d.ID+"? " + client.CheckScore(d, score));
         }
 
         static void Main(string[] args)

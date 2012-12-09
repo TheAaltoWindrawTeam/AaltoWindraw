@@ -15,8 +15,7 @@ namespace AaltoWindraw.Network
             WHO_REQUEST,
             ITEMS_REQUEST,
             HIGHSCORES_REQUEST,
-
-            IS_HIGHSCORE_REQUEST,
+            HIGHSCORE_REQUEST,
 
             SEND_SCORE,
             SEND_DRAWING,
@@ -24,9 +23,6 @@ namespace AaltoWindraw.Network
 
             // Responses from server
             PONG,
-            IS_HIGHSCORE,
-            IS_NOT_HIGHSCORE,
-
             DRAWING_FOUND,
             NO_DRAWING_FOUND,
             SCORE_STORED,
@@ -35,6 +31,8 @@ namespace AaltoWindraw.Network
             DRAWING_NOT_STORED,
             ITEM_SAVED,
             ITEM_NOT_SAVED,
+            HIGHSCORE_FOUND,
+            HIGHSCORE_NOT_FOUND
         }
     }
 }

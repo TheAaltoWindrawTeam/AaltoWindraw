@@ -164,7 +164,7 @@
     <comment>TODO change it in favor of a REAL IP (no domain!)</comment>
   </data>
   <data name="string_distance_threshold" xml:space="preserve">
-    <value>0.1</value>
+    <value>0.3</value>
     <comment>Change this value for more or less severe string matching - from 0 (perfect match) to 1 (total mismatch)</comment>
   </data>
 </root>

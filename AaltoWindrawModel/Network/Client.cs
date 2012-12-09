@@ -201,25 +201,26 @@ namespace AaltoWindraw.Network
             return inMsg.ReadByte() == (byte)Commons.PacketType.DRAWING_STORED;
         }
 
-        /*
-         * Check if a score is a highscore for a given drawing
-         * Return true if this is a highscore (hence score may be saved once scorer
-         * name is known)
-         */
-        public bool CheckScore(Drawing.Drawing drawing, ulong score)
+        public Highscores.Highscore GetHighscoreFromServer(Drawing.Drawing drawing)
         {
             // Send request to server
             this.outMsg = client.CreateMessage();
-            this.outMsg.Write((byte)Commons.PacketType.IS_HIGHSCORE_REQUEST);
+            this.outMsg.Write((byte)Commons.PacketType.HIGHSCORE_REQUEST);
             this.outMsg.Write(drawing.ID);
-            this.outMsg.Write(score);
 
             client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
-            // Read response (check if highscore)
+            // Read response
             inMsg = NextDataMessageFromServer();
 
-            return inMsg.ReadByte() == (byte)Commons.PacketType.IS_HIGHSCORE;
+            if (inMsg.ReadByte() == (byte)Commons.PacketType.HIGHSCORE_FOUND)
+            {
+                return NetSerializer.DeSerialize<Highscores.Highscore>(inMsg.ReadString());
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public bool AddItemToServer(string item)

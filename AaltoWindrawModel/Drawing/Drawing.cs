@@ -203,15 +203,15 @@ namespace AaltoWindraw
             private int FindClosest(Point d)
             {
                 int val = 0;
-                double dist = Math.Sqrt(Math.Pow(this.currentStrokes[0].Position.X - d.X, 2) +
-                                        Math.Pow(this.currentStrokes[0].Position.Y - d.Y, 2));
+                double dist = Math.Sqrt(Math.Pow(this.currentStrokes[0].PositionX - d.X, 2) +
+                                        Math.Pow(this.currentStrokes[0].PositionY - d.Y, 2));
                 // we assume that there is at least one element in currentStrokes
                 // ie BeginStroke has been called more than CompleteStroke
 
                 for (int i = 1; i < currentStrokes.Count; i++)
                 {
-                    double temp = Math.Sqrt(Math.Pow(this.currentStrokes[i].Position.X - d.X, 2) +
-                                            Math.Pow(this.currentStrokes[i].Position.Y - d.Y, 2));
+                    double temp = Math.Sqrt(Math.Pow(this.currentStrokes[i].PositionX - d.X, 2) +
+                                            Math.Pow(this.currentStrokes[i].PositionY - d.Y, 2));
                     if (temp < dist)
                     {
                         dist = temp;
@@ -240,7 +240,8 @@ namespace AaltoWindraw
             {
                 if (currentStrokes.Count == 0) return; // should never happen
                 int index = FindClosest(d);
-                currentStrokes[index].Position = d;
+                currentStrokes[index].PositionX = d.X;
+                currentStrokes[index].PositionY = d.Y;
             }
 
             public void SaveFrame(Color pColor, double pRadius)

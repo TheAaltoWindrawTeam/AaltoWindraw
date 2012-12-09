@@ -9,22 +9,26 @@
 	<Grid x:Name="LayoutRoot" Background="White">
 		<StackPanel Grid.Row="4" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
 			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25" VerticalAlignment="Center">
-				<Button x:Name="Home_DrawButton" Content="Draw" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0" Click="OpenRandomCardWindow"/>
+				<Button x:Name="Home_DrawButton" Content="Draw" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenRandomCardWindow" TouchDown="OpenRandomCardWindow" TouchEnter="OpenRandomCardWindow"/>
 				<TextBlock x:Name="DrawDescription" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Style="{DynamicResource TextBlock-Default}" Text="Draw something and add it to the database" Margin="20,0,0,0" VerticalAlignment="Center"/>
 			</StackPanel>
 		
 			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25">
-                <Button x:Name="Home_GuessButton" Content="Guess" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0" Click="OpenBeforeGuessingWindow"/>
+                <Button x:Name="Home_GuessButton" Content="Guess" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenBeforeGuessingWindow" TouchDown="OpenBeforeGuessingWindow" TouchEnter="OpenBeforeGuessingWindow"/>
 				<TextBlock x:Name="GuessDescription" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Style="{DynamicResource TextBlock-Default}" Text="Guess as quickly as you can a drawing from the database" Margin="20,0,0,0" VerticalAlignment="Center"/>
 			</StackPanel>
 		
 			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25">
-				<Button x:Name="Home_PlayOnlineButton" Content="Play Online" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0" Click="OpenOnlineWindow"/>
+				<Button x:Name="Home_PlayOnlineButton" Content="Play Online" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenOnlineWindow" TouchDown="OpenOnlineWindow" TouchEnter="OpenOnlineWindow"/>
 				<TextBlock x:Name="PlayOnlineDescription" HorizontalAlignment="Left" Style="{DynamicResource TextBlock-Default}" TextWrapping="WrapWithOverflow" Text="Play online with a friend on an other Aalto Window Platform" Margin="20,0,0,0" VerticalAlignment="Center"/>
 			</StackPanel>
 		
 			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25">
-                <Button x:Name="Home_HighScoresButton" Content="High scores" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0" Click="OpenHighScoresWindow"/>
+                <Button x:Name="Home_HighScoresButton" Content="High scores" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenHighScoresWindow" TouchDown="OpenHighScoresWindow" TouchEnter="OpenHighScoresWindow"/>
 				<TextBlock x:Name="HighScoresDescription" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Style="{DynamicResource TextBlock-Default}" Text="Look who's the king" Margin="20,0,0,0" VerticalAlignment="Center"/>
 			</StackPanel>
 		

@@ -15,7 +15,8 @@
 			
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 				<TextBlock Style="{DynamicResource TextBlock-Title}" Text="Are you ready?" VerticalAlignment="Center"></TextBlock>
-				<Button x:Name="ButtonGo" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Go !" Margin="30" Click="OnClickGo" VerticalAlignment="Center"></Button>
+				<Button x:Name="ButtonGo" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Go !" Margin="30" VerticalAlignment="Center"
+                        Click="OnClickGo" TouchDown="OnClickGo" TouchEnter="OnClickGo"></Button>
 			</StackPanel>
 			<TextBlock x:Name="FinalCountdown" Style="{DynamicResource TextBlock-Title}" FontSize="200" Text="3" HorizontalAlignment="Center"></TextBlock>
 		</StackPanel>

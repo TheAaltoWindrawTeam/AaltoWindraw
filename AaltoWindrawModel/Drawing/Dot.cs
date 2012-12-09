@@ -13,7 +13,9 @@ namespace AaltoWindraw
         [Serializable]
         public class Dot : ISerializable
         {
-            private Point position; // Coordinates of the point on the whiteboard
+            // Coordinates of the point on the whiteboard
+            private double x;
+            private double y;
             private byte colorA;    // Color of the point (alpha)
             private byte colorR;    // Color of the point (red)
             private byte colorG;    // Color of the point (green)
@@ -26,7 +28,8 @@ namespace AaltoWindraw
 
             public Dot(Double pX, Double pY, Color pColor, Double pRadius)
             {
-                position = new Point(pX, pY);
+                x = pX;
+                y = pY;
                 colorA = pColor.A;
                 colorR = pColor.R;
                 colorG = pColor.G;
@@ -36,7 +39,8 @@ namespace AaltoWindraw
 
             public Dot(SerializationInfo info, StreamingContext ctxt)
             {
-                position = (Point)info.GetValue("Position", typeof(Point));
+                x = info.GetDouble("X");
+                y = info.GetDouble("Y");
                 byte[] colorBytes = (byte[])info.GetValue("Color", typeof(byte[]));
                 colorA = colorBytes[0];
                 colorR = colorBytes[1];
@@ -45,10 +49,16 @@ namespace AaltoWindraw
                 radius = info.GetDouble("Radius");
             }
 
-            public Point Position
+            public double X
             {
-                get { return position; }
-                set { position = value; }
+                get { return x; }
+                set { x = value; }
+            }
+
+            public double Y
+            {
+                get { return y; }
+                set { y = value; }
             }
 
             public byte ColorA
@@ -75,6 +85,11 @@ namespace AaltoWindraw
                 set { colorB = value; }
             }
 
+            public Point GetPosition()
+            {
+                return new Point(x, y);
+            }
+
             public Color GetColor()
             {
                 return Color.FromArgb(colorA, colorR, colorG, colorB);
@@ -88,7 +103,8 @@ namespace AaltoWindraw
 
             public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
             {
-                info.AddValue("Position", this.position, typeof(Point));
+                info.AddValue("X", this.x);
+                info.AddValue("Y", this.y);
                 byte[] colorBytes = new byte[] { colorA, colorR, colorG, colorB };
                 info.AddValue("Color", colorBytes, typeof(byte[]));
                 info.AddValue("Radius", this.radius);

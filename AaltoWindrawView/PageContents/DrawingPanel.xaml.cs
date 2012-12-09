@@ -204,8 +204,8 @@ namespace AaltoWindraw
                 {
                     Dot d2 = Enumerator.Current;
                     var strokePoints = new StylusPointCollection();
-                    strokePoints.Add(new StylusPoint(d.Position.X, d.Position.Y));
-                    strokePoints.Add(new StylusPoint(d2.Position.X, d2.Position.Y));
+                    strokePoints.Add(new StylusPoint(d.X, d.Y));
+                    strokePoints.Add(new StylusPoint(d2.X, d2.Y));
                     var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
                     drawingAttributes.Color = d.GetColor();
                     drawingAttributes.Width = d.Radius;

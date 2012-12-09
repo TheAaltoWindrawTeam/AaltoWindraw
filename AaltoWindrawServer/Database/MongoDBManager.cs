@@ -164,10 +164,5 @@ namespace AaltoWindraw.Database
             }
             return isDifferentEnough && items.Insert(new BsonDocument("item", itemSent)).Ok;
         }
-
-        private void Log(string s)
-        {
-            Console.WriteLine(s);
-        }
     }
 }

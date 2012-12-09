@@ -174,8 +174,6 @@ namespace AaltoWindraw.Network
 
         public List<string> GetConnectedTablesFromServer()
         {
-            List<string> connectedTables = new List<string>();
-
             // Send request to server
             outMsg = client.CreateMessage();
             outMsg.Write((byte)Commons.PacketType.WHO_REQUEST);
@@ -183,13 +181,7 @@ namespace AaltoWindraw.Network
 
             // Read response (list of tables)
             inMsg = NextDataMessageFromServer();
-            int tablesCount = inMsg.ReadInt32();
-            for (int i = 0; i < tablesCount; i++)
-            {
-                connectedTables.Add(inMsg.ReadString());
-            }
-
-            return connectedTables;
+            return NetSerializer.DeSerialize<List<string>>(inMsg.ReadString());
         }
 
         public bool SaveDrawingToServer(Drawing.Drawing drawing)

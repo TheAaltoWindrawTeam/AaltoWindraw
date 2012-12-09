@@ -183,8 +183,7 @@ namespace AaltoWindraw.Server
                     break;  // End of SEND_SCORE part
 
                 case (byte)Network.Commons.PacketType.WHO_REQUEST:
-                    outMsg.Write(connectedTables.Count);
-                    connectedTables.ForEach(table => outMsg.Write(table));
+                    outMsg.Write(NetSerializer.Serialize(connectedTables));
                     break;  // End of WHO_REQUEST part
 
                 case (byte)Network.Commons.PacketType.SEND_DRAWING:

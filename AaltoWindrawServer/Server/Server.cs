@@ -40,7 +40,16 @@ namespace AaltoWindraw.Server
 
         public void Start()
         {
-            db.Start();
+            bool dbOk = db.Start();
+            if (dbOk)
+            {
+                Console.WriteLine("Database loaded successfully");
+            }
+            else
+            {
+                Console.WriteLine("Database could not be loaded...");
+                return;
+            }
 
             // Start server
             config = new NetPeerConfiguration(Properties.Resources.application_protocol_name);
@@ -141,8 +150,7 @@ namespace AaltoWindraw.Server
             switch (inMsg.ReadByte())
             {
                 case (byte)Network.Commons.PacketType.DRAWING_REQUEST:
-                    string request = inMsg.ReadString();
-                    Drawing.Drawing[] drawings = db.GetDrawingsByItem(request);
+                    Drawing.Drawing[] drawings = db.GetDrawingsByItem(inMsg.ReadString());
                     if (drawings.Length == 0)
                     {
                         outMsg.Write((byte)Network.Commons.PacketType.NO_DRAWING_FOUND);
@@ -151,22 +159,12 @@ namespace AaltoWindraw.Server
                     {
                         Drawing.Drawing drawing = drawings[rand.Next(0, drawings.Length)];
                         outMsg.Write((byte)Network.Commons.PacketType.DRAWING_FOUND);
-
-                        // Somehow serialization do not take into account the ID...
-                        // So here's a hack
-                        outMsg.Write(drawing.ID);
-
-                        // Write drawing data
-                        outMsg.Write(NetSerializer.Serialize(drawing));
-
-                        //Write a hash of the drawing to check if communication was successful (maybe overkill?)
-                        outMsg.Write(Utilities.Hash.ComputeHash(drawing));
+                        writeDrawing(drawing, outMsg);
                     }
                     break;  // End of DRAWING_REQUEST part
 
                 case (byte)Network.Commons.PacketType.DRAWING_BY_ID_REQUEST:
-                    string requestID = inMsg.ReadString();
-                    Drawing.Drawing d = db.GetDrawingById(requestID);
+                    Drawing.Drawing d = db.GetDrawingById(inMsg.ReadString());
                     if (d == null)
                     {
                         outMsg.Write((byte)Network.Commons.PacketType.NO_DRAWING_FOUND);
@@ -174,16 +172,7 @@ namespace AaltoWindraw.Server
                     else
                     {
                         outMsg.Write((byte)Network.Commons.PacketType.DRAWING_FOUND);
-
-                        // Somehow serialization do not take into account the ID...
-                        // So here's a hack
-                        outMsg.Write(d.ID);
-
-                        // Write drawing data
-                        outMsg.Write(NetSerializer.Serialize(d));
-
-                        //Write a hash of the drawing to check if communication was successful (maybe overkill?)
-                        outMsg.Write(Utilities.Hash.ComputeHash(d));
+                        writeDrawing(d, outMsg);
                     }
                     break;  // End of DRAWING__BY_ID_REQUEST part
 
@@ -199,10 +188,7 @@ namespace AaltoWindraw.Server
                     break;  // End of WHO_REQUEST part
 
                 case (byte)Network.Commons.PacketType.SEND_DRAWING:
-                    Drawing.Drawing drawingReceived = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
-                    string hash = inMsg.ReadString();
-                    string localHash = Utilities.Hash.ComputeHash(drawingReceived);
-                    outMsg.Write((hash.Equals(localHash) && db.SaveDrawing(drawingReceived)) ?
+                    outMsg.Write((db.SaveDrawing(NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString()))) ?
                         (byte)Network.Commons.PacketType.DRAWING_STORED :
                         (byte)Network.Commons.PacketType.DRAWING_NOT_STORED);
                     break;  // End of SEND_DRAWING part
@@ -229,6 +215,16 @@ namespace AaltoWindraw.Server
             }
 
             return outMsg;
+        }
+
+        private void writeDrawing(Drawing.Drawing d, NetOutgoingMessage outMsg)
+        {
+            // Somehow serialization do not take into account the ID...
+            // So here's a hack
+            outMsg.Write(d.ID);
+
+            // Write drawing data
+            outMsg.Write(NetSerializer.Serialize(d));
         }
 
         private string GetTableName(System.Net.IPEndPoint ip)

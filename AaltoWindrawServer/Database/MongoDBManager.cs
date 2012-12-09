@@ -18,7 +18,7 @@ namespace AaltoWindraw.Database
         private MongoCollection<BsonDocument> items;
         private Process mongoProcess;
 
-        public void Start()
+        public bool Start()
         {
             try
             {
@@ -47,10 +47,10 @@ namespace AaltoWindraw.Database
             drawings = db.GetCollection<Drawing.Drawing>("drawings");
             highscores = db.GetCollection<Highscores.Highscore>("highscores");
             items = db.GetCollection<BsonDocument>("items");
-
+            return true;
         }
 
-        public void Stop()
+        public bool Stop()
         {
             try
             {
@@ -58,7 +58,9 @@ namespace AaltoWindraw.Database
             }
             catch (System.InvalidOperationException)
             {
+                return false;
             }
+            return true;
         }
 
         internal Drawing.Drawing[] GetDrawingsByItem(string item)

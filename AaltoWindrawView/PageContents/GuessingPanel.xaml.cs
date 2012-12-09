@@ -26,16 +26,13 @@ namespace AaltoWindraw
 
         // Variable for printing the saved drawing
         private System.Windows.Threading.DispatcherTimer drawTimer;
-        private StylusPoint lastPointDrawn;
-        private bool newStroke;
-        private IEnumerator<List<AaltoWindraw.Drawing.Dot>> frameEnumerator;
-        private IEnumerator<AaltoWindraw.Drawing.Dot> currentStrokeDotEnumerator;
+        bool remainingStrokes;
+        private IEnumerator<Drawing.SampledStroke> strokesEnum; // return the next sampledStroke to start to be drawn
+        private List<IEnumerator<Drawing.Dot>> dotPointerList;  // countain the current SampledStrokes, to be finished to be drawn
 
         private const int REFRESH_TIME_DRAW = 10;
         private const string DRAWING_FOLDER = @"..\..\..\Drawings\";
 		
-        private int counter=0;
-
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -69,51 +66,71 @@ namespace AaltoWindraw
             else throw new Exception("Incorrect value in button StartStop in Guessing Windows");
         }
 
+
         private void DoDraw()
         {
             ClearBoard();
+            canvas.EditingMode = SurfaceInkEditingMode.None;
             canvas.Background = new SolidColorBrush(currentDrawing.Background);
-            newStroke = true;
-            frameEnumerator = currentDrawing.Frames.GetEnumerator();
+            //newStroke = true;
+            //frameEnumerator = currentDrawing.Frames.GetEnumerator();
+            strokesEnum = currentDrawing.EnumStrokes;
+            remainingStrokes = strokesEnum.MoveNext();
+            dotPointerList = new List<IEnumerator<Drawing.Dot>>();
             drawTimer.Start();
+            currentDrawing.reinit();
         }
 
-        // TODO : add opacity
-        private void DrawFrame(object sender, EventArgs e)
+
+        private void DrawFrame(Object sender, EventArgs e)
         {
-            if (newStroke && frameEnumerator.MoveNext())
+            // Test if there are new strokes to draw, not started yet
+            while (remainingStrokes && strokesEnum.Current.Beginning == currentDrawing.CurrentFrame)
             {
-                currentStrokeDotEnumerator = frameEnumerator.Current.GetEnumerator();
-                currentStrokeDotEnumerator.MoveNext();
-                AaltoWindraw.Drawing.Dot d = currentStrokeDotEnumerator.Current;
-                this.lastPointDrawn = new StylusPoint(d.Position.X, d.Position.Y);
-                newStroke = false;
+                IEnumerator<Drawing.Dot> temp = strokesEnum.Current.Enum;
+                temp.MoveNext();
+                dotPointerList.Add(temp);
+                remainingStrokes = strokesEnum.MoveNext();
             }
-            else if (newStroke)
+
+            List<IEnumerator<Drawing.Dot>> toBeRemoved = new List<IEnumerator<Drawing.Dot>>();
+
+            // Draw the current dots, linked to the previous ones
+            foreach (IEnumerator<Drawing.Dot> Enumerator in dotPointerList)
+            {
+                Drawing.Dot d = Enumerator.Current;
+                if (Enumerator.MoveNext())
+                {
+                    Drawing.Dot d2 = Enumerator.Current;
+                    var strokePoints = new StylusPointCollection();
+                    strokePoints.Add(new StylusPoint(d.Position.X, d.Position.Y));
+                    strokePoints.Add(new StylusPoint(d2.Position.X, d2.Position.Y));
+                    var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
+                    drawingAttributes.Color = d.Color;
+                    drawingAttributes.Width = d.Radius;
+                    drawingAttributes.Height = d.Radius;
+                    Stroke stroke = new Stroke(strokePoints, drawingAttributes);
+                    canvas.Strokes.Add(stroke);
+                }
+                else
+                {
+                    toBeRemoved.Add(Enumerator);
+                }
+            }
+
+            // Remove the finished strokes
+            dotPointerList.RemoveAll(x => toBeRemoved.Contains(x));
+            currentDrawing.NewFrame();
+            GuessTimer.Text = String.Format("{0:00}:{1:00}:{2:00}", currentDrawing.CurrentFrame / 6000,
+                                                                   (currentDrawing.CurrentFrame % 6000 / 100),
+                                                                    currentDrawing.CurrentFrame % 100);
+
+            if (!remainingStrokes && dotPointerList.Count() == 0)
             {
                 drawTimer.Stop();
                 StartStop.Content = "End...";
             }
-            else
-            {
-                AaltoWindraw.Drawing.Dot d = currentStrokeDotEnumerator.Current;
-                var strokePoints = new StylusPointCollection();
-                strokePoints.Add(this.lastPointDrawn);
-                var newPointDrawn = new StylusPoint(d.Position.X, d.Position.Y);
-                strokePoints.Add(newPointDrawn);
-                var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
-                drawingAttributes.Color = d.Color;
-                drawingAttributes.Width = d.Radius;
-                drawingAttributes.Height = d.Radius;
-                Stroke stroke = new Stroke(strokePoints, drawingAttributes);
-                this.lastPointDrawn = newPointDrawn;
-                canvas.Strokes.Add(stroke);
 
-                newStroke = !currentStrokeDotEnumerator.MoveNext();
-
-                counter++;
-                GuessTimer.Text = String.Format("{0:00}:{1:00}:{2:00}", counter / 6000, (counter % 6000 / 100), counter % 100);
-            }
         }
 
         //clear the board

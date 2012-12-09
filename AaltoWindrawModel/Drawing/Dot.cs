@@ -28,6 +28,13 @@ namespace AaltoWindraw
                 radius = pRadius;
             }
 
+            //public Dot(Dot d)
+            //{
+            //    position = new Point(d.position.X, d.position.Y);
+            //    color = d.Color;
+            //    radius = d.radius;
+            //}
+
             public Dot(SerializationInfo info, StreamingContext ctxt)
             {
                 position = (Point)info.GetValue("Position", typeof(Point));

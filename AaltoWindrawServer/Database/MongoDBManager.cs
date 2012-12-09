@@ -1,0 +1,171 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using MongoDB.Bson;
+
+namespace AaltoWindraw.Database
+{
+    class MongoDBManager
+    {
+        private MongoClient mongo;
+        private MongoDatabase db;
+        private MongoCollection<Drawing.Drawing> drawings;
+        private MongoCollection<Highscores.Highscore> highscores;
+        private MongoCollection<BsonDocument> items;
+        private Process mongoProcess;
+
+        public void Start()
+        {
+            try
+            {
+                // Boot up DB
+                mongoProcess = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = Properties.Resources.mongodb_exe,
+                        Arguments = "--journal --dbpath " + Properties.Resources.db_path,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = false,
+                        CreateNoWindow = true
+                    }
+                };
+                mongoProcess.Start();
+            }
+            catch (Exception)
+            {
+                // Getting an Exception here commonly means mongod is already up and running
+            }
+
+            mongo = new MongoClient();  // connect to localhost
+            db = mongo.GetServer().GetDatabase(Properties.Resources.db_name);
+
+            drawings = db.GetCollection<Drawing.Drawing>("drawings");
+            highscores = db.GetCollection<Highscores.Highscore>("highscores");
+            items = db.GetCollection<BsonDocument>("items");
+
+        }
+
+        public void Stop()
+        {
+            try
+            {
+                mongoProcess.Kill();
+            }
+            catch (System.InvalidOperationException)
+            {
+            }
+        }
+
+        internal Drawing.Drawing[] GetDrawingsByItem(string item)
+        {
+            List<Drawing.Drawing> tmpList = new List<Drawing.Drawing>();
+            MongoCursor<Drawing.Drawing> cursor = drawings.Find(new QueryDocument("Item", item));
+            foreach (Drawing.Drawing drawing in cursor)
+            {
+                tmpList.Add(drawing);
+            }
+            return tmpList.ToArray<Drawing.Drawing>();
+        }
+
+        internal Drawing.Drawing GetDrawingById(string id)
+        {
+            return drawings.FindOne(new QueryDocument("_id", id));
+        }
+
+        internal bool SaveScore(AaltoWindraw.Highscores.Highscore highscore)
+        {
+            AaltoWindraw.Highscores.Highscore hs = highscores.FindOne(new QueryDocument("_id", highscore.id));
+            try
+            {
+                if (hs == null)
+                {
+                    return highscores.Insert<Highscores.Highscore>(highscore).Ok;
+                }
+                else
+                {
+                    hs.score = highscore.score;
+                    return highscores.Save(hs).Ok;
+                } 
+            }
+            catch (WriteConcernException)
+            {
+                return false;
+            }
+        }
+
+        internal bool SaveDrawing(Drawing.Drawing drawing)
+        {
+            if(drawing.ID != null && !drawing.ID.Equals(""))
+                throw new Exception("You are not allowed to insert a pre-existing drawing to the database");
+            drawing.ID = ObjectId.GenerateNewId().ToString();
+            return drawings.Insert<Drawing.Drawing>(drawing).Ok;
+        }
+
+        internal List<string> GetItems()
+        {
+            List<string> itemList = new List<string>();
+            var cursor = items.FindAll();
+            // To use in case of too many items (one day maybe)
+            //cursor.Skip = 100;
+            //cursor.Limit = 10;
+            foreach (var item in cursor)
+            {
+                itemList.Add(item["item"].AsString);
+            }
+            return itemList;
+        }
+
+        internal bool CheckIfHighscore(string drawingId, ulong score)
+        {
+            bool isHighscore = false;
+            MongoCursor<Highscores.Highscore> hs = highscores.Find(new QueryDocument("_id", drawingId));
+            switch (hs.Count())
+            {
+                case 0:
+                    isHighscore = true;
+                    break;
+                case 1:
+                    isHighscore = hs.First().score < score;
+                    break;
+                default:
+                    throw new Exception("Highscore check should read at most one highscore");
+            }
+            return isHighscore;
+            
+        }
+
+        internal List<Highscores.Highscore> GetHighscores()
+        {
+            List<Highscores.Highscore> highscoreList = new List<Highscores.Highscore>();
+            var cursor = highscores.FindAll();
+            // To use in case of too many highscores (one day maybe)
+            //cursor.Skip = 100;
+            //cursor.Limit = 10;
+            foreach (Highscores.Highscore hs in cursor)
+            {
+                highscoreList.Add(hs);
+            }
+            return highscoreList;
+        }
+        
+        internal bool SaveItem(string itemSent)
+        {
+            bool isDifferentEnough = true;
+            foreach (var item in items.FindAll())
+            {
+                isDifferentEnough = isDifferentEnough && Utilities.StringDistanceEvaluator.Distant((string)item["item"], itemSent);
+            }
+            return isDifferentEnough && items.Insert(new BsonDocument("item", itemSent)).Ok;
+        }
+
+        private void Log(string s)
+        {
+            Console.WriteLine(s);
+        }
+    }
+}

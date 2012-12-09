@@ -169,7 +169,7 @@ namespace AaltoWindraw
         {
             ClearBoard();
             canvas.EditingMode = SurfaceInkEditingMode.None;
-            canvas.Background = new SolidColorBrush(currentDrawing.Background);
+            canvas.Background = new SolidColorBrush(currentDrawing.GetBackgroundAsColor());
             //newStroke = true;
             //frameEnumerator = currentDrawing.Frames.GetEnumerator();
             strokesEnum = currentDrawing.EnumStrokes;
@@ -204,7 +204,7 @@ namespace AaltoWindraw
                     strokePoints.Add(new StylusPoint(d.Position.X, d.Position.Y));
                     strokePoints.Add(new StylusPoint(d2.Position.X, d2.Position.Y));
                     var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
-                    drawingAttributes.Color = d.Color;
+                    drawingAttributes.Color = d.GetColor();
                     drawingAttributes.Width = d.Radius;
                     drawingAttributes.Height = d.Radius;
                     Stroke stroke = new Stroke(strokePoints, drawingAttributes);
@@ -239,7 +239,7 @@ namespace AaltoWindraw
             drawTimer.Stop();
             canvas.EditingMode = SurfaceInkEditingMode.Ink;
             currentDrawing = new Drawing.Drawing(item);
-            currentDrawing.Background = ((SolidColorBrush)canvas.Background).Color;
+            currentDrawing.SetBackgroundAsColor(((SolidColorBrush)canvas.Background).Color);
         }
 
         private void ClearBoard()
@@ -339,7 +339,7 @@ namespace AaltoWindraw
         {
             if (currentDrawing.ReadOnly) return;
             canvas.Background = new SolidColorBrush(c);
-            currentDrawing.Background = c;
+            currentDrawing.SetBackgroundAsColor(c);
         }
 
         private void BackgroundBlue(object sender, RoutedEventArgs e)

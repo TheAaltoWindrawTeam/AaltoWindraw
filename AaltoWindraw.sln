@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AaltoWindrawView", "AaltoWi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AaltoWindrawModel", "AaltoWindrawModel\AaltoWindrawModel.csproj", "{C12D2D2C-AA2D-4D13-A6B1-9D232AA82309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AaltoWindrawServer", "AaltoWindrawServer\AaltoWindrawServer.csproj", "{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{C12D2D2C-AA2D-4D13-A6B1-9D232AA82309}.Release|Mixed Platforms.Build.0 = Release|x86
 		{C12D2D2C-AA2D-4D13-A6B1-9D232AA82309}.Release|x86.ActiveCfg = Release|x86
 		{C12D2D2C-AA2D-4D13-A6B1-9D232AA82309}.Release|x86.Build.0 = Release|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Debug|x86.ActiveCfg = Debug|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Debug|x86.Build.0 = Debug|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Release|Any CPU.ActiveCfg = Release|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Release|x86.ActiveCfg = Release|x86
+		{2DDC6CA3-E49E-459C-8C5E-226ED9075F3B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

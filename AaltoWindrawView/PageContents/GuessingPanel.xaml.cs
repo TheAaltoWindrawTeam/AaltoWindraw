@@ -71,7 +71,7 @@ namespace AaltoWindraw
         {
             ClearBoard();
             canvas.EditingMode = SurfaceInkEditingMode.None;
-            canvas.Background = new SolidColorBrush(currentDrawing.Background);
+            canvas.Background = new SolidColorBrush(currentDrawing.GetBackgroundAsColor());
             //newStroke = true;
             //frameEnumerator = currentDrawing.Frames.GetEnumerator();
             strokesEnum = currentDrawing.EnumStrokes;
@@ -106,7 +106,7 @@ namespace AaltoWindraw
                     strokePoints.Add(new StylusPoint(d.Position.X, d.Position.Y));
                     strokePoints.Add(new StylusPoint(d2.Position.X, d2.Position.Y));
                     var drawingAttributes = new System.Windows.Ink.DrawingAttributes();
-                    drawingAttributes.Color = d.Color;
+                    drawingAttributes.Color = d.GetColor();
                     drawingAttributes.Width = d.Radius;
                     drawingAttributes.Height = d.Radius;
                     Stroke stroke = new Stroke(strokePoints, drawingAttributes);
@@ -142,7 +142,7 @@ namespace AaltoWindraw
         private void OpenDrawing()
         {
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(DRAWING_FOLDER);
-            System.IO.FileInfo[] files = dir.GetFiles("*" + AaltoWindraw.Drawing.Drawing.FILE_EXTENSION);
+            System.IO.FileInfo[] files = dir.GetFiles("*" + AaltoWindraw.Properties.Resources.drawing_file_extension);
 
             Random random = new Random();
             int randomNumber = random.Next(0, files.Length);

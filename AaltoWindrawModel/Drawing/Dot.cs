@@ -14,7 +14,10 @@ namespace AaltoWindraw
         public class Dot : ISerializable
         {
             private readonly Point position; // Coordinates of the point on the whiteboard
-            private readonly Color color;    // Color of the point
+            private readonly byte colorA;    // Color of the point (alpha)
+            private readonly byte colorR;    // Color of the point (red)
+            private readonly byte colorG;    // Color of the point (green)
+            private readonly byte colorB;    // Color of the point (blue)
             private readonly Double radius;  // Radius of the point
 
 
@@ -24,7 +27,10 @@ namespace AaltoWindraw
             public Dot(Double pX, Double pY, Color pColor, Double pRadius)
             {
                 position = new Point(pX, pY);
-                color = pColor;
+                colorA = pColor.A;
+                colorR = pColor.R;
+                colorG = pColor.G;
+                colorB = pColor.B;
                 radius = pRadius;
             }
 
@@ -38,25 +44,50 @@ namespace AaltoWindraw
             public Dot(SerializationInfo info, StreamingContext ctxt)
             {
                 position = (Point)info.GetValue("Position", typeof(Point));
-                byte[] tempColor = (byte[])info.GetValue("Color", typeof(byte[]));
-                color = Color.FromArgb(tempColor[0], tempColor[1], tempColor[2], tempColor[3]);
+                byte[] colorBytes = (byte[])info.GetValue("Color", typeof(byte[]));
+                colorA = colorBytes[0];
+                colorR = colorBytes[1];
+                colorG = colorBytes[2];
+                colorB = colorBytes[3];
                 radius = info.GetDouble("Radius");
             }
 
             public Point Position
             { get { return position; } }
 
-            public Color Color
-            { get { return color; } }
+            public byte ColorA
+            {
+                get { return colorA; }
+            }
 
+            public byte ColorR
+            {
+                get { return colorR; }
+            }
+
+            public byte ColorG
+            {
+                get { return colorG; }
+            }
+
+            public byte ColorB
+            {
+                get { return colorB; }
+            }
+
+            public Color GetColor()
+            {
+                return Color.FromArgb(colorA, colorR, colorG, colorB);
+            }
+            
             public Double Radius
             { get { return radius; } }
 
             public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
             {
                 info.AddValue("Position", this.position, typeof(Point));
-                byte[] tempColor = { this.color.A, this.color.R, this.color.G, this.color.B };
-                info.AddValue("Color", tempColor, typeof(byte[]));
+                byte[] colorBytes = new byte[] { colorA, colorR, colorG, colorB };
+                info.AddValue("Color", colorBytes, typeof(byte[]));
                 info.AddValue("Radius", this.radius);
             }
         }

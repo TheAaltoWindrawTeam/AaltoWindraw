@@ -112,95 +112,67 @@ namespace AaltoWindraw.Network
             return NetSerializer.DeSerialize<List<string>>(inMsg.ReadString());
         }
 
-        public Drawing.Drawing GetDrawingFromServer(string drawingName)
+        public Drawing.Drawing GetDrawingFromServer(string item)
         {
-            Drawing.Drawing drawing = null;
-            string inHash = "";
-            int attempt = 0;
+            // Send request to server
+            outMsg = client.CreateMessage();
+            outMsg.Write((byte)Commons.PacketType.DRAWING_REQUEST);
+            outMsg.Write(item);
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
-            do
-            {
-                // Send request to server
-                outMsg = client.CreateMessage();
-                outMsg.Write((byte)Commons.PacketType.DRAWING_REQUEST);
-                outMsg.Write(drawingName);
-                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+            // Read response (and drawing inside it)
+            inMsg = NextDataMessageFromServer();
+            if (inMsg.ReadByte().Equals((byte)Network.Commons.PacketType.NO_DRAWING_FOUND))
+                return null;
 
-                // Read response (and drawing inside it)
-                inMsg = NextDataMessageFromServer();
-                if (inMsg.ReadByte().Equals((byte)Network.Commons.PacketType.NO_DRAWING_FOUND))
-                    break;
-                // Somehow serialization do not take into account the ID...
-                // So here's a hack
-                string id = inMsg.ReadString();
-                drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
-                drawing.ID = id;
-                inHash = inMsg.ReadString();
-
-            }   // Re-do as long as the drawing is not equal to its hash on the server
-            while (inHash != Utilities.Hash.ComputeHash(drawing) && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
+            // Somehow serialization do not take into account the ID...
+            // So here's a hack
+            string id = inMsg.ReadString();
+            Drawing.Drawing drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
+            drawing.ID = id;
 
             return drawing;
         }
 
         public Drawing.Drawing GetDrawingFromServerById(string drawingID)
         {
-            Drawing.Drawing drawing = null;
-            string inHash = "";
-            int attempt = 0;
+            // Send request to server
+            outMsg = client.CreateMessage();
+            outMsg.Write((byte)Commons.PacketType.DRAWING_BY_ID_REQUEST);
+            outMsg.Write(drawingID);
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
-            do
-            {
-                // Send request to server
-                outMsg = client.CreateMessage();
-                outMsg.Write((byte)Commons.PacketType.DRAWING_BY_ID_REQUEST);
-                outMsg.Write(drawingID);
-                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
-
-                // Read response (and drawing inside it)
-                inMsg = NextDataMessageFromServer();
-                if (inMsg.ReadByte().Equals((byte)Network.Commons.PacketType.NO_DRAWING_FOUND))
-                    break;
-                // Somehow serialization do not take into account the ID...
-                // So here's a hack
-                string id = inMsg.ReadString();
-                drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
-                drawing.ID = id;
-                inHash = inMsg.ReadString();
-
-            }   // Re-do as long as the drawing is not equal to its hash on the server
-            while (inHash != Utilities.Hash.ComputeHash(drawing) && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
-
+            // Read response (and drawing inside it)
+            inMsg = NextDataMessageFromServer();
+            if (inMsg.ReadByte().Equals((byte)Network.Commons.PacketType.NO_DRAWING_FOUND))
+                return null;
+            // Somehow serialization do not take into account the ID...
+            // So here's a hack
+            string id = inMsg.ReadString();
+            Drawing.Drawing drawing = NetSerializer.DeSerialize<Drawing.Drawing>(inMsg.ReadString());
+            drawing.ID = id;
+            
             return drawing;
         }
 
         public bool SaveScoreToServer(Drawing.Drawing drawing, string scorer, ulong score)
         {
-            int attempt = 0;
-            bool saveOk = false;
             Highscores.Highscore highscore = new Highscores.Highscore(drawing, scorer, score, DateTime.Now);
 
-            do{
-                // Send request to server
-                outMsg = client.CreateMessage();
-                outMsg.Write((byte)Commons.PacketType.SEND_SCORE);
-                outMsg.Write(NetSerializer.Serialize(highscore));
-                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+            // Send request to server
+            outMsg = client.CreateMessage();
+            outMsg.Write((byte)Commons.PacketType.SEND_SCORE);
+            outMsg.Write(NetSerializer.Serialize(highscore));
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
-                // Read response (check if sending ok)
-                inMsg = NextDataMessageFromServer();
+            // Read response (check if sending ok)
+            inMsg = NextDataMessageFromServer();
 
-                saveOk = inMsg.ReadByte() == (byte)Commons.PacketType.SCORE_STORED;
-            }
-            while(!saveOk && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
-
-            return saveOk;
+            return inMsg.ReadByte() == (byte)Commons.PacketType.SCORE_STORED;
         }
 
         public List<string> GetConnectedTablesFromServer()
         {
-            List<string> connectedTables = new List<string>();
-
             // Send request to server
             outMsg = client.CreateMessage();
             outMsg.Write((byte)Commons.PacketType.WHO_REQUEST);
@@ -208,38 +180,23 @@ namespace AaltoWindraw.Network
 
             // Read response (list of tables)
             inMsg = NextDataMessageFromServer();
-            int tablesCount = inMsg.ReadInt32();
-            for (int i = 0; i < tablesCount; i++)
-            {
-                connectedTables.Add(inMsg.ReadString());
-            }
-
-            return connectedTables;
+            return NetSerializer.DeSerialize<List<string>>(inMsg.ReadString());
         }
 
         public bool SaveDrawingToServer(Drawing.Drawing drawing)
         {
-            int attempt = 0;
-            bool saveOk = false;
             drawing.Save();
 
-            do
-            {
-                // Send request to server
-                outMsg = client.CreateMessage();
-                outMsg.Write((byte)Commons.PacketType.SEND_DRAWING);
-                outMsg.Write(NetSerializer.Serialize(drawing));
-                outMsg.Write(Hash.ComputeHash(drawing));
-                client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
+            // Send request to server
+            outMsg = client.CreateMessage();
+            outMsg.Write((byte)Commons.PacketType.SEND_DRAWING);
+            outMsg.Write(NetSerializer.Serialize(drawing));
+            client.SendMessage(outMsg, NetDeliveryMethod.ReliableOrdered);
 
-                // Read response (check if sending ok)
-                inMsg = NextDataMessageFromServer();
+            // Read response (check if sending ok)
+            inMsg = NextDataMessageFromServer();
 
-                saveOk = inMsg.ReadByte() == (byte)Commons.PacketType.DRAWING_STORED;
-            }
-            while (!saveOk && attempt++ < Int32.Parse(Properties.Resources.maximum_attempts));
-
-            return saveOk;
+            return inMsg.ReadByte() == (byte)Commons.PacketType.DRAWING_STORED;
         }
 
         /*

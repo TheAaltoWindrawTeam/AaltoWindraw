@@ -41,7 +41,7 @@
 					</StackPanel>
 					<TextBlock Style="{DynamicResource TextBlock-Default}" Text="This application needs its server part to be running"></TextBlock>
 				</StackPanel>
-				<Button x:Name="ButtonCheckAgain" Content="Check again" Style="{DynamicResource YellowButton}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Margin="0"/>
+				<Button x:Name="ButtonCheckAgain" Content="Check again" Style="{DynamicResource YellowButton}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Margin="0" Click="OnClickCheckAgain"/>
 
 			</StackPanel>
 		

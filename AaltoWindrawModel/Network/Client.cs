@@ -185,6 +185,8 @@ namespace AaltoWindraw.Network
 
         public bool SaveDrawingToServer(Drawing.Drawing drawing)
         {
+            if (drawing.StrokesCount() == 0)
+                return false;
             drawing.Save();
 
             // Send request to server

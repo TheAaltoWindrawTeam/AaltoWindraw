@@ -40,9 +40,6 @@ namespace AaltoWindraw
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
 
-            // Create client
-            Console.WriteLine("connected:"+App.client.IsConnected());
-
             // First page the user sees is HomePage
             NextPage(new HomePanel(), "Home","Choose a game mode", true);
         }
@@ -57,8 +54,6 @@ namespace AaltoWindraw
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-
-            // Remove handlers for window availability events
             RemoveWindowAvailabilityHandlers();
         }
 
@@ -148,6 +143,12 @@ namespace AaltoWindraw
         public void PreviousPage()
         {
             pageTransitionControl.PreviousPage();
+        }
+
+        public void GoToHomePage()
+        {
+            pageTransitionControl.EmptyPageStack();
+            NextPage(new HomePanel(), "Home", "Choose a game mode", true);
         }
         #endregion SetPage
 

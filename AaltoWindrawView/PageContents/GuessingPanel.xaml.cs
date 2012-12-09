@@ -36,15 +36,15 @@ namespace AaltoWindraw
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public GuessingPanel()
+        public GuessingPanel(Drawing.Drawing drawingToGuess)
         {
             InitializeComponent();
-            
+            currentDrawing = drawingToGuess;
             drawTimer = new System.Windows.Threading.DispatcherTimer();
             drawTimer.Tick += new EventHandler(DrawFrame);
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
             
-            OpenDrawing();
+            DoDraw();
 
             // No drawing in this phase
             canvas.EditingMode = SurfaceInkEditingMode.None;
@@ -168,6 +168,11 @@ namespace AaltoWindraw
                 return false;
             }
             return true;
+        }
+
+        private void OnClickTryAnother(Object sender, EventArgs e)
+        {
+            //TODO
         }
 	}
 }

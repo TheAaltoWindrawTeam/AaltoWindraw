@@ -143,7 +143,10 @@ namespace AaltoWindraw
 
         private void OnClickSaveDrawing(object sender, RoutedEventArgs e)
         {
-            DoSaveDrawing();
+            if (DoSaveDrawing())
+            {
+                ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            }
         }
 
         private void OnClickChangeBrushColor(object sender, RoutedEventArgs e)
@@ -294,17 +297,10 @@ namespace AaltoWindraw
             Boolean authorNameWritten = assignAuthorToDrawing();
             if (authorNameWritten)
             {
-                currentDrawing.Save();
-                try
-                {
-                    FileSerializer<Drawing.Drawing>.Serialize(DRAWING_FOLDER + @currentDrawing.FileName(), currentDrawing);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                    return false;
-                }
-                return true;
+                TextWriter tw = new StreamWriter("lalala.json");
+                tw.WriteLine(NetSerializer.Serialize(currentDrawing));
+                tw.Close();
+                return App.client.SaveDrawingToServer(currentDrawing);
             }
             else
             {

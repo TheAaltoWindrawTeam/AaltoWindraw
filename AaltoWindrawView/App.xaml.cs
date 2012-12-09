@@ -17,6 +17,7 @@ namespace AaltoWindraw
 
         public void CloseApp()
         {
+            client.Stop();
             MainWindow.Close();
         }
     }

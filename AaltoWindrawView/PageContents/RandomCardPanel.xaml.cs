@@ -19,21 +19,17 @@ namespace AaltoWindraw
 	/// </summary>
 	public partial class RandomCardPanel : UserControl
 	{
-        private ArrayList listOfWords = new ArrayList();
+
         private String item;
         //Provisoire
-        private String[] arrayOfRandomWords = new String[] { "Batman", "Mickey Mouse", "A cat", "Tintin", "Donald Duck", "A wild Pikachu", "Scarlett Johanson", "Justin Bieber" };
+        private String[] arrayOfRandomWords;
 		
         public RandomCardPanel()
 		{
 			this.InitializeComponent();
-            // Provisoire
-            foreach (String s in arrayOfRandomWords)
-            {
-                listOfWords.Add(s);
-            }
             ButtonNo.IsEnabled = false;
             ButtonYes.IsEnabled = false;
+            arrayOfRandomWords = App.client.GetItemsFromServer().ToArray();
 		}
 
         private void OnClickCard1(object sender, RoutedEventArgs e)
@@ -66,8 +62,8 @@ namespace AaltoWindraw
         private void PickRandomName()
         {
             Random random = new Random();
-            int randomNumber = random.Next(0, listOfWords.Count);
-            item = (String)listOfWords[randomNumber];
+            int randomNumber = random.Next(0, arrayOfRandomWords.Length);
+            item = arrayOfRandomWords[randomNumber];
             DrawingToGuess.Text = item;
             ButtonNo.IsEnabled = true;
             ButtonYes.IsEnabled = true;

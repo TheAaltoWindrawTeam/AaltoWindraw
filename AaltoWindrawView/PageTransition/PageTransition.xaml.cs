@@ -73,5 +73,10 @@ namespace AaltoWindraw
             DisplayPage();
         }
 
+        public void EmptyPageStack()
+        {
+            pageStack.Clear();
+        }
+
     }
 }

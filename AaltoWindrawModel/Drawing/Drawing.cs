@@ -163,7 +163,12 @@ namespace AaltoWindraw
             // Getter for strokes (TODO: is an enumerator enough ?)
             public IEnumerator<SampledStroke> EnumStrokes
             {
-                get { return strokes.GetEnumerator(); }
+                get { if (strokes == null) strokes = new List<SampledStroke>(); return strokes.GetEnumerator(); }
+            }
+
+            public int StrokesCount()
+            {
+                return strokes.Count;
             }
 
             public bool ReadOnly

@@ -15,15 +15,15 @@ namespace AaltoWindraw
         public class SampledStroke : ISerializable
         {
 
-            // This class contain a particular type of stroke
+            // This class contains a particular type of stroke
             // The points are ordered but they are sampled : between two successive point, 
-            // an interpolation is made to ensure the strokes is continuous
+            // an interpolation is made to ensure the stroke is continuous
 
             // /!\ The inner state is not verified :
             //     one must use this class on read-only OR write-only
 
             private List<Dot> str;          // set of the dots (ordered)
-            private readonly int beginning; // frame corresponding to the first point
+            private int beginning; // frame corresponding to the first point
             private Point position;         // position of the next dot (may still change before sampling)
 
             private SampledStroke() { }
@@ -43,12 +43,21 @@ namespace AaltoWindraw
             }
 
             public int Beginning
-            { get { return beginning; } }
+            { 
+                get { return beginning; }
+                set { beginning = value; }
+            }
 
             public Point Position
             {
                 get { return position; }
                 set { position = value; }
+            }
+
+            public List<Dot> Str
+            {
+                get { return str; }
+                set { str = value; }
             }
 
             public IEnumerator<Dot> Enum

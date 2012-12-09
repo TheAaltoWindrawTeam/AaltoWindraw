@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Lidgren.Network;
 using AaltoWindraw.Network;
+using System.IO;
+using AaltoWindraw.Utilities;
+using System.Windows;
 
 namespace AaltoWindraw
 {
@@ -116,10 +119,8 @@ namespace AaltoWindraw
                     cp.GetDrawing(result.Last());
 
                     Drawing.Drawing d2 = cp.GetDrawingById(d.ID);
-                    cp.GetDrawingById("foobar");
 
-                    Console.WriteLine("id equal ? " + (d.ID == d2.ID));
-                    Console.WriteLine("object equal ? " + d.Equals(d2));
+                    cp.GetDrawingById("foobar");
 
                     cp.SaveScore(d, 12);
 

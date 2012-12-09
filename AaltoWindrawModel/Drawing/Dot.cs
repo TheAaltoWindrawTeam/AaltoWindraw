@@ -13,12 +13,12 @@ namespace AaltoWindraw
         [Serializable]
         public class Dot : ISerializable
         {
-            private readonly Point position; // Coordinates of the point on the whiteboard
-            private readonly byte colorA;    // Color of the point (alpha)
-            private readonly byte colorR;    // Color of the point (red)
-            private readonly byte colorG;    // Color of the point (green)
-            private readonly byte colorB;    // Color of the point (blue)
-            private readonly Double radius;  // Radius of the point
+            private Point position; // Coordinates of the point on the whiteboard
+            private byte colorA;    // Color of the point (alpha)
+            private byte colorR;    // Color of the point (red)
+            private byte colorG;    // Color of the point (green)
+            private byte colorB;    // Color of the point (blue)
+            private Double radius;  // Radius of the point
 
 
             // Disable default constructor
@@ -34,13 +34,6 @@ namespace AaltoWindraw
                 radius = pRadius;
             }
 
-            //public Dot(Dot d)
-            //{
-            //    position = new Point(d.position.X, d.position.Y);
-            //    color = d.Color;
-            //    radius = d.radius;
-            //}
-
             public Dot(SerializationInfo info, StreamingContext ctxt)
             {
                 position = (Point)info.GetValue("Position", typeof(Point));
@@ -53,26 +46,33 @@ namespace AaltoWindraw
             }
 
             public Point Position
-            { get { return position; } }
+            {
+                get { return position; }
+                set { position = value; }
+            }
 
             public byte ColorA
             {
                 get { return colorA; }
+                set { colorA = value; }
             }
 
             public byte ColorR
             {
                 get { return colorR; }
+                set { colorR = value; }
             }
 
             public byte ColorG
             {
                 get { return colorG; }
+                set { colorG = value; }
             }
 
             public byte ColorB
             {
                 get { return colorB; }
+                set { colorB = value; }
             }
 
             public Color GetColor()
@@ -81,7 +81,10 @@ namespace AaltoWindraw
             }
             
             public Double Radius
-            { get { return radius; } }
+            {
+                get { return radius; }
+                set { radius = value; }
+            }
 
             public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
             {

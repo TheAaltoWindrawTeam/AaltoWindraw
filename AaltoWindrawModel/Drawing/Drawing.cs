@@ -140,6 +140,13 @@ namespace AaltoWindraw
                 get { return backgroundB; }
             }
 
+            // Getter and setter for background strokes attribute
+            public List<SampledStroke> Strokes
+            {
+                set { strokes = value; }
+                get { return strokes; }
+            }
+
             public void SetBackgroundAsColor(Color value)
             {
                 backgroundA = value.A;

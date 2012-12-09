@@ -25,9 +25,8 @@ namespace AaltoWindraw
     /// <summary>
     /// Interaction logic for DrawingPage.xaml
     /// </summary>
-    public partial class DrawingPage
+    public partial class DrawingPanel : UserControl
     {
-
         // Global
         private Drawing.Drawing currentDrawing;
 
@@ -66,24 +65,15 @@ namespace AaltoWindraw
          */
         private string item;
 
-        /* For the moment, hard coded, but actually needs to be from a database
-         * (or file if we are lazy)
-         */
-        //TODO
-        private String[] arrayOfRandomWords;
-
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public DrawingPage()
+        public DrawingPanel(String itemToDraw)
         {
             InitializeComponent();
-
-            //TODO: replace by Database
-            arrayOfRandomWords = new String[] { "Batman", "Mickey Mouse", "A cat", "Tintin", "Donald Duck", "A wild Pikachu" };
-            PickRandomName();
-
+            item = itemToDraw;
             currentDrawing = new Drawing.Drawing(item);
+            DrawingToDraw.Text = item;
 
             saveTimer = new System.Windows.Threading.DispatcherTimer();
             saveTimer.Tick += new EventHandler(SaveFrame);
@@ -91,11 +81,11 @@ namespace AaltoWindraw
             drawTimer = new System.Windows.Threading.DispatcherTimer();
             drawTimer.Tick += new EventHandler(DrawFrame);
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
-            DrawingGlobalLayout.Children.Add(new AboutPopup());
 
             ChangeBrushColor(Colors.Black);
         }
 
+        #region Mouse & Touch EventListeners
         // // // // --------------- \\ \\ \\ \\
         // // // // Event Listeners \\ \\ \\ \\
         // // // // --------------- \\ \\ \\ \\
@@ -129,48 +119,42 @@ namespace AaltoWindraw
         {
             Stop_Drawing();
         }
+        #endregion Mouse & Touch EventListeners
 
-        private void OnClickCloseButton(object sender, RoutedEventArgs e)
+        #region OnClick methods
+
+        private void OnClickDrawAnother(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)this.Parent).Close();
+            //Not really a clean way to do it, but we just load again the page.
+            ((MainWindow)Application.Current.MainWindow).PreviousPage();
+            ((MainWindow)Application.Current.MainWindow).PreviousPage();
+            ((MainWindow)Application.Current.MainWindow).NextPage(new RandomCardPanel(), "Draw", "First, pick a card", true);
         }
 
-        private void OnClickHomeButton(object sender, RoutedEventArgs e)
+        private void OnClickAddANewOne(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)this.Parent).SetPage(new HomePage());
+            ((MainWindow)Application.Current.MainWindow).NextPage(new AddingDrawingPanel(), "Draw", "Add your masterpiece to the database", true);
         }
 
-        private void LoadAnotherDrawing(object sender, RoutedEventArgs e)
-        {
-            PrintDebug("Load Another Drawing (not implemented)");
-            ClearBoard();
-            PickRandomName();
-        }
-
-
-        // // // // --------------- \\ \\ \\ \\
-        // // // // Clear the board \\ \\ \\ \\
-        // // // // --------------- \\ \\ \\ \\
-
-        private void Reset(object sender, RoutedEventArgs e)
+        private void OnClickResetBoard(object sender, RoutedEventArgs e)
         {
             ClearBoard();
-            drawTimer.Stop();
-            canvas.EditingMode = SurfaceInkEditingMode.Ink;
-            currentDrawing = new Drawing.Drawing(item);
-            currentDrawing.Background = ((SolidColorBrush)canvas.Background).Color;
-
         }
 
-        //clear the board
-        private void ClearBoard()
+        private void OnClickSaveDrawing(object sender, RoutedEventArgs e)
         {
-            PrintDebug("Cleared");
-            canvas.Strokes.Clear();
-            counter = 0;
+            DoSaveDrawing();
         }
 
+        private void OnClickChangeBrushColor(object sender, RoutedEventArgs e)
+        {
+            //TODO Bind with actual button color
+            PrintDebug("sender=" + sender.GetType());
+        }
 
+        #endregion OnClick methods
+
+        #region DrawCurrentDrawing
         // // // // -------------------- \\ \\ \\ \\
         // // // // Draw Current drawing \\ \\ \\ \\ TEMPORARY PART
         // // // // -------------------- \\ \\ \\ \\
@@ -227,23 +211,34 @@ namespace AaltoWindraw
                 DebugText2.Text = "draw " + counter++ + " " + d.Radius;
             }
         }
+        #endregion DrawCurrentDrawing
 
+        #region ClearTheBoard
+        // // // // --------------- \\ \\ \\ \\
+        // // // // Clear the board \\ \\ \\ \\
+        // // // // --------------- \\ \\ \\ \\
 
+        private void Reset(object sender, RoutedEventArgs e)
+        {
+            ClearBoard();
+            drawTimer.Stop();
+            canvas.EditingMode = SurfaceInkEditingMode.Ink;
+            currentDrawing = new Drawing.Drawing(item);
+            currentDrawing.Background = ((SolidColorBrush)canvas.Background).Color;
+        }
 
+        private void ClearBoard()
+        {
+            PrintDebug("Cleared");
+            canvas.Strokes.Clear();
+            counter = 0;
+        }
+        #endregion ClearTheBoard
+
+        #region SaveDrawing
         // // // // ------------ \\ \\ \\ \\
         // // // // Save Drawing \\ \\ \\ \\ ADD DATABASE
         // // // // ------------ \\ \\ \\ \\
-
-
-        //TODO: replace with popup and database
-        // Choose the subject to draw
-        private void PickRandomName()
-        {
-            Random random = new Random();
-            int randomNumber = random.Next(0, arrayOfRandomWords.Length);
-            DrawingToGuess.Text = arrayOfRandomWords[randomNumber];
-            item = arrayOfRandomWords[randomNumber];
-        }
 
         private void Start_Drawing(object sender, EventArgs e)
         {
@@ -268,58 +263,48 @@ namespace AaltoWindraw
             currentDrawing.AddDot(p);
         }
 
-        private void SaveDrawing(object sender, RoutedEventArgs e)
-        {
-            DoSaveDrawing();
-        }
-
         private Boolean DoSaveDrawing()
         {
-            currentDrawing.Save();
-            try
+            Boolean authorNameWritten = assignAuthorToDrawing();
+            if (authorNameWritten)
             {
-                FileSerializer<Drawing.Drawing>.Serialize(DRAWING_FOLDER + @currentDrawing.FileName(), currentDrawing);
+                currentDrawing.Save();
+                try
+                {
+                    FileSerializer<Drawing.Drawing>.Serialize(DRAWING_FOLDER + @currentDrawing.FileName(), currentDrawing);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.ToString());
                 return false;
             }
-            return true;
         }
 
-        // // // // ------------ \\ \\ \\ \\
-        // // // // Open Drawing \\ \\ \\ \\ TEMPORARY PART
-        // // // // ------------ \\ \\ \\ \\
-
-        private void OpenDrawing(object sender, RoutedEventArgs e)
+        private Boolean assignAuthorToDrawing()
         {
-            DirectoryInfo dir = new DirectoryInfo(DRAWING_FOLDER);
-            FileInfo[] files = dir.GetFiles("*" + Drawing.Drawing.FILE_EXTENSION);
-
-            Random random = new Random();
-            int randomNumber = random.Next(0, files.Length);
-
-            if (DoOpenDrawing(files[randomNumber].Name))
-                DoDraw();
-        }
-
-        private Boolean DoOpenDrawing(string fileName)
-        {
-            // TODO check if currentDrawing == null ?
-
-            try
+            String author = FieldName.Text.Trim();
+            author = author.Replace('_',' ');
+            if (author == String.Empty)
             {
-                currentDrawing = FileSerializer<Drawing.Drawing>.DeSerialize(DRAWING_FOLDER + @fileName);
-            }
-            catch (Exception ex)
-            {
-                PrintDebug(ex.ToString());
+                //TODO Custom more beautiful MessageBox
+                MessageBox.Show("Please enter your name.");
                 return false;
             }
-            return true;
+            else
+            {
+                currentDrawing.Author = author;
+                return true;
+            }
         }
+        #endregion SaveDrawing
 
+        #region ChangeBackground
         // // // // ----------------- \\ \\ \\ \\
         // // // // Change background \\ \\ \\ \\
         // // // // ----------------- \\ \\ \\ \\
@@ -350,8 +335,9 @@ namespace AaltoWindraw
         {
             ChangeBackgroundColor(Colors.Yellow);
         }
+        #endregion ChangeBackground
 
-
+        #region ChangeBrushColor
         // // // // ------------------ \\ \\ \\ \\
         // // // // Change brush color \\ \\ \\ \\
         // // // // ------------------ \\ \\ \\ \\
@@ -380,14 +366,17 @@ namespace AaltoWindraw
         {
             ChangeBrushColor(Colors.Blue);
         }
+        #endregion ChangeBrushColor
 
+        #region ChangeBrushSize
         // // // // ----------------- \\ \\ \\ \\
         // // // // Change brush size \\ \\ \\ \\
         // // // // ----------------- \\ \\ \\ \\
 
         private void SetBrushRadius(double radius)
         {
-            Double newSize = Math.Round(radius, 0);
+            Double factor = 0.5;
+            Double newSize = Math.Round(radius * factor, 0);
             PrintDebug("Selected Size=" + newSize);
             canvas.DefaultDrawingAttributes.Width = newSize;
             canvas.DefaultDrawingAttributes.Height = newSize;
@@ -398,8 +387,9 @@ namespace AaltoWindraw
         {
             SetBrushRadius(BrushRadiusSlider.Value);
         }
+        #endregion ChangeBrushSize
 
-
+        #region Miscellaneous
         // // // // ------------- \\ \\ \\ \\
         // // // // Miscellaneous \\ \\ \\ \\
         // // // // ------------- \\ \\ \\ \\
@@ -416,6 +406,7 @@ namespace AaltoWindraw
                 Console.WriteLine(e.ToString());
             }
         }
+        #endregion Miscellaneous
 
 
 

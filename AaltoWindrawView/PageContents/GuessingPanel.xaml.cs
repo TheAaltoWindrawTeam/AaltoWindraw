@@ -19,13 +19,9 @@ using System.Windows.Ink;
 
 namespace AaltoWindraw
 {
-    /// <summary>
-    /// Interaction logic for GuessingPage.xaml
-    /// </summary>
-    public partial class GuessingPage
-    {
-
-        // Global
+	public partial class GuessingPanel : UserControl
+	{
+		// Global
         private AaltoWindraw.Drawing.Drawing currentDrawing;
 
         // Variable for printing the saved drawing
@@ -37,25 +33,15 @@ namespace AaltoWindraw
 
         private const int REFRESH_TIME_DRAW = 10;
         private const string DRAWING_FOLDER = @"..\..\..\Drawings\";
-
-        //TODO
-        private String[] arrayOfRandomWords;
-
-        private string item;
 		
         private int counter=0;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public GuessingPage()
+        public GuessingPanel()
         {
             InitializeComponent();
-			GuessingGlobalLayout.Children.Add(new AboutPopup());
-
-            //TODO: replace by Database
-            arrayOfRandomWords = new String[] { "Batman", "Mickey Mouse", "A cat", "Tintin", "Donald Duck", "A wild Pikachu" };
-            PickRandomName();
             
             drawTimer = new System.Windows.Threading.DispatcherTimer();
             drawTimer.Tick += new EventHandler(DrawFrame);
@@ -66,23 +52,6 @@ namespace AaltoWindraw
             // No drawing in this phase
             canvas.EditingMode = SurfaceInkEditingMode.None;
         }
-
-        private void OnClickHomeButton(object sender, RoutedEventArgs e)
-        {
-            ((MainWindow)this.Parent).SetPage(new HomePage());
-        }
-
-
-        private void OnClickCloseButton(object sender, RoutedEventArgs e)
-        {
-            ((MainWindow)this.Parent).Close();
-        }
-
-
-        
-
-
-
 
         private void OnClickStartStop(object sender, RoutedEventArgs e)
         {
@@ -153,8 +122,6 @@ namespace AaltoWindraw
             canvas.Strokes.Clear();
         }
 
-
-
         private void OpenDrawing()
         {
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(DRAWING_FOLDER);
@@ -185,13 +152,5 @@ namespace AaltoWindraw
             }
             return true;
         }
-        
-        //TODO: replace with popup and database
-        private void PickRandomName()
-        {
-            Random random = new Random();
-            int randomNumber = random.Next(0, arrayOfRandomWords.Length);
-            item = arrayOfRandomWords[randomNumber];
-        }
-    }
+	}
 }

@@ -68,7 +68,6 @@ namespace AaltoWindraw
                 byte[] tempBgColor = (byte[])info.GetValue("Background", typeof(byte[]));
                 background = Color.FromArgb(tempBgColor[0], tempBgColor[1], tempBgColor[2], tempBgColor[3]);
                 frames = (List<List<Dot>>)info.GetValue("Frames", typeof(List<List<Dot>>));
-                
                 readOnly = true;
             }
 

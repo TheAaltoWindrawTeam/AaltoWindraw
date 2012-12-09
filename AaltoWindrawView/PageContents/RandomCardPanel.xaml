@@ -1,0 +1,32 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="AaltoWindraw.RandomCardPanel"
+	x:Name="UserControl"
+	>
+
+	<Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Left">
+		<Viewbox>
+		<StackPanel>
+			<TextBlock Style="{StaticResource TextBlock-Title}" Text="Pick a card"></TextBlock>
+			<TextBlock Style="{StaticResource TextBlock-SubTitle}" Text="On this card will be written what you have to draw."></TextBlock>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="30">
+				<Button x:Name="Card1" Content="Button" HorizontalAlignment="Left" Height="174.792" Style="{DynamicResource ButtonCard}" VerticalAlignment="Top" Width="119" Margin="20" Click="OnClickCard1"/>
+				<Button x:Name="Card2" Content="Button" HorizontalAlignment="Left" Height="174.792" Style="{DynamicResource ButtonCard}" VerticalAlignment="Top" Width="119" Margin="20" Click="OnClickCard2"/>
+				<Button x:Name="Card3" Content="Button" HorizontalAlignment="Left" Height="174.792" Style="{DynamicResource ButtonCard}" VerticalAlignment="Top" Width="119" Margin="20" Click="OnClickCard3"/>
+			</StackPanel>
+			<TextBlock Style="{StaticResource TextBlock-Title}" Text="You have to draw :"></TextBlock>
+			<TextBlock Style="{StaticResource TextBlock-SubTitle}" x:Name="DrawingToGuess" FontSize="56" Text="?" HorizontalAlignment="Center"></TextBlock>
+			<TextBlock Style="{StaticResource TextBlock-Title}" Text="Are you ready?"></TextBlock>
+			<StackPanel Orientation="Horizontal">
+				<Button x:Name="ButtonNo" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="Auto" Content="No, I want another one" Margin="30" Click="OnClickAnotherOne"></Button>
+                <Button x:Name="ButtonYes" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Yes" Margin="30" Click="OpenDrawingWindow"></Button>
+			</StackPanel>
+			<Button x:Name="ButtonAdd" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="550" Content="I want to draw what I want" Margin="0,0,0,0" Click="OnClickDrawWhatIWant"></Button>
+		</StackPanel>
+		</Viewbox>
+	</Grid>
+</UserControl>

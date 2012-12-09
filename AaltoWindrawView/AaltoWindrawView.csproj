@@ -8,7 +8,7 @@
     <ProjectGuid>{96E694DD-177E-4597-A122-9F1B77702BD3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AaltoWindrawView</RootNamespace>
+    <RootNamespace>AaltoWindraw</RootNamespace>
     <AssemblyName>AaltoWindrawView</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -37,8 +37,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,52 +62,136 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="PageContents\AddingDrawingPanel.xaml.cs">
+      <DependentUpon>AddingDrawingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\BeforeGuessingPanel.xaml.cs">
+      <DependentUpon>BeforeGuessingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\HighScoresPanel.xaml.cs">
+      <DependentUpon>HighScoresPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\HomePanel.xaml.cs">
+      <DependentUpon>HomePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\OnlinePanel.xaml.cs">
+      <DependentUpon>OnlinePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\RandomCardPanel.xaml.cs">
+      <DependentUpon>RandomCardPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageGuiElements\ColorButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PageTransition\PageTransitionType.cs" />
+    <Compile Include="PageTransition\CenterConverter.cs" />
+    <Compile Include="PageTransition\HeightConverter.cs" />
+    <Compile Include="PageTransition\InvertConverter.cs" />
+    <Compile Include="PageTransition\PageTransition.xaml.cs">
+      <DependentUpon>PageTransition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageTransition\WidthConverter.cs" />
+    <Compile Include="PageWrapper\BasicPage.xaml.cs">
+      <DependentUpon>BasicPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\AboutPanel.xaml.cs">
+      <DependentUpon>AboutPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageGuiElements\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\DrawingPanel.xaml.cs">
+      <DependentUpon>DrawingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\GuessingPanel.xaml.cs">
+      <DependentUpon>GuessingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageContents\LoadingPanel.xaml.cs">
+      <DependentUpon>LoadingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageWrapper\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AboutPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DrawingPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="AboutPopup.xaml.cs">
-      <DependentUpon>AboutPopup.xaml</DependentUpon>
+    <Compile Include="PageGuiElements\NavigationPanel.xaml.cs">
+      <DependentUpon>NavigationPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageGuiElements\TitlePanel.xaml.cs">
+      <DependentUpon>TitlePanel.xaml</DependentUpon>
+    </Compile>
+    <Page Include="PageContents\AddingDrawingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\BeforeGuessingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\HighScoresPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\HomePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\OnlinePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\RandomCardPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageTransition\PageTransition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageWrapper\BasicPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\AboutPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageGuiElements\CircularProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawingPage.xaml.cs">
-      <DependentUpon>DrawingPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="GuessingPage.xaml">
+    <Page Include="PageContents\DrawingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\GuessingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageContents\LoadingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageWrapper\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomePage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="PageGuiElements\NavigationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionary1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PageGuiElements\TitlePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GuessingPage.xaml.cs">
-      <DependentUpon>GuessingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,0 +1,99 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:s="http://schemas.microsoft.com/surface/2008"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="AaltoWindraw.DrawingPanel"
+	x:Name="DrawingPage"
+	FlowDirection="LeftToRight"
+	Width="Auto" Height="Auto">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.793*"/>
+			<ColumnDefinition Width="0.207*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.098*"/>
+			<RowDefinition Height="0.902*"/>
+		</Grid.RowDefinitions>
+		
+		<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+			<TextBlock x:Name="DrawingToDraw" Style="{StaticResource TextBlock-SubTitle}" Text="Batman" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+		<StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right">
+			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center"></TextBlock>
+                <Button x:Name="ButtonReset"    Content="Reset"         Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickResetBoard"/>
+                <Button x:Name="ButtonAnother"  Content="Draw another"  Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickDrawAnother"/>
+			    <Button x:Name="ButtonAddNew"   Content="Add a new one" Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickAddANewOne"/>
+		</StackPanel>
+		</Grid>
+
+		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Row="1" Grid.Column="0">
+			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" 
+				/>
+		</Border>
+		
+		<StackPanel Grid.Row="1" Grid.Column="1" Margin="8">
+			<Expander x:Name="Expander_Palette" Header="Palette" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+							
+							<Button x:Name="ButtonBrushRed" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}" Click="BrushRed"/>
+							<Button x:Name="ButtonBrushOrange" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}"/>
+							<Button x:Name="ButtonBrushYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}"/>
+							<Button x:Name="ButtonBrushBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}"/>
+                            
+
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Background" Header="Background" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+							<Button x:Name="BgRed" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}" Click="BackgroundRed"/>
+							<Button x:Name="BgOrange" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}"/>
+							<Button x:Name="BgYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}"/>
+							<Button x:Name="BgBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}"/>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Brush" Header="Brush" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5" Margin="0">
+					<StackPanel VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
+						<StackPanel Orientation="Horizontal" Margin="10,0">
+							<TextBlock Foreground="#FFAFAFAF" Background="Transparent"><Run Text="Size"/></TextBlock>
+							<s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" 
+								Width="175.19" Value="20" Maximum="100" SmallChange="10" LargeChange="20" Minimum="10"
+                                             Thumb.DragCompleted="OnSlideValueChanged" ValueChanged="OnSlideValueChanged"
+								Foreground="White" />
+						</StackPanel>
+
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="50" x:Name="DebugBox" BorderBrush="#FFA70000"  BorderThickness="0" Foreground="White" Background="#FF393939" >
+				<TextBlock x:Name="DebugText" TextWrapping="NoWrap"/>
+			</s:SurfaceScrollViewer>
+
+			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="15" x:Name="DebugBox2" BorderBrush="#FFA70000" BorderThickness="0" Foreground="White" Background="#FF393939" >
+				<TextBlock x:Name="DebugText2" TextWrapping="NoWrap"/>
+			</s:SurfaceScrollViewer>
+			
+		    <StackPanel Orientation="Vertical"  VerticalAlignment="Center">
+			    <TextBlock Style="{StaticResource TextBlock-Default}" Text="Satisfied ?" VerticalAlignment="Center"></TextBlock>
+			    <TextBox x:Name="FieldName" Tag="Your name" Height="44" Style="{DynamicResource TextBoxGUI}" Margin="10"></TextBox>
+                <Button x:Name="ButtonSaveDrawing" Content="Save" Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickSaveDrawing"/>
+		    </StackPanel>
+
+        </StackPanel>
+		
+	</Grid>
+</UserControl>

@@ -1,0 +1,24 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="AaltoWindraw.BeforeGuessingPanel"
+	x:Name="UserControl">
+
+	<Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Left">
+		
+		<StackPanel>
+			<TextBlock Style="{StaticResource TextBlock-Title}" Text="Rules"></TextBlock>
+			<TextBlock Style="{StaticResource TextBlock-SubTitle}" Text="You will have to guess as fast as possible what"></TextBlock>
+			<TextBlock Style="{StaticResource TextBlock-SubTitle}" Text="will be magically drawn under your eyes" Margin="0,0,0,80"></TextBlock>
+			
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+				<TextBlock Style="{StaticResource TextBlock-Title}" Text="Are you ready?" VerticalAlignment="Center"></TextBlock>
+				<Button Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Go !" Margin="30" Click="OpenGuessingWindow" VerticalAlignment="Center"></Button>
+			</StackPanel>
+		</StackPanel>
+		
+	</Grid>
+</UserControl>

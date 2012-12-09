@@ -15,6 +15,10 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+using System.Windows.Media.Animation;
+using System.Threading.Tasks;
+using System.Threading;
+
 
 namespace AaltoWindraw
 {
@@ -23,6 +27,11 @@ namespace AaltoWindraw
     /// </summary>
     public partial class MainWindow : SurfaceWindow
     {
+        #region Attributes
+        // Pages
+        Stack<UserControl> pages = new Stack<UserControl>();
+        #endregion Attributes
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -32,9 +41,12 @@ namespace AaltoWindraw
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
-            SetPage(new HomePage());
+            // First page the user sees is HomePage
+            Console.WriteLine("salut");
+            NextPage(new HomePanel(), "Home","Choose a game mode", true);
         }
 
+        #region EventsHandlers
         /// <summary>
         /// Occurs when the window is about to close. 
         /// </summary>
@@ -100,11 +112,41 @@ namespace AaltoWindraw
         {
             //TODO: disable audio, animations here
         }
+        #endregion EventsHandlers
 
-        public void SetPage(Page p)
+        #region SetPage
+
+        /// <summary>
+        /// Change the page on the screen. Works like this :
+        /// - MainWindow uses a BasicPage that contains already basic GUI
+        /// - The page in argument is actually a UserControl, it will be placed
+        /// in the pageTransitionControl of the BasicPage
+        /// </summary>
+        public void NextPage(UserControl page)
         {
-            this.Content = p;
+            //Prepare Wrapper (GUI navigation tools)
+            BasicPage wrapper = new BasicPage();
+            //Add window content
+            wrapper.PageContent.Content = page;
+            pageTransitionControl.NextPage(wrapper);
         }
-		
+
+        public void NextPage(UserControl page, String title, String subTitle, Boolean possibleClickAbout)
+        {
+            BasicPage wrapper = new BasicPage();
+            wrapper.setTitle(title);
+            wrapper.setSubTitle(subTitle);
+            wrapper.setPossibleGoBack(false);
+            wrapper.setPossibleClickAbout(possibleClickAbout);
+            wrapper.PageContent.Content = page;
+            pageTransitionControl.NextPage(wrapper);
+        }
+
+        public void PreviousPage()
+        {
+            pageTransitionControl.PreviousPage();
+        }
+        #endregion SetPage
+
     }
 }

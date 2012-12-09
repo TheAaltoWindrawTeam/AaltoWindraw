@@ -12,9 +12,8 @@ using System.Net.Sockets;
 
 namespace AaltoWindraw.Network
 {
-    class Client
+    public class Client
     {
-        
         NetClient client;
         NetPeerConfiguration config;
         NetOutgoingMessage outMsg;
@@ -35,7 +34,7 @@ namespace AaltoWindraw.Network
                                Int32.Parse(Properties.Resources.default_port));
         }
 
-        public bool isConnected()
+        public bool IsConnected()
         {
             return this.connected;
         }

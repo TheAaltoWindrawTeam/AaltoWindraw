@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using AaltoWindraw.Network;
 
 namespace AaltoWindraw
 {
@@ -12,13 +13,7 @@ namespace AaltoWindraw
     /// </summary>
     public partial class App : Application
     {
-        private String someText = "default";
-
-        public String SomeText
-        {
-            get { return this.someText; }
-            set { this.someText = value; }
-        }
+        public static Client client = new Client();
 
         public void CloseApp()
         {

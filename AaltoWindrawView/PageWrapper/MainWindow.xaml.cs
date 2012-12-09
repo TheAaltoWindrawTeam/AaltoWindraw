@@ -18,7 +18,7 @@ using Microsoft.Surface.Presentation.Input;
 using System.Windows.Media.Animation;
 using System.Threading.Tasks;
 using System.Threading;
-
+using AaltoWindraw.Network;
 
 namespace AaltoWindraw
 {
@@ -27,10 +27,8 @@ namespace AaltoWindraw
     /// </summary>
     public partial class MainWindow : SurfaceWindow
     {
-        #region Attributes
-        // Pages
-        Stack<UserControl> pages = new Stack<UserControl>();
-        #endregion Attributes
+        #region Attributes & Constructor
+        
 
         /// <summary>
         /// Default constructor.
@@ -41,10 +39,15 @@ namespace AaltoWindraw
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();
+
+            // Create client
+            Console.WriteLine("connected:"+App.client.IsConnected());
+
             // First page the user sees is HomePage
-            Console.WriteLine("salut");
             NextPage(new HomePanel(), "Home","Choose a game mode", true);
         }
+
+        #endregion Attributes & Constructor
 
         #region EventsHandlers
         /// <summary>

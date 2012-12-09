@@ -1144,6 +1144,46 @@
             		</Setter.Value>
             	</Setter>
             </Style>
+			<Style x:Key="IconServerDown" TargetType="{x:Type Button}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Canvas x:Name="icon_serverdown" UseLayoutRounding="False">
+								<Canvas x:Name="Calque_1" Height="51.838" Canvas.Left="0" Canvas.Top="0" Width="51.837">
+									<Path Data="F1M8.3088,-0.838200000000001L0.000799999999999912,7.4708L17.6098,25.0808L-0.000199999999999534,42.6908L8.3088,50.9998L25.9188,33.3898L43.5288,50.9998L51.8368,42.6908L34.2278,25.0818L51.8368,7.4718L43.5288,-0.837200000000001L25.9188,16.7718z" Fill="#FFE52421" Height="51.838" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="51.837"/>
+								</Canvas>
+							</Canvas>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsFocused" Value="True"/>
+								<Trigger Property="IsDefaulted" Value="True"/>
+								<Trigger Property="IsMouseOver" Value="True"/>
+								<Trigger Property="IsPressed" Value="True"/>
+								<Trigger Property="IsEnabled" Value="False"/>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style x:Key="IconServerUp" TargetType="{x:Type Button}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Canvas x:Name="icon_serverup" UseLayoutRounding="False">
+								<Canvas x:Name="Calque_1" Height="45.752" Canvas.Left="0" Canvas.Top="3" Width="62.599">
+									<Path Data="F1M25.7067,29.976L8.8607,13.13L-0.000299999999999301,21.99L25.9667,47.957L25.9667,47.956L62.5987,11.325L53.4767,2.205z" Fill="#FF71B62B" Height="45.752" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="62.599"/>
+								</Canvas>
+							</Canvas>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsFocused" Value="True"/>
+								<Trigger Property="IsDefaulted" Value="True"/>
+								<Trigger Property="IsMouseOver" Value="True"/>
+								<Trigger Property="IsPressed" Value="True"/>
+								<Trigger Property="IsEnabled" Value="False"/>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
     
         <!-- Popup -->
 			

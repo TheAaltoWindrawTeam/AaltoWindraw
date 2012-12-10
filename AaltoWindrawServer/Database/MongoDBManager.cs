@@ -152,12 +152,14 @@ namespace AaltoWindraw.Database
         
         internal bool SaveItem(string itemSent)
         {
-            bool isDifferentEnough = true;
-            foreach (var item in items.FindAll())
-            {
-                isDifferentEnough = isDifferentEnough && Utilities.StringDistanceEvaluator.Distant((string)item["item"], itemSent);
-            }
-            return isDifferentEnough && items.Insert(new BsonDocument("item", itemSent)).Ok;
+            return (items.FindOne(new QueryDocument("item", itemSent)) == null) ?
+                items.Insert(new BsonDocument("item", itemSent)).Ok :
+                false;
+        }
+
+        public bool IsEmpty()
+        {
+            return items.FindAll().Count() == 0;
         }
     }
 }

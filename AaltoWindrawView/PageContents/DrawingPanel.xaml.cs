@@ -59,16 +59,38 @@ namespace AaltoWindraw
          * - Let's roll (DrawingWindow is visible and usable)
          */
         private string item;
+        private bool addingNewDrawing = false;
+        private string drawingTitle;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public DrawingPanel(String itemToDraw)
+        public DrawingPanel(String itemToDraw, Boolean addingNewDrawing)
         {
             InitializeComponent();
             item = itemToDraw;
+            this.addingNewDrawing = addingNewDrawing;
+            // If the user wants to add his own title
+            if (this.addingNewDrawing)
+            {
+                DrawingToDraw.Visibility = System.Windows.Visibility.Collapsed;
+                FieldTitle.Visibility = System.Windows.Visibility.Visible;
+                Console.WriteLine("Entering Draw mode with adding New Drawing");
+            }
+            // If the user uses what was written on the card
+            else
+            {
+                DrawingToDraw.Visibility = System.Windows.Visibility.Visible;
+                FieldTitle.Visibility = System.Windows.Visibility.Collapsed;
+                Console.WriteLine("Entering Draw mode with item given on card");
+            }
             currentDrawing = new Drawing.Drawing(item);
             DrawingToDraw.Text = item;
+
+            // Hide buttons and everything
+            SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+            SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Collapsed;
 
             saveTimer = new System.Windows.Threading.DispatcherTimer();
             saveTimer.Tick += new EventHandler(SaveFrame);
@@ -133,7 +155,10 @@ namespace AaltoWindraw
 
         private void OnClickAddANewOne(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new AddingDrawingPanel(), "Draw", "Add your masterpiece to the database", true);
+            DrawingToDraw.Visibility = System.Windows.Visibility.Collapsed;
+            FieldTitle.Visibility = System.Windows.Visibility.Visible;
+            addingNewDrawing = true;
+            //((MainWindow)Application.Current.MainWindow).NextPage(new AddingDrawingPanel(), "Draw", "Add your masterpiece to the database", true);
         }
 
         private void OnClickResetBoard(object sender, RoutedEventArgs e)
@@ -143,10 +168,24 @@ namespace AaltoWindraw
 
         private void OnClickSaveDrawing(object sender, RoutedEventArgs e)
         {
-            if (DoSaveDrawing())
+            bool success = DoSaveDrawing();
+            Console.WriteLine("Saving drawing. Success =" + success);
+            if (success)
             {
-                ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+                SaveFeedbackOK.Visibility = System.Windows.Visibility.Visible;
+                SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
             }
+            else
+            {
+                SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Visible;
+                SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void OnClickGoBackHome(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
         }
 
         private void OnClickChangeBrushColor(object sender, RoutedEventArgs e)
@@ -295,7 +334,8 @@ namespace AaltoWindraw
         private Boolean DoSaveDrawing()
         {
             Boolean authorNameWritten = assignAuthorToDrawing();
-            if (authorNameWritten)
+            Boolean drawingTitleWritten = assignTitleToDrawing();
+            if (authorNameWritten && drawingTitleWritten)
             {
                 TextWriter tw = new StreamWriter("lalala.json");
                 tw.WriteLine(NetSerializer.Serialize(currentDrawing));
@@ -308,10 +348,39 @@ namespace AaltoWindraw
             }
         }
 
+        // Assign title
+        private bool assignTitleToDrawing()
+        {
+            // If user is adding new item
+            if (addingNewDrawing)
+            {
+                String title = FieldTitle.Text.Trim();
+                if (title == String.Empty)
+                {
+                    //TODO Custom more beautiful MessageBox
+                    MessageBox.Show("Please enter a title.");
+                    return false;
+                }
+                else
+                {
+                    drawingTitle = title;
+                    currentDrawing.Item = drawingTitle;
+                    return true;
+                }
+            }
+            // If user is using the item on the card
+            else
+            {
+                drawingTitle = item;
+                currentDrawing.Item = drawingTitle;
+                return true;
+            }
+        }
+
+        // Assign author
         private Boolean assignAuthorToDrawing()
         {
             String author = FieldName.Text.Trim();
-            author = author.Replace('_',' ');
             if (author == String.Empty)
             {
                 //TODO Custom more beautiful MessageBox

@@ -36,6 +36,9 @@
   <PropertyGroup>
     <StartupObject>AaltoWindraw.ClientProgram</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Projet3.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="gfoidl.StringSearching">
       <HintPath>..\Libraries\gfoidl.StringSearching.dll</HintPath>
@@ -78,7 +81,10 @@
     <Compile Include="Utilities\NetSerializer.cs" />
     <Compile Include="Utilities\StringDistanceEvaluator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Icon\Projet3.ico" />
+    <Content Include="Projet3.ico" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

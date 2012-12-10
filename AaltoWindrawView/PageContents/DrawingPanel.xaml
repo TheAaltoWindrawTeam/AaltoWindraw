@@ -21,8 +21,10 @@
 		
 		<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
 			<TextBlock x:Name="DrawingToDraw" Style="{StaticResource TextBlock-SubTitle}" Text="Batman" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+			<TextBox x:Name="FieldTitle" Tag="Title of your drawing" Height="48" Width="300" Style="{DynamicResource TextBoxGUI}" HorizontalAlignment="Left"></TextBox>
+
 		<StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right">
-			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center"></TextBlock>
+			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center" Height="48"></TextBlock>
                 <Button x:Name="ButtonReset"    Content="Reset"         Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickResetBoard" TouchDown="OnClickResetBoard" TouchEnter="OnClickResetBoard"/>
                 <Button x:Name="ButtonAnother"  Content="Draw another"  Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickDrawAnother" TouchDown="OnClickDrawAnother" TouchEnter="OnClickDrawAnother"/>
                 <Button x:Name="ButtonAddNew"   Content="Add a new one" Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickAddANewOne" TouchDown="OnClickAddANewOne" TouchEnter="OnClickAddANewOne"/>
@@ -96,7 +98,25 @@
                         Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
                         Click="OnClickSaveDrawing" TouchDown="OnClickSaveDrawing" TouchEnter="OnClickSaveDrawing"/>
 		    </StackPanel>
+			<StackPanel x:Name="SaveFeeback" Orientation="Vertical">
+				<StackPanel x:Name="SaveFeedbackOK" Orientation="Horizontal">
+					<Viewbox Height="30" Margin="0,0,10,0">
+						<Button Content="Button" HorizontalAlignment="Left" Height="42.045" Style="{DynamicResource ButtonSaveSuccess}" VerticalAlignment="Center" Width="42.045"/>
+			         </Viewbox>
+			         <TextBlock Text="Save successful" Style="{DynamicResource TextBlock-Default}" VerticalAlignment="Center"></TextBlock>      
+				 </StackPanel>
+				 
+				 <StackPanel x:Name="SaveFeedbackNOTOK" Orientation="Horizontal">
+					<Viewbox Height="30" Margin="0,0,10,0">
+						<Button Content="Button" HorizontalAlignment="Left" Height="42.045" Style="{DynamicResource ButtonSaveFail}" VerticalAlignment="Top" Width="42.045"/>
+			         </Viewbox>
+			         <TextBlock Text="Save failed" Style="{DynamicResource TextBlock-Default}" VerticalAlignment="Center"></TextBlock>      
+				 </StackPanel>
 
+				  <Button x:Name="ButtonGoBackHome" Content="Go back Home" Style="{DynamicResource YellowButton}"
+	                        Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
+	                        Click="OnClickGoBackHome" TouchDown="OnClickGoBackHome" TouchEnter="OnClickGoBackHome"/>
+			</StackPanel>
         </StackPanel>
 		
 	</Grid>

@@ -1184,6 +1184,54 @@
 					</Setter.Value>
 				</Setter>
 			</Style>
+			<Style x:Key="ButtonSaveSuccess" TargetType="{x:Type Button}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Canvas x:Name="icon_save_success" UseLayoutRounding="False">
+								<Canvas x:Name="Calque_1" Height="37" Canvas.Left="2.64" Canvas.Top="2.64" Width="37">
+									<Path Data="F1M34.812,37.019L7.263,37.019L7.263,20.978L34.812,20.978z M11.809,5.034L30.236,5.034L30.236,17.536L11.809,17.536z M30.112,2.64L2.685,2.64L2.685,39.315L39.36,39.315L39.36,11.888z" Fill="#FF71B62B" Height="36.675" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="36.675"/>
+									<Path Data="F1M32.539,25.552L9.542,25.552L9.542,23.207L32.539,23.207z" Fill="#FF71B62B" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="20.567" Width="22.997"/>
+									<Path Data="F1M32.539,30.186L9.542,30.186L9.542,27.841L32.539,27.841z" Fill="#FF71B62B" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="25.201" Width="22.997"/>
+									<Path Data="F1M32.539,34.766L9.542,34.766L9.542,32.421L32.539,32.421z" Fill="#FF71B62B" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="29.781" Width="22.997"/>
+									<Path Data="F1M27.905,6.561L23.326,6.561L23.326,15.248L27.905,15.248z" Fill="#FF71B62B" Height="8.687" Canvas.Left="20.641" Stretch="Fill" Canvas.Top="3.921" Width="4.579"/>
+								</Canvas>
+							</Canvas>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsFocused" Value="True"/>
+								<Trigger Property="IsDefaulted" Value="True"/>
+								<Trigger Property="IsMouseOver" Value="True"/>
+								<Trigger Property="IsPressed" Value="True"/>
+								<Trigger Property="IsEnabled" Value="False"/>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style x:Key="ButtonSaveFail" TargetType="{x:Type Button}">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type Button}">
+							<Canvas x:Name="icon_save_fail" UseLayoutRounding="False">
+								<Canvas x:Name="Calque_1" Height="36.675" Canvas.Left="2.64" Canvas.Top="2.64" Width="36.675">
+									<Path Data="F1M34.812,37.019L7.263,37.019L7.263,20.978L34.812,20.978z M11.809,5.034L30.236,5.034L30.236,17.536L11.809,17.536z M30.112,2.64L2.685,2.64L2.685,39.315L39.36,39.315L39.36,11.888z" Fill="#FFE52421" Height="36.675" Canvas.Left="0" Stretch="Fill" Canvas.Top="0" Width="36.675"/>
+									<Path Data="F1M32.539,25.552L9.542,25.552L9.542,23.207L32.539,23.207z" Fill="#FFE52421" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="20.567" Width="22.997"/>
+									<Path Data="F1M32.539,30.186L9.542,30.186L9.542,27.841L32.539,27.841z" Fill="#FFE52421" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="25.201" Width="22.997"/>
+									<Path Data="F1M32.539,34.766L9.542,34.766L9.542,32.421L32.539,32.421z" Fill="#FFE52421" Height="2.345" Canvas.Left="6.857" Stretch="Fill" Canvas.Top="29.781" Width="22.997"/>
+									<Path Data="F1M27.905,6.561L23.326,6.561L23.326,15.248L27.905,15.248z" Fill="#FFE52421" Height="8.687" Canvas.Left="20.641" Stretch="Fill" Canvas.Top="3.921" Width="4.579"/>
+								</Canvas>
+							</Canvas>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsFocused" Value="True"/>
+								<Trigger Property="IsDefaulted" Value="True"/>
+								<Trigger Property="IsMouseOver" Value="True"/>
+								<Trigger Property="IsPressed" Value="True"/>
+								<Trigger Property="IsEnabled" Value="False"/>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
     
         <!-- Popup -->
 			

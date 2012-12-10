@@ -28,6 +28,9 @@ namespace AaltoWindraw
             bool isHighscore = false;
             IsHighScoreFeedback.Visibility = System.Windows.Visibility.Collapsed;
             IsNotHighScoreFeedback.Visibility = System.Windows.Visibility.Collapsed;
+            SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+            SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Collapsed;
             currentDrawing = drawingGuessed;
             UserScore.Text = FormatScore(userScore);
             Highscores.Highscore high = App.client.GetHighscoreFromServer(drawingGuessed);
@@ -48,9 +51,11 @@ namespace AaltoWindraw
             if (isHighscore)
             {
                 IsHighScoreFeedback.Visibility = System.Windows.Visibility.Visible;
+                IsNotHighScoreFeedback.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
+                IsHighScoreFeedback.Visibility = System.Windows.Visibility.Collapsed;
                 IsNotHighScoreFeedback.Visibility = System.Windows.Visibility.Visible;
             }
 
@@ -68,8 +73,18 @@ namespace AaltoWindraw
 
 		private void OnClickSave(Object sender, RoutedEventArgs e)
 		{
-            App.client.SaveScoreToServer(currentDrawing, GetScorerName(), this.userScore);
-            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            bool succes = App.client.SaveScoreToServer(currentDrawing, GetScorerName(), this.userScore);
+            if (succes)
+            {
+                SaveFeedbackOK.Visibility = System.Windows.Visibility.Visible;
+                SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+                SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Visible;
+            }
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Visible;
 		}
 		
 		private void OnClickTryAgain(Object sender, RoutedEventArgs e)
@@ -77,5 +92,10 @@ namespace AaltoWindraw
             ((MainWindow)Application.Current.MainWindow).GoToHomePage();
             ((MainWindow)Application.Current.MainWindow).NextPage(new BeforeGuessingPanel(), "Guess", "Try to guess as quickly as possible", true);
 		}
+
+        private void OnClickGoBackHome(Object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+        }
 	}
 }

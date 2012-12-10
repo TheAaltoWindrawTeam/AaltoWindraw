@@ -29,6 +29,7 @@ namespace AaltoWindraw
 			this.InitializeComponent();
             ButtonNo.IsEnabled = false;
             ButtonYes.IsEnabled = false;
+            ButtonAdd.IsEnabled = false;
             arrayOfRandomWords = App.client.GetItemsFromServer().ToArray();
 		}
 
@@ -67,6 +68,7 @@ namespace AaltoWindraw
             DrawingToGuess.Text = item;
             ButtonNo.IsEnabled = true;
             ButtonYes.IsEnabled = true;
+            ButtonAdd.IsEnabled = true;
         }
 
         private void DisableCards()
@@ -78,12 +80,12 @@ namespace AaltoWindraw
 
         private void OpenDrawingWindow(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new DrawingPanel(item), "Draw", "Paint and save your masterpiece", true);
+            ((MainWindow)Application.Current.MainWindow).NextPage(new DrawingPanel(item, false), "Draw", "Paint and save your masterpiece", true);
         }
 
         private void OnClickDrawWhatIWant(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new AddingDrawingPanel(), "Draw", "Add your masterpiece to the database", true);
+            ((MainWindow)Application.Current.MainWindow).NextPage(new DrawingPanel(item, true), "Draw", "Add your masterpiece to the database", true);
         }
 	}
 }

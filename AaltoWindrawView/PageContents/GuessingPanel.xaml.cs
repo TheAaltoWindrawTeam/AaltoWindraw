@@ -22,6 +22,12 @@ namespace AaltoWindraw
 {
 	public partial class GuessingPanel : UserControl
 	{
+        #region static properties
+        public static String TitleContent = "Guess";
+        public static String SubTitleContent = "as quick as you can";
+        public static Boolean GoAbout = true;
+        #endregion
+
 		// Global
         private AaltoWindraw.Drawing.Drawing currentDrawing;
 
@@ -115,12 +121,13 @@ namespace AaltoWindraw
         private void OnClickPlayAgain(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).GoToHomePage();
-            ((MainWindow)Application.Current.MainWindow).NextPage(new BeforeGuessingPanel(), "Guess", "Try to guess as quickly as possible", true);
+            ((MainWindow)Application.Current.MainWindow).GoToBeforeGuessingPage();
         }
 
         private void OnClickCheckMyScore(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new AfterGuessingPanel(currentDrawing, ComputeUserScore()), "Your score", "Compared to others", true);
+            AfterGuessingPanel aftergp = new AfterGuessingPanel(currentDrawing, ComputeUserScore());
+            ((MainWindow)Application.Current.MainWindow).GoToAfterGuessingPage(aftergp);
         }
 
         private bool verifyUserInput()
@@ -226,7 +233,7 @@ namespace AaltoWindraw
         private void OnClickTryAnother(Object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).GoToHomePage();
-            ((MainWindow)Application.Current.MainWindow).NextPage(new BeforeGuessingPanel(), "Guess", "Try to guess as quickly as possible", true);
+            ((MainWindow)Application.Current.MainWindow).GoToBeforeGuessingPage();
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

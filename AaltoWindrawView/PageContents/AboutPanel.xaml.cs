@@ -13,7 +13,13 @@ using System.Windows.Shapes;
 namespace AaltoWindraw
 {
 	public partial class AboutPanel : UserControl
-	{
+    {
+        #region static properties
+        public static String TitleContent = "About";
+        public static String SubTitleContent = "this game";
+        public static Boolean GoAbout = false;
+        #endregion
+
         #region Properties
         private String title;
         public String subTitle;

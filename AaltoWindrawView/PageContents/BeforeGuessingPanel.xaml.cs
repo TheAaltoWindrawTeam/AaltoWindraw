@@ -20,6 +20,13 @@ namespace AaltoWindraw
 	/// </summary>
 	public partial class BeforeGuessingPanel : UserControl
 	{
+
+        #region static properties
+        public static String TitleContent = "Guess";
+        public static String SubTitleContent = "as quick as you can";
+        public static Boolean GoAbout = true;
+        #endregion
+
         private int _time;
         private DispatcherTimer _countdownTimer;
         private volatile bool drawingLoaded = false;
@@ -38,12 +45,8 @@ namespace AaltoWindraw
         {
             if (drawingLoaded)
             {
-                Console.WriteLine("drawingLoad=true");
                 GuessingPanel gp = new GuessingPanel(drawingToGuess);
-                Console.WriteLine("fucked your mom");
-                ((MainWindow)Application.Current.MainWindow).NextPage(gp,
-                    "Guess", "Try to guess as quickly as possible", true);
-                Console.WriteLine("pwned");
+                ((MainWindow)Application.Current.MainWindow).GoToGuessingPanel(gp);
             }
             else
             {

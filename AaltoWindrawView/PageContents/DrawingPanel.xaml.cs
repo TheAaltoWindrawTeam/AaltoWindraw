@@ -27,6 +27,12 @@ namespace AaltoWindraw
     /// </summary>
     public partial class DrawingPanel : UserControl
     {
+        #region static properties
+        public static String TitleContent = "Draw";
+        public static String SubTitleContent = "and save your masterpiece";
+        public static Boolean GoAbout = true;
+        #endregion
+
         // Global
         private Drawing.Drawing currentDrawing;
 
@@ -148,9 +154,8 @@ namespace AaltoWindraw
         private void OnClickDrawAnother(object sender, RoutedEventArgs e)
         {
             //Not really a clean way to do it, but we just load again the page.
-            ((MainWindow)Application.Current.MainWindow).PreviousPage();
-            ((MainWindow)Application.Current.MainWindow).PreviousPage();
-            ((MainWindow)Application.Current.MainWindow).NextPage(new RandomCardPanel(), "Draw", "First, pick a card", true);
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            ((MainWindow)Application.Current.MainWindow).GoToRandomCardPage();
         }
 
         private void OnClickAddANewOne(object sender, RoutedEventArgs e)

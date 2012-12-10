@@ -18,6 +18,12 @@ namespace AaltoWindraw
 	/// </summary>
 	public partial class OnlinePanel : UserControl
 	{
+        #region static properties
+        public static String TitleContent = "Play online";
+        public static String SubTitleContent = "against the world";
+        public static Boolean GoAbout = true;
+        #endregion
+
 		public OnlinePanel()
 		{
 			this.InitializeComponent();

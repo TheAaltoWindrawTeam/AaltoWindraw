@@ -13,8 +13,13 @@ using System.Windows.Shapes;
 namespace AaltoWindraw
 {
 	public partial class HomePanel : UserControl
-	{
-        
+    {
+        #region static properties
+        public static String TitleContent = "Choose";
+        public static String SubTitleContent = "a game mode";
+        public static Boolean GoAbout = true;
+        #endregion
+
         public HomePanel()
 		{
 			this.InitializeComponent();
@@ -25,40 +30,35 @@ namespace AaltoWindraw
 		}
 
         #region OnClick Methods
+
         private void OpenHighScoresWindow(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new HighScoresPanel(), "High Scores", "Hall of fame", true);
+            ((MainWindow)Application.Current.MainWindow).GoToHighScoresPage();
         }
 
         private void OpenBeforeGuessingWindow(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new BeforeGuessingPanel(), "Guess", "Try to guess as quickly as possible", true);
+            ((MainWindow)Application.Current.MainWindow).GoToBeforeGuessingPage();
         }
 
         private void OpenRandomCardWindow(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new RandomCardPanel(), "Draw", "First, pick a card", true);
+            ((MainWindow)Application.Current.MainWindow).GoToRandomCardPage();
         }
 
         private void OpenOnlineWindow(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new OnlinePanel(), "Play Online", "against people on another AaltoWindow", true);
+            ((MainWindow)Application.Current.MainWindow).GoToOnlinePage();
         }
 
         private void OnClickCheckAgain(object sender, RoutedEventArgs e)
         {
-            if (App.client.IsConnected())
-            {
-                InitializeButtons(App.client.CheckServerAvailability());
-            }
-            else
-            {
-                InitializeButtons(App.client.Start());
-            }
+            CheckAgainServerAvailability();
         }
 
         #endregion OnClick Methods
 
+        #region UI modifications
         private void InitializeButtons(bool clientConnected)
         {
             if (clientConnected)
@@ -78,6 +78,19 @@ namespace AaltoWindraw
                 Home_GuessButton.IsEnabled = false;
                 Home_PlayOnlineButton.IsEnabled = false;
                 Home_HighScoresButton.IsEnabled = false;
+            }
+        }
+        #endregion
+
+        private void CheckAgainServerAvailability()
+        {
+            if (App.client.IsConnected())
+            {
+                InitializeButtons(App.client.CheckServerAvailability());
+            }
+            else
+            {
+                InitializeButtons(App.client.Start());
             }
         }
     }

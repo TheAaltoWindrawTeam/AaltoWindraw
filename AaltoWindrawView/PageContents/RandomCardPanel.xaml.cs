@@ -19,6 +19,11 @@ namespace AaltoWindraw
 	/// </summary>
 	public partial class RandomCardPanel : UserControl
 	{
+        #region static properties
+        public static String TitleContent = "First";
+        public static String SubTitleContent = "pick a card";
+        public static Boolean GoAbout = true;
+        #endregion
 
         private String item;
         //Provisoire
@@ -54,8 +59,8 @@ namespace AaltoWindraw
         private void OnClickAnotherOne(object sender, RoutedEventArgs e)
         {
             //Not really a clean way to do it, but we just load again the page.
-            ((MainWindow)Application.Current.MainWindow).PreviousPage();
-            ((MainWindow)Application.Current.MainWindow).NextPage(new RandomCardPanel(), "Draw", "First, pick a card", true);
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            ((MainWindow)Application.Current.MainWindow).GoToRandomCardPage();
         }
 
         //TODO: replace with database
@@ -80,12 +85,12 @@ namespace AaltoWindraw
 
         private void OpenDrawingWindow(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new DrawingPanel(item, false), "Draw", "Paint and save your masterpiece", true);
+            ((MainWindow)Application.Current.MainWindow).GoToDrawingPanel(item, false);
         }
 
         private void OnClickDrawWhatIWant(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new DrawingPanel(item, true), "Draw", "Add your masterpiece to the database", true);
+            ((MainWindow)Application.Current.MainWindow).GoToDrawingPanel(item, true);
         }
 	}
 }

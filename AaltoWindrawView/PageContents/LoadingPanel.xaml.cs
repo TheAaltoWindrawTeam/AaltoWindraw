@@ -24,6 +24,12 @@ namespace AaltoWindraw
 	/// </summary>
 	public partial class LoadingPanel : UserControl
 	{
+        #region static properties
+        public static String TitleContent = "Loading";
+        public static String SubTitleContent = "Please wait";
+        public static Boolean GoAbout = true;
+        #endregion
+
 		public LoadingPanel()
 		{
 			this.InitializeComponent();

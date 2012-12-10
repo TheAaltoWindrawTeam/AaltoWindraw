@@ -93,7 +93,7 @@ namespace AaltoWindraw
 
         public void OnClickAbout(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).NextPage(new AboutPanel(), "About", "Some information", false);
+            ((MainWindow)Application.Current.MainWindow).GoToAboutPage();
         }
     }
 }

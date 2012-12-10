@@ -14,6 +14,12 @@ namespace AaltoWindraw
 {
 	public partial class HighScoresPanel : UserControl
 	{
+        #region static properties
+        public static String TitleContent = "High scores";
+        public static String SubTitleContent = "of the champions";
+        public static Boolean GoAbout = true;
+        #endregion
+
 		public HighScoresPanel()
 		{
 			this.InitializeComponent();

@@ -18,6 +18,12 @@ namespace AaltoWindraw
 	/// </summary>
 	public partial class AfterGuessingPanel : UserControl
 	{
+        #region static properties
+        public static String TitleContent = "Your score";
+        public static String SubTitleContent = "compared to others";
+        public static Boolean GoAbout = true;
+        #endregion
+
         private Drawing.Drawing currentDrawing;
         private ulong userScore;
 

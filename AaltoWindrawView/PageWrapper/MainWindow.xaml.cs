@@ -28,7 +28,6 @@ namespace AaltoWindraw
     public partial class MainWindow : SurfaceWindow
     {
         #region Attributes & Constructor
-        
 
         /// <summary>
         /// Default constructor.
@@ -41,7 +40,7 @@ namespace AaltoWindraw
             AddWindowAvailabilityHandlers();
 
             // First page the user sees is HomePage
-            NextPage(new HomePanel(), "Home","Choose a game mode", true);
+            GoToHomePage();
         }
 
         #endregion Attributes & Constructor
@@ -145,12 +144,55 @@ namespace AaltoWindraw
             pageTransitionControl.PreviousPage();
         }
 
+        #endregion SetPage
+
+        #region Pages
+
         public void GoToHomePage()
         {
             pageTransitionControl.EmptyPageStack();
-            NextPage(new HomePanel(), "Home", "Choose a game mode", true);
+            NextPage(new HomePanel(), HomePanel.TitleContent, HomePanel.SubTitleContent, HomePanel.GoAbout);
         }
-        #endregion SetPage
 
+        public void GoToAboutPage()
+        {
+            NextPage(new AboutPanel(), AboutPanel.TitleContent, AboutPanel.SubTitleContent, AboutPanel.GoAbout);
+        }
+
+        public void GoToRandomCardPage()
+        {
+            NextPage(new RandomCardPanel(), RandomCardPanel.TitleContent, RandomCardPanel.SubTitleContent, RandomCardPanel.GoAbout);
+        }
+
+        public void GoToOnlinePage()
+        {
+            NextPage(new OnlinePanel(), OnlinePanel.TitleContent, OnlinePanel.SubTitleContent, OnlinePanel.GoAbout);
+        }
+
+        public void GoToHighScoresPage()
+        {
+            NextPage(new HighScoresPanel(), HighScoresPanel.TitleContent, HighScoresPanel.SubTitleContent, HighScoresPanel.GoAbout);
+        }
+
+        public void GoToBeforeGuessingPage()
+        {
+            NextPage(new BeforeGuessingPanel(), BeforeGuessingPanel.TitleContent, BeforeGuessingPanel.SubTitleContent, BeforeGuessingPanel.GoAbout);
+        }
+
+        public void GoToAfterGuessingPage(AfterGuessingPanel aftergp)
+        {
+            NextPage(aftergp, AfterGuessingPanel.TitleContent, AfterGuessingPanel.SubTitleContent, AfterGuessingPanel.GoAbout);
+        }
+
+        public void GoToGuessingPanel(GuessingPanel gp)
+        {
+            NextPage(gp, GuessingPanel.TitleContent, GuessingPanel.SubTitleContent, GuessingPanel.GoAbout);
+        }
+
+        public void GoToDrawingPanel(String item, Boolean AddingNewDrawing)
+        {
+            NextPage(new DrawingPanel(item, false), DrawingPanel.TitleContent, DrawingPanel.SubTitleContent, DrawingPanel.GoAbout);
+        }
+        #endregion
     }
 }

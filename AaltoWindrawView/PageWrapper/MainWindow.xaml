@@ -11,6 +11,6 @@
     
     <Grid x:Name="MainWindowGrid" Background="White" >
         <!-- Keep empty and use methods to fill with Pages-->
-        <local:PageTransition x:Name="pageTransitionControl" Margin="0" TransitionType="SlideAndFade" />
+        <local:PageTransition x:Name="pageTransitionControl" Margin="0" />
     </Grid>
 </s:SurfaceWindow>

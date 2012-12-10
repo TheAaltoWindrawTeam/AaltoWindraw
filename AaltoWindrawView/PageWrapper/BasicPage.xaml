@@ -13,14 +13,14 @@
 			<RowDefinition Height="0.9*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="0.209*"/>
-			<ColumnDefinition Width="0.791*"/>
+			<ColumnDefinition Width="0.184*"/>
+			<ColumnDefinition Width="0.816*"/>
 		</Grid.ColumnDefinitions>
-		<local:NavigationPanel x:Name="PageNavigation" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left"></local:NavigationPanel>
+		<local:NavigationPanel x:Name="PageNavigation" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,-76.8,0,0" Grid.Row="1"/>
 		
-		<local:TitlePanel x:Name="PageTitle" Grid.Column="1" Grid.Row="0"></local:TitlePanel>
+		<local:TitlePanel x:Name="PageTitle" Grid.Column="1" Grid.Row="0" Margin="34.15,0,0,0"></local:TitlePanel>
        
-	   <ContentControl x:Name="PageContent" Grid.Column="1" Grid.Row="1" Margin="20"/>
+	   <ContentControl x:Name="PageContent" Grid.Column="1" Grid.Row="1" Margin="54.15,20,20,20"/>
 		
 	</Grid>
 </UserControl>

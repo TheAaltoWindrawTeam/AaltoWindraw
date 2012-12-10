@@ -83,6 +83,11 @@ namespace AaltoWindraw.Server
             db.Stop();
         }
 
+        public MongoDBManager DB()
+        {
+            return db;
+        }
+
 		private void AnalyzeMessage(NetIncomingMessage incomingMsg)
 		{
 			// There are several kinds of message here:

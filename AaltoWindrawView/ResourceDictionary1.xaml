@@ -9,10 +9,6 @@
     
     mc:Ignorable="d">
 	<!-- Les entrées du dictionnaire de ressources sont définies ici. -->
-	
-            <!-- Resolution de l'appli -->
-            <sys:Int32 x:Key="ResolutionHeight">768</sys:Int32>
-            <sys:Int32 x:Key="ResolutionWidth">1366</sys:Int32>
 
     <!-- COLORS FOR GUI -->
 			<SolidColorBrush x:Key="GUIColor-Default" Color="#FFFECB06" />
@@ -114,12 +110,12 @@
             </Style>
 			
 			
-            <Style x:Key="ColorButtonStyle-Red" TargetType="{x:Type Button}">
+            <Style x:Key="ColorButtonStyle-Black" TargetType="{x:Type Button}">
             	<Setter Property="Template">
             		<Setter.Value>
             			<ControlTemplate TargetType="{x:Type Button}">
             				<Grid>
-            					<Rectangle x:Name="rectangle" Fill="#FFCE1414" Stroke="White" StrokeThickness="0" Margin="4"/>
+            					<Rectangle x:Name="rectangle" Fill="{DynamicResource BrushColor-Black}" Stroke="White" StrokeThickness="0" Margin="4"/>
             					<Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
             				</Grid>
             				<ControlTemplate.Triggers>
@@ -140,61 +136,25 @@
             		</Setter.Value>
             	</Setter>
             </Style>
-            <Style x:Key="ColorButtonStyle-Blue" TargetType="{x:Type Button}">
+            <Style x:Key="ColorButtonStyle-Grey" TargetType="{x:Type Button}">
             	<Setter Property="Template">
             		<Setter.Value>
             			<ControlTemplate TargetType="{x:Type Button}">
             				<Grid>
-            					<Rectangle x:Name="rectangle" Fill="#FF4747FF" Stroke="Black" StrokeThickness="0" Margin="4"/>
-            				</Grid>
-            				<ControlTemplate.Triggers>
-            					<Trigger Property="IsFocused" Value="True"/>
-            					<Trigger Property="IsDefaulted" Value="True"/>
-            					<Trigger Property="IsMouseOver" Value="True"/>
-            					<Trigger Property="IsPressed" Value="True">
-            						<Setter Property="Fill" TargetName="rectangle" Value="#FF7A95FF"/>
-            					</Trigger>
-            					<Trigger Property="IsEnabled" Value="False"/>
-            				</ControlTemplate.Triggers>
-            			</ControlTemplate>
-            		</Setter.Value>
-            	</Setter>
-            </Style>
-            <Style x:Key="ColorButtonStyle-Orange" TargetType="{x:Type Button}">
-            	<Setter Property="Template">
-            		<Setter.Value>
-            			<ControlTemplate TargetType="{x:Type Button}">
-            				<Grid>
-            					<Rectangle x:Name="rectangle" Fill="#FFFF7500" Stroke="#FFFF7500" StrokeThickness="0" Margin="4"/>
-            				</Grid>
-            				<ControlTemplate.Triggers>
-            					<Trigger Property="IsFocused" Value="True"/>
-            					<Trigger Property="IsDefaulted" Value="True"/>
-            					<Trigger Property="IsMouseOver" Value="True"/>
-            					<Trigger Property="IsPressed" Value="True">
-            						<Setter Property="Fill" TargetName="rectangle" Value="#FFFFA02C"/>
-            					</Trigger>
-            					<Trigger Property="IsEnabled" Value="False"/>
-            				</ControlTemplate.Triggers>
-            			</ControlTemplate>
-            		</Setter.Value>
-            	</Setter>
-            </Style>
-            <Style x:Key="ColorButtonStyle-Yellow" TargetType="{x:Type Button}">
-            	<Setter Property="Template">
-            		<Setter.Value>
-            			<ControlTemplate TargetType="{x:Type Button}">
-            				<Grid>
-            					<Rectangle x:Name="rectangle" Fill="#FFFCDC10" Stroke="Black" StrokeThickness="0" Margin="4"/>
+            					<Rectangle x:Name="rectangle" Fill="#FFAFAFAF" Stroke="White" StrokeThickness="0" Margin="4"/>
+            					<Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
             				</Grid>
             				<ControlTemplate.Triggers>
             					<Trigger Property="IsFocused" Value="True">
-            						<Setter Property="StrokeThickness" TargetName="rectangle" Value="1"/>
-            					</Trigger>
+									<Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+								</Trigger>
             					<Trigger Property="IsDefaulted" Value="True"/>
-            					<Trigger Property="IsMouseOver" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+								</Trigger>
             					<Trigger Property="IsPressed" Value="True">
-            						<Setter Property="Fill" TargetName="rectangle" Value="#FFFFE747"/>
+            						<Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+									<Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
             					</Trigger>
             					<Trigger Property="IsEnabled" Value="False"/>
             				</ControlTemplate.Triggers>
@@ -202,8 +162,482 @@
             		</Setter.Value>
             	</Setter>
             </Style>
-			
-			<!-- Button to close window-->
+            <Style x:Key="ColorButtonStyle-White" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Rectangle x:Name="rectangle" Fill="White" Stroke="White" StrokeThickness="0" Margin="4"/>
+            					<Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True">
+									<Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+								</Trigger>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+								</Trigger>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+									<Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+            <Style x:Key="ColorButtonStyle-Pink" TargetType="{x:Type Button}">
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="{x:Type Button}">
+            				<Grid>
+            					<Rectangle x:Name="rectangle" Fill="#FFE235BB" Stroke="White" StrokeThickness="0" Margin="4"/>
+            					<Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+            				</Grid>
+            				<ControlTemplate.Triggers>
+            					<Trigger Property="IsFocused" Value="True">
+									<Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+								</Trigger>
+            					<Trigger Property="IsDefaulted" Value="True"/>
+            					<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+								</Trigger>
+            					<Trigger Property="IsPressed" Value="True">
+            						<Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+									<Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+            					</Trigger>
+            					<Trigger Property="IsEnabled" Value="False"/>
+            				</ControlTemplate.Triggers>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
+    <Style x:Key="ColorButtonStyle-Mauve" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFB519F3" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Purple" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF6F06DC" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Indigo" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF4016A5" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-MarineBlue" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF2940C2" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Blue" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF19A1E7" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-SkyBlue" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF82DCF3" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-BlueGreen" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF17D4A4" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-DarkGreen" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF229F00" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Green" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF4FC80D" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-GreenYellow" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFB8E91A" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-PaleYellow" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFFBF567" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Yellow" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFFCF310" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    
+    
+    <Style x:Key="ColorButtonStyle-Ambre" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFFFAF00" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Orange" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFFC6610" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Red" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FFDC1910" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ColorButtonStyle-Brown" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="rectangle" Fill="#FF7A1600" Stroke="White" StrokeThickness="0" Margin="4"/>
+                        <Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="rectangleLight" Value="Visible"/>
+                            <Setter Property="StrokeThickness" TargetName="rectangle" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    
+    <!-- Button to close window-->
             <Style x:Key="ButtonClose" TargetType="{x:Type Button}">
             	<Setter Property="Template">
             		<Setter.Value>

@@ -39,7 +39,7 @@ namespace AaltoWindraw
         // Variable for saving the drawing
         private System.Windows.Threading.DispatcherTimer saveTimer;
 
-        // Variable for printing the saved drawing
+        // Variable for printing the saved drawing (TODO : remove/comment it and the drawing methods)
         private System.Windows.Threading.DispatcherTimer drawTimer;
         bool remainingStrokes;
         private IEnumerator<SampledStroke> strokesEnum; // return the next sampledStroke to start to be drawn
@@ -85,7 +85,7 @@ namespace AaltoWindraw
 
 
             // If the user wants to add his own title
-            if (this.addingNewDrawing)
+            if (addingNewDrawing)
             {
                 DrawingToDraw.Visibility = System.Windows.Visibility.Collapsed;
                 FieldTitle.Visibility = System.Windows.Visibility.Visible;
@@ -170,7 +170,11 @@ namespace AaltoWindraw
 
         private void OnClickResetBoard(object sender, RoutedEventArgs e)
         {
-            ClearBoard();
+            Reset(sender,e);
+            SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+            SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonSaveDrawing.Visibility = System.Windows.Visibility.Visible;
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void OnClickSaveDrawing(object sender, RoutedEventArgs e)
@@ -181,6 +185,7 @@ namespace AaltoWindraw
             {
                 SaveFeedbackOK.Visibility = System.Windows.Visibility.Visible;
                 SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+                ButtonSaveDrawing.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
@@ -193,12 +198,6 @@ namespace AaltoWindraw
         private void OnClickGoBackHome(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).GoToHomePage();
-        }
-
-        private void OnClickChangeBrushColor(object sender, RoutedEventArgs e)
-        {
-            //TODO Bind with actual button color
-            PrintDebug("sender=" + sender.GetType());
         }
 
         #endregion OnClick methods
@@ -293,7 +292,6 @@ namespace AaltoWindraw
 
         private void ClearBoard()
         {
-            PrintDebug("Cleared");
             canvas.Strokes.Clear();
         }
         #endregion ClearTheBoard
@@ -340,9 +338,7 @@ namespace AaltoWindraw
 
         private Boolean DoSaveDrawing()
         {
-            Boolean authorNameWritten = assignAuthorToDrawing();
-            Boolean drawingTitleWritten = assignTitleToDrawing();
-            if (authorNameWritten && drawingTitleWritten)
+            if (assignAuthorToDrawing() && assignTitleToDrawing())
             {
                 return App.client.SaveDrawingToServer(currentDrawing);
             }
@@ -369,6 +365,7 @@ namespace AaltoWindraw
                 {
                     drawingTitle = title;
                     currentDrawing.Item = drawingTitle;
+                    App.client.AddItemToServer(drawingTitle);
                     return true;
                 }
             }
@@ -411,25 +408,31 @@ namespace AaltoWindraw
             currentDrawing.SetBackgroundAsColor(c);
         }
 
-        private void BackgroundBlue(object sender, RoutedEventArgs e)
+        private void BackgroundBlack(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor(Colors.Blue);
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-Black")).Color);
         }
 
-        private void BackgroundRed(object sender, RoutedEventArgs e)
+        private void BackgroundWhite(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor(Colors.Red);
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-White")).Color);
         }
 
-        private void BackgroundOrange(object sender, RoutedEventArgs e)
+        private void BackgroundPaleYellow(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor(Colors.Orange);
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-PaleYellow")).Color);
         }
 
-        private void BackgroundYellow(object sender, RoutedEventArgs e)
+        private void BackgroundGreenYellow(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor(Colors.Yellow);
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-GreenYellow")).Color);
         }
+
+        private void BackgroundSkyBlue(object sender, RoutedEventArgs e)
+        {
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-SkyBlue")).Color);
+        }
+
         #endregion ChangeBackground
 
         #region ChangeBrushColor
@@ -442,25 +445,106 @@ namespace AaltoWindraw
             canvas.DefaultDrawingAttributes.Color = c;
         }
 
-        private void BrushYellow(object sender, RoutedEventArgs e)
+        private void BrushBlack(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor(Colors.Yellow);
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Black")).Color);
         }
 
-        private void BrushOrange(object sender, RoutedEventArgs e)
+        private void BrushGrey(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor(Colors.Orange);
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Grey")).Color);
         }
 
-        private void BrushRed(object sender, RoutedEventArgs e)
+        private void BrushWhite(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor(Colors.Red);
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-White")).Color);
+        }
+
+        private void BrushPink(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Pink")).Color);
+        }
+
+        private void BrushMauve(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Mauve")).Color);
+        }
+
+        private void BrushPurple(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Purple")).Color);
+        }
+
+        private void BrushIndigo(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Indigo")).Color);
+        }
+
+        private void BrushMarineBlue(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-MarineBlue")).Color);
         }
 
         private void BrushBlue(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor(Colors.Blue);
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Blue")).Color);
         }
+
+        private void BrushSkyBlue(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-SkyBlue")).Color);
+        }
+
+        private void BrushBlueGreen(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-BlueGreen")).Color);
+        }
+
+        private void BrushDarkGreen(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-DarkGreen")).Color);
+        }
+
+        private void BrushGreen(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Green")).Color);
+        }
+
+        private void BrushGreenYellow(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-GreenYellow")).Color);
+        }
+
+        private void BrushPaleYellow(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-PaleYellow")).Color);
+        }
+
+        private void BrushYellow(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Yellow")).Color);
+        }
+
+        private void BrushAmbre(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Ambre")).Color);
+        }
+
+        private void BrushOrange(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Orange")).Color);
+        }
+
+        private void BrushRed(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Red")).Color);
+        }
+
+        private void BrushBrown(object sender, RoutedEventArgs e)
+        {
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Brown")).Color);
+        }
+
         #endregion ChangeBrushColor
 
         #region ChangeBrushSize
@@ -472,7 +556,6 @@ namespace AaltoWindraw
         {
             Double factor = 0.5;
             Double newSize = Math.Round(radius * factor, 0);
-            PrintDebug("Selected Size=" + newSize);
             canvas.DefaultDrawingAttributes.Width = newSize;
             canvas.DefaultDrawingAttributes.Height = newSize;
             canvas.UsesTouchShape = false;
@@ -483,27 +566,6 @@ namespace AaltoWindraw
             SetBrushRadius(BrushRadiusSlider.Value);
         }
         #endregion ChangeBrushSize
-
-        #region Miscellaneous
-        // // // // ------------- \\ \\ \\ \\
-        // // // // Miscellaneous \\ \\ \\ \\
-        // // // // ------------- \\ \\ \\ \\
-
-        // Print in the text panel in the application
-        private void PrintDebug(String s)
-        {
-            try
-            {
-                DebugText.Text += s + "\n";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-        #endregion Miscellaneous
-
-
 
     }
 }

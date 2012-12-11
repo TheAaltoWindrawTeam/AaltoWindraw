@@ -34,7 +34,7 @@ namespace AaltoWindraw
 			this.InitializeComponent();
             ButtonNo.IsEnabled = false;
             ButtonYes.IsEnabled = false;
-            ButtonAdd.IsEnabled = false;
+            //ButtonAdd.IsEnabled = false;
             arrayOfRandomWords = App.client.GetItemsFromServer().ToArray();
 		}
 
@@ -73,7 +73,7 @@ namespace AaltoWindraw
             DrawingToGuess.Text = item;
             ButtonNo.IsEnabled = true;
             ButtonYes.IsEnabled = true;
-            ButtonAdd.IsEnabled = true;
+            //ButtonAdd.IsEnabled = true;
         }
 
         private void DisableCards()
@@ -90,7 +90,7 @@ namespace AaltoWindraw
 
         private void OnClickDrawWhatIWant(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).GoToDrawingPanel(item, true);
+            ((MainWindow)Application.Current.MainWindow).GoToDrawingPanel("", true);
         }
 	}
 }

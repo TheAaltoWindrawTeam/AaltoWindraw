@@ -31,12 +31,13 @@ namespace AaltoWindraw
         private DispatcherTimer _countdownTimer;
         private volatile bool drawingLoaded = false;
         private Drawing.Drawing drawingToGuess;
+        Thread loadDrawingThread;
 
 		public BeforeGuessingPanel()
 		{
 			this.InitializeComponent();
             FinalCountdown.Visibility = System.Windows.Visibility.Collapsed;
-            Thread loadDrawingThread = new Thread(new ThreadStart(LoadDrawing));
+            loadDrawingThread = new Thread(new ThreadStart(LoadDrawing));
             loadDrawingThread.Name = "loadDrawingThread";
             loadDrawingThread.Start();
 		}
@@ -102,6 +103,9 @@ namespace AaltoWindraw
             else
             {
                 _countdownTimer.Stop();
+                //Not really a clean way to do it, but we just load again the page.
+                ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+                ((MainWindow)Application.Current.MainWindow).GoToBeforeGuessingPage();
                 OpenGuessingWindow();
             }
         }

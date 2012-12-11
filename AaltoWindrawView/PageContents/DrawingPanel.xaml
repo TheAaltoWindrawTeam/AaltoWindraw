@@ -34,7 +34,7 @@
 		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Row="1" Grid.Column="0">
 			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White"
                                 PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp" PreviewMouseMove="onMouseMove"
-                                TouchEnter="OnTouchDown" TouchLeave="OnTouchUp" TouchMove="onTouchMove"
+                                TouchEnter="OnTouchDown" TouchLeave="OnTouchUp" PreviewTouchMove="onTouchMove"
 				/>
 		</Border>
 		
@@ -43,27 +43,47 @@
 				<Grid Background="#FFE5E5E5">
 					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
 						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-							
-							<Button x:Name="ButtonBrushRed" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}" Click="BrushRed"/>
-							<Button x:Name="ButtonBrushOrange" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}"/>
-							<Button x:Name="ButtonBrushYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}"/>
-							<Button x:Name="ButtonBrushBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}"/>
-                            
-
-						</StackPanel>
-					</StackPanel>
-				</Grid>
+							<Button x:Name="ButtonBrushBlack" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Black}" Click="BrushBlack" TouchEnter="BrushBlack"/>
+                            <Button x:Name="ButtonBrushGrey" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Grey}" Click="BrushGrey" TouchEnter="BrushGrey"/>
+                            <Button x:Name="ButtonBrushWhite" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-White}" Click="BrushWhite" TouchEnter="BrushWhite"/>
+                            <Button x:Name="ButtonBrushPink" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Pink}" Click="BrushPink" TouchEnter="BrushPink"/>
+                            <Button x:Name="ButtonBrushMauve" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Mauve}" Click="BrushMauve" TouchEnter="BrushMauve"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="ButtonBrushPurple" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Purple}" Click="BrushPurple" TouchEnter="BrushPurple"/>
+                            <Button x:Name="ButtonBrushIndigo" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Indigo}" Click="BrushIndigo" TouchEnter="BrushIndigo"/>
+                            <Button x:Name="ButtonBrushMarineBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-MarineBlue}" Click="BrushMarineBlue" TouchEnter="BrushMarineBlue"/>
+                            <Button x:Name="ButtonBrushBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}" Click="BrushBlue" TouchEnter="BrushBlue"/>
+                            <Button x:Name="ButtonBrushSkyBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-SkyBlue}" Click="BrushSkyBlue" TouchEnter="BrushSkyBlue"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="ButtonBrushBlueGreen" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-BlueGreen}" Click="BrushBlueGreen" TouchEnter="BrushBlueGreen"/>
+                            <Button x:Name="ButtonBrushDarkGreen" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-DarkGreen}" Click="BrushDarkGreen" TouchEnter="BrushDarkGreen"/>
+                            <Button x:Name="ButtonBrushGreen" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Green}" Click="BrushGreen" TouchEnter="BrushGreen"/>
+                            <Button x:Name="ButtonBrushGreenYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-GreenYellow}" Click="BrushGreenYellow" TouchEnter="BrushGreenYellow"/>
+                            <Button x:Name="ButtonBrushPaleYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-PaleYellow}" Click="BrushPaleYellow" TouchEnter="BrushPaleYellow"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="ButtonBrushYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}" Click="BrushYellow" TouchEnter="BrushYellow"/>
+                            <Button x:Name="ButtonBrushAmbre" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Ambre}" Click="BrushAmbre" TouchEnter="BrushAmbre"/>
+                            <Button x:Name="ButtonBrushOrange" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}" Click="BrushOrange" TouchEnter="BrushOrange"/>
+                            <Button x:Name="ButtonBrushRed" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}" Click="BrushRed" TouchEnter="BrushRed"/>
+                            <Button x:Name="ButtonBrushBrown" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Brown}" Click="BrushBrown" TouchEnter="BrushBrown"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
 			</Expander>
 			
 			<Expander x:Name="Expander_Background" Header="Background" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
 				<Grid Background="#FFE5E5E5">
 					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
 						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-							<Button x:Name="BgRed" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}" Click="BackgroundRed"/>
-							<Button x:Name="BgOrange" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}"/>
-							<Button x:Name="BgYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}"/>
-							<Button x:Name="BgBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}"/>
-						</StackPanel>
+                            <Button x:Name="BgWhite" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-White}" Click="BackgroundWhite" TouchEnter="BackgroundWhite"/>
+                            <Button x:Name="BgGreenYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-GreenYellow}" Click="BackgroundGreenYellow" TouchEnter="BackgroundGreenYellow"/>
+                            <Button x:Name="BgPaleYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-PaleYellow}" Click="BackgroundPaleYellow" TouchEnter="BackgroundPaleYellow"/>
+                            <Button x:Name="BgSkyBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-SkyBlue}" Click="BackgroundSkyBlue" TouchEnter="BackgroundSkyBlue"/>
+                            <Button x:Name="BgBlack" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Black}" Click="BackgroundBlack" TouchEnter="BackgroundBlack"/>
+                        </StackPanel>
 					</StackPanel>
 				</Grid>
 			</Expander>
@@ -83,13 +103,6 @@
 				</Grid>
 			</Expander>
 			
-			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="50" x:Name="DebugBox" BorderBrush="#FFA70000"  BorderThickness="0" Foreground="White" Background="#FF393939" >
-				<TextBlock x:Name="DebugText" TextWrapping="NoWrap"/>
-			</s:SurfaceScrollViewer>
-
-			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="15" x:Name="DebugBox2" BorderBrush="#FFA70000" BorderThickness="0" Foreground="White" Background="#FF393939" >
-				<TextBlock x:Name="DebugText2" TextWrapping="NoWrap"/>
-			</s:SurfaceScrollViewer>
 			
 		    <StackPanel Orientation="Vertical"  VerticalAlignment="Center">
 			    <TextBlock Style="{StaticResource TextBlock-Default}" Text="Satisfied ?" VerticalAlignment="Center"></TextBlock>

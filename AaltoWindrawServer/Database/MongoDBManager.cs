@@ -6,6 +6,7 @@ using System.Diagnostics;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
+using System.Threading;
 
 namespace AaltoWindraw.Database
 {
@@ -153,6 +154,7 @@ namespace AaltoWindraw.Database
         
         internal bool SaveItem(string itemSent)
         {
+            itemSent = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(itemSent);
             return (items.FindOne(new QueryDocument("item", itemSent)) == null) ?
                 items.Insert(new BsonDocument("item", itemSent)).Ok :
                 false;

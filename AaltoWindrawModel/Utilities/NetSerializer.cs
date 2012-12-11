@@ -15,7 +15,7 @@ namespace AaltoWindraw.Utilities
         }
 
         public static T DeSerialize<T>(string s)
-        {
+        {   
             return JsonConvert.DeserializeObject<T>(s);
         }
     }

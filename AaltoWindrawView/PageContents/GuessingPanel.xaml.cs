@@ -70,32 +70,35 @@ namespace AaltoWindraw
             canvas.EditingMode = SurfaceInkEditingMode.None;
         }
 
+
+        #region OnClick
         private void OnClickIKnow(object sender, RoutedEventArgs e)
         {
-            // Stop timer
-            drawTimer.Stop();
-            ButtonIKnow.Visibility = System.Windows.Visibility.Collapsed;
             bool distant = verifyUserInput();
-            UserAttempt.IsEnabled = false;
 
             // If close to right answer
             if (!distant)
-            { 
+            {
+                ButtonIKnow.Visibility = System.Windows.Visibility.Collapsed;
                 ButtonTryAgain.Visibility = System.Windows.Visibility.Collapsed;
                 UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Visible;
                 UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Collapsed;
                 UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Collapsed;
                 ButtonCheckScore.Visibility = System.Windows.Visibility.Visible;
+                UserAttempt.IsEnabled = false;
                 
             }
             // If not close to right answer
             else
             {
-                ButtonTryAgain.Visibility = System.Windows.Visibility.Visible;
+                //ButtonTryAgain.Visibility = System.Windows.Visibility.Visible;
                 UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Collapsed;
                 UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Visible;
                 UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Collapsed;
                 ButtonCheckScore.Visibility = System.Windows.Visibility.Collapsed;
+                UserAttempt.Text = "";
+                Keyboard.Focus(UserAttempt);
+                drawTimer.Start();
             }
         }
 
@@ -141,6 +144,42 @@ namespace AaltoWindraw
             return distant;
         }
 
+
+        private void OnClickTryAnother(Object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
+            ((MainWindow)Application.Current.MainWindow).GoToBeforeGuessingPage();
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                OnClickIKnow(sender, e);
+            }
+            else
+            {
+                // Stop timer
+                drawTimer.Stop();
+            }
+        }
+
+        private void OnTouchEnter(object sender, TouchEventArgs e)
+        {
+            drawTimer.Stop();
+        }
+
+        #endregion
+
+
+        private void FocusTextBox(Object sender, EventArgs e)
+        {
+            //((TextBox)sender).Focus();
+            Keyboard.Focus((TextBox)sender);
+        }
+
+        #region Draw
+
         private void DoDraw()
         {
             ClearBoard();
@@ -156,11 +195,6 @@ namespace AaltoWindraw
             currentDrawing.reinit();
         }
 
-        private void FocusTextBox(Object sender, EventArgs e)
-        {
-            //((TextBox)sender).Focus();
-            Keyboard.Focus((TextBox)sender);
-        }
 
         private void DrawFrame(Object sender, EventArgs e)
         {
@@ -236,18 +270,7 @@ namespace AaltoWindraw
             canvas.Strokes.Clear();
         }
 
-        private void OnClickTryAnother(Object sender, RoutedEventArgs e)
-        {
-            ((MainWindow)Application.Current.MainWindow).GoToHomePage();
-            ((MainWindow)Application.Current.MainWindow).GoToBeforeGuessingPage();
-        }
+        #endregion
 
-        private void OnKeyDownHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-            {
-                OnClickIKnow(sender, e);
-            }
-        }
-	}
+    }
 }

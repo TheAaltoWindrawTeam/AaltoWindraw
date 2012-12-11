@@ -9,9 +9,9 @@ done : brush size wider
 *TODO : When hitting Previous from About, it systematically goes back to Home
 TODO : When hitting Go in BeforeGuess, it always goes to GuessPage even if clicked on Back or About during countdown
 TODO : In Guess, interrupt counting when typing and restart when hitting ENTER
-TODO : In Draw, collapse Save button when saved successfully
+done : In Draw, collapse Save button when saved successfully
 *TODO : Changing color during the drawing of a stroke => one stroke = one color & one size !
 
 new transitions
-TODO : Guess -> Home (or new BeforeGuess...)
+done : Guess -> Home (or new BeforeGuess...)
 

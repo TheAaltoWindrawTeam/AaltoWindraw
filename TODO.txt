@@ -3,10 +3,10 @@ done : Stable server when release
 done : Activate "I want to draw what I want" as soon as page launched
 done : When in "draw what i want" have textfield instead of text
 done : Add personnal drawing in the database (for the moment, it adds only drawings corresponding to a card)
-TODO : Palette and Background buttons (complete palette + touchenter)
-TODO : remove debug console
-TODO : brush size wider
-TODO : When hitting Previous from About, it systematically goes back to Home
+done : Palette and Background buttons (complete palette + touchenter)
+done : remove debug console
+done : brush size wider
+*TODO : When hitting Previous from About, it systematically goes back to Home
 TODO : When hitting Go in BeforeGuess, it always goes to GuessPage even if clicked on Back or About during countdown
 TODO : In Guess, interrupt counting when typing and restart when hitting ENTER
 TODO : In Draw, collapse Save button when saved successfully

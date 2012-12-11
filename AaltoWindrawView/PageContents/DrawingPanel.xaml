@@ -34,7 +34,7 @@
 		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Row="1" Grid.Column="0">
 			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White"
                                 PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp" PreviewMouseMove="onMouseMove"
-                                TouchEnter="OnTouchDown" TouchLeave="OnTouchUp" TouchMove="onTouchMove"
+                                TouchEnter="OnTouchDown" TouchLeave="OnTouchUp" PreviewTouchMove="onTouchMove"
 				/>
 		</Border>
 		

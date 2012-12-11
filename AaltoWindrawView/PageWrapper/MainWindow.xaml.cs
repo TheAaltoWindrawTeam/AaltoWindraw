@@ -191,7 +191,7 @@ namespace AaltoWindraw
 
         public void GoToDrawingPanel(String item, Boolean AddingNewDrawing)
         {
-            NextPage(new DrawingPanel(item, false), DrawingPanel.TitleContent, DrawingPanel.SubTitleContent, DrawingPanel.GoAbout);
+            NextPage(new DrawingPanel(item, AddingNewDrawing), DrawingPanel.TitleContent, DrawingPanel.SubTitleContent, DrawingPanel.GoAbout);
         }
         #endregion
     }

@@ -39,7 +39,7 @@ namespace AaltoWindraw
         // Variable for saving the drawing
         private System.Windows.Threading.DispatcherTimer saveTimer;
 
-        // Variable for printing the saved drawing
+        // Variable for printing the saved drawing (TODO : remove/comment it and the drawing methods)
         private System.Windows.Threading.DispatcherTimer drawTimer;
         bool remainingStrokes;
         private IEnumerator<SampledStroke> strokesEnum; // return the next sampledStroke to start to be drawn
@@ -85,7 +85,7 @@ namespace AaltoWindraw
 
 
             // If the user wants to add his own title
-            if (this.addingNewDrawing)
+            if (addingNewDrawing)
             {
                 DrawingToDraw.Visibility = System.Windows.Visibility.Collapsed;
                 FieldTitle.Visibility = System.Windows.Visibility.Visible;
@@ -170,7 +170,7 @@ namespace AaltoWindraw
 
         private void OnClickResetBoard(object sender, RoutedEventArgs e)
         {
-            ClearBoard();
+            Reset(sender,e);
         }
 
         private void OnClickSaveDrawing(object sender, RoutedEventArgs e)
@@ -340,9 +340,7 @@ namespace AaltoWindraw
 
         private Boolean DoSaveDrawing()
         {
-            Boolean authorNameWritten = assignAuthorToDrawing();
-            Boolean drawingTitleWritten = assignTitleToDrawing();
-            if (authorNameWritten && drawingTitleWritten)
+            if (assignAuthorToDrawing() && assignTitleToDrawing())
             {
                 return App.client.SaveDrawingToServer(currentDrawing);
             }
@@ -369,6 +367,7 @@ namespace AaltoWindraw
                 {
                     drawingTitle = title;
                     currentDrawing.Item = drawingTitle;
+                    App.client.AddItemToServer(drawingTitle);
                     return true;
                 }
             }

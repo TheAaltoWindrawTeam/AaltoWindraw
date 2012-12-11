@@ -101,6 +101,10 @@ namespace AaltoWindraw
                 }
                 Console.WriteLine("Default items loaded into database");
             }
+            else
+            {
+                Console.WriteLine("Default items already loaded");
+            }
             Console.ReadLine();
             server.Stop();
             Environment.Exit(0);

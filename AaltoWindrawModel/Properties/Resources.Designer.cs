@@ -97,7 +97,7 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à ..\..\..\Database.
+        ///   Recherche une chaîne localisée semblable à Database.
         /// </summary>
         public static string db_path {
             get {
@@ -142,7 +142,7 @@ namespace AaltoWindraw.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à ..\..\..\own_resources\mongodb\mongod.exe.
+        ///   Recherche une chaîne localisée semblable à Database\mongod.exe.
         /// </summary>
         public static string mongodb_exe {
             get {

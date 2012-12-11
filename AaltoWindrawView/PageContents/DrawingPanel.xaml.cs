@@ -76,6 +76,14 @@ namespace AaltoWindraw
             InitializeComponent();
             item = itemToDraw;
             this.addingNewDrawing = addingNewDrawing;
+            currentDrawing = new Drawing.Drawing(item);
+            
+            // Hide buttons and everything
+            SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+            SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Collapsed;
+
+
             // If the user wants to add his own title
             if (this.addingNewDrawing)
             {
@@ -88,15 +96,9 @@ namespace AaltoWindraw
             {
                 DrawingToDraw.Visibility = System.Windows.Visibility.Visible;
                 FieldTitle.Visibility = System.Windows.Visibility.Collapsed;
+                DrawingToDraw.Text = item;
                 Console.WriteLine("Entering Draw mode with item given on card");
             }
-            currentDrawing = new Drawing.Drawing(item);
-            DrawingToDraw.Text = item;
-
-            // Hide buttons and everything
-            SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
-            SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
-            ButtonGoBackHome.Visibility = System.Windows.Visibility.Collapsed;
 
             saveTimer = new System.Windows.Threading.DispatcherTimer();
             saveTimer.Tick += new EventHandler(SaveFrame);
@@ -342,9 +344,6 @@ namespace AaltoWindraw
             Boolean drawingTitleWritten = assignTitleToDrawing();
             if (authorNameWritten && drawingTitleWritten)
             {
-                TextWriter tw = new StreamWriter("lalala.json");
-                tw.WriteLine(NetSerializer.Serialize(currentDrawing));
-                tw.Close();
                 return App.client.SaveDrawingToServer(currentDrawing);
             }
             else

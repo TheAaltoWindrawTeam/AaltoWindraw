@@ -76,7 +76,6 @@ namespace AaltoWindraw
 
         static void Main(string[] args)
         {
-
             Thread exitThread = new Thread(new ThreadStart(Exit));
             exitThread.Start();
 
@@ -87,24 +86,33 @@ namespace AaltoWindraw
             Console.WriteLine("** Press ENTER at any moment to exit **");
             Console.WriteLine();
             Console.WriteLine();
-            server.Start();
+
+            try
+            {
+                server.Init();
+                if (server.DB().IsEmpty())
+                {
+                    foreach (string item in defaultItems)
+                    {
+                        server.DB().SaveItem(item);
+                    }
+                    Console.WriteLine("Default items loaded into database");
+                }
+                else
+                {
+                    Console.WriteLine("Default items already loaded");
+                }
+                server.Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                server.Stop();
+            }
         }
 
         public static void Exit()
         {
-            Thread.Sleep(2000);
-            if (server.DB().IsEmpty())
-            {
-                foreach (string item in defaultItems)
-                {
-                    server.DB().SaveItem(item);
-                }
-                Console.WriteLine("Default items loaded into database");
-            }
-            else
-            {
-                Console.WriteLine("Default items already loaded");
-            }
             Console.ReadLine();
             server.Stop();
             Environment.Exit(0);

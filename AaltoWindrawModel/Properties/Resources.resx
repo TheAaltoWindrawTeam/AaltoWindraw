@@ -133,7 +133,7 @@
     <comment>Name of the database</comment>
   </data>
   <data name="db_path" xml:space="preserve">
-    <value>..\..\..\Database</value>
+    <value>Database</value>
     <comment>Path to the DB folder</comment>
   </data>
   <data name="default_port" xml:space="preserve">
@@ -147,16 +147,12 @@
     <value>{0}_{1}_{2:00}{3:00}{4:00}{5:00}{6:00}{7:00}</value>
     <comment>used for export/storage only</comment>
   </data>
-  <data name="maximum_attempts" xml:space="preserve">
-    <value>10</value>
-    <comment>Maximum attemps to consecutively do the same network operation</comment>
-  </data>
   <data name="maximum_connections" xml:space="preserve">
     <value>100</value>
     <comment>Totally arbitrary and untested</comment>
   </data>
   <data name="mongodb_exe" xml:space="preserve">
-    <value>..\..\..\own_resources\mongodb\mongod.exe</value>
+    <value>Database\mongod.exe</value>
     <comment>Path to the mongoDB executable</comment>
   </data>
   <data name="server_address" xml:space="preserve">

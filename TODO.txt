@@ -1,0 +1,16 @@
+Stable server when release
+HIGHSCORES page
+Activate "I want to draw what I want" as soon as page launched
+When in "draw what i want" have textfield instead of text
+Palette and Background buttons (complete palette + touchenter)
+remove debug console
+brush size wider
+When hitting Previous from About, systematically go back to Home
+When hitting Go in BeforeGuess, always go to GuessPage even if clicked on Back or About during countdown
+In Guess, interrupt counting when typing and restart when hitting ENTER
+In Draw, collapse Save button when saved successfully
+Changing color during the drawing of a stroke => one stroke = one color & one size !
+
+new transitions
+Guess -> Home (or new BeforeGuess...)
+

@@ -38,7 +38,7 @@ namespace AaltoWindraw.Server
             rand = new Random();
 		}
 
-        public void Start()
+        public void Init()
         {
             bool dbOk = db.Start();
             if (dbOk)
@@ -61,6 +61,10 @@ namespace AaltoWindraw.Server
 
             server.Start();
 
+        }
+
+        public void Start()
+        {        
             Thread upThread = new Thread(new ThreadStart(TellAvailability));
             upThread.Start();
 

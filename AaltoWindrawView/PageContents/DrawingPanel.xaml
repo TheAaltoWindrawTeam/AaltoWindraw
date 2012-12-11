@@ -78,11 +78,11 @@
 				<Grid Background="#FFE5E5E5">
 					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
 						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-							<Button x:Name="BgWhite" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-White}"/>
-                            <Button x:Name="BgGreenYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-GreenYellow}"/>
-                            <Button x:Name="BgPaleYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-PaleYellow}"/>
-                            <Button x:Name="BgSkyBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-SkyBlue}"/>
-                            <Button x:Name="BgBlack" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Black}"/>
+                            <Button x:Name="BgWhite" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-White}" Click="BackgroundWhite" TouchEnter="BackgroundWhite"/>
+                            <Button x:Name="BgGreenYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-GreenYellow}" Click="BackgroundGreenYellow" TouchEnter="BackgroundGreenYellow"/>
+                            <Button x:Name="BgPaleYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-PaleYellow}" Click="BackgroundPaleYellow" TouchEnter="BackgroundPaleYellow"/>
+                            <Button x:Name="BgSkyBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-SkyBlue}" Click="BackgroundSkyBlue" TouchEnter="BackgroundSkyBlue"/>
+                            <Button x:Name="BgBlack" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Black}" Click="BackgroundBlack" TouchEnter="BackgroundBlack"/>
                         </StackPanel>
 					</StackPanel>
 				</Grid>

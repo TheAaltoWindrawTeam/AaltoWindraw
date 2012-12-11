@@ -423,6 +423,11 @@ namespace AaltoWindraw
             ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-PaleYellow")).Color);
         }
 
+        private void BackgroundGreenYellow(object sender, RoutedEventArgs e)
+        {
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-GreenYellow")).Color);
+        }
+
         private void BackgroundSkyBlue(object sender, RoutedEventArgs e)
         {
             ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-SkyBlue")).Color);

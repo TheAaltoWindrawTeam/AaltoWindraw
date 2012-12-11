@@ -30,6 +30,7 @@ namespace AaltoWindraw
 
 		// Global
         private AaltoWindraw.Drawing.Drawing currentDrawing;
+        private Boolean timerIsOver = true;
 
         // Variable for printing the saved drawing
         private System.Windows.Threading.DispatcherTimer drawTimer;
@@ -54,7 +55,7 @@ namespace AaltoWindraw
             drawTimer = new System.Windows.Threading.DispatcherTimer();
             drawTimer.Tick += new EventHandler(DrawFrame);
             drawTimer.Interval = new TimeSpan(0, 0, 0, 0, REFRESH_TIME_DRAW);
-            
+            timerIsOver = false;
             // Hide buttons and everything
             ButtonPlayAgain.Visibility = System.Windows.Visibility.Collapsed;
             ButtonCheckScore.Visibility = System.Windows.Visibility.Collapsed;
@@ -209,6 +210,7 @@ namespace AaltoWindraw
             if (!remainingStrokes && dotPointerList.Count() == 0)
             {
                 drawTimer.Stop();
+                timerIsOver = true;
                 DisableEverythingWhenDrawingIsOver();
                 UserAttemptFeedbackTooLate.Visibility = System.Windows.Visibility.Visible;
                 ButtonPlayAgain.Visibility = System.Windows.Visibility.Visible;
@@ -222,6 +224,10 @@ namespace AaltoWindraw
             ButtonTryAgain.Visibility = System.Windows.Visibility.Collapsed;
             UserAttemptFeedbackRight.Visibility = System.Windows.Visibility.Collapsed;
             UserAttemptFeedbackWrong.Visibility = System.Windows.Visibility.Collapsed;
+            if (timerIsOver)
+            {
+                UserAttempt.IsEnabled = false;
+            }
         }
 
         //clear the board

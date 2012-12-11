@@ -195,12 +195,6 @@ namespace AaltoWindraw
             ((MainWindow)Application.Current.MainWindow).GoToHomePage();
         }
 
-        private void OnClickChangeBrushColor(object sender, RoutedEventArgs e)
-        {
-            //TODO Bind with actual button color
-            PrintDebug("sender=" + sender.GetType());
-        }
-
         #endregion OnClick methods
 
         #region DrawCurrentDrawing
@@ -293,7 +287,6 @@ namespace AaltoWindraw
 
         private void ClearBoard()
         {
-            PrintDebug("Cleared");
             canvas.Strokes.Clear();
         }
         #endregion ClearTheBoard
@@ -553,7 +546,6 @@ namespace AaltoWindraw
         {
             Double factor = 0.5;
             Double newSize = Math.Round(radius * factor, 0);
-            PrintDebug("Selected Size=" + newSize);
             canvas.DefaultDrawingAttributes.Width = newSize;
             canvas.DefaultDrawingAttributes.Height = newSize;
             canvas.UsesTouchShape = false;
@@ -564,32 +556,6 @@ namespace AaltoWindraw
             SetBrushRadius(BrushRadiusSlider.Value);
         }
         #endregion ChangeBrushSize
-
-        #region Miscellaneous
-        // // // // ------------- \\ \\ \\ \\
-        // // // // Miscellaneous \\ \\ \\ \\
-        // // // // ------------- \\ \\ \\ \\
-
-        // Print in the text panel in the application
-        private void PrintDebug(String s)
-        {
-            try
-            {
-                DebugText.Text += s + "\n";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-        #endregion Miscellaneous
-
-        private void BgRed_TouchEnter(object sender, TouchEventArgs e)
-        {
-
-        }
-
-
 
     }
 }

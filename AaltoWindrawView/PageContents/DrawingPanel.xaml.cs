@@ -171,6 +171,10 @@ namespace AaltoWindraw
         private void OnClickResetBoard(object sender, RoutedEventArgs e)
         {
             Reset(sender,e);
+            SaveFeedbackOK.Visibility = System.Windows.Visibility.Collapsed;
+            SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+            ButtonSaveDrawing.Visibility = System.Windows.Visibility.Visible;
+            ButtonGoBackHome.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void OnClickSaveDrawing(object sender, RoutedEventArgs e)
@@ -181,6 +185,7 @@ namespace AaltoWindraw
             {
                 SaveFeedbackOK.Visibility = System.Windows.Visibility.Visible;
                 SaveFeedbackNOTOK.Visibility = System.Windows.Visibility.Collapsed;
+                ButtonSaveDrawing.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {

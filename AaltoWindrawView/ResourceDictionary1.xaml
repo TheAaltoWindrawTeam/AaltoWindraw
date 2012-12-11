@@ -9,10 +9,6 @@
     
     mc:Ignorable="d">
 	<!-- Les entrées du dictionnaire de ressources sont définies ici. -->
-	
-            <!-- Resolution de l'appli -->
-            <sys:Int32 x:Key="ResolutionHeight">768</sys:Int32>
-            <sys:Int32 x:Key="ResolutionWidth">1366</sys:Int32>
 
     <!-- COLORS FOR GUI -->
 			<SolidColorBrush x:Key="GUIColor-Default" Color="#FFFECB06" />
@@ -119,7 +115,7 @@
             		<Setter.Value>
             			<ControlTemplate TargetType="{x:Type Button}">
             				<Grid>
-            					<Rectangle x:Name="rectangle" Fill="#FFCE1414" Stroke="White" StrokeThickness="0" Margin="4"/>
+            					<Rectangle x:Name="rectangle" Fill="{DynamicResource BrushColor-Red}" Stroke="White" StrokeThickness="0" Margin="4"/>
             					<Rectangle x:Name="rectangleLight" Fill="White" Margin="4" Stroke="Black" StrokeThickness="0" Opacity="0.245" Visibility="Hidden"/>
             				</Grid>
             				<ControlTemplate.Triggers>

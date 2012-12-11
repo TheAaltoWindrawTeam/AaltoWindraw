@@ -103,13 +103,6 @@
 				</Grid>
 			</Expander>
 			
-			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="50" x:Name="DebugBox" BorderBrush="#FFA70000"  BorderThickness="0" Foreground="White" Background="#FF393939" >
-				<TextBlock x:Name="DebugText" TextWrapping="NoWrap"/>
-			</s:SurfaceScrollViewer>
-
-			<s:SurfaceScrollViewer Grid.Column="3" Grid.Row="3" Height="15" x:Name="DebugBox2" BorderBrush="#FFA70000" BorderThickness="0" Foreground="White" Background="#FF393939" >
-				<TextBlock x:Name="DebugText2" TextWrapping="NoWrap"/>
-			</s:SurfaceScrollViewer>
 			
 		    <StackPanel Orientation="Vertical"  VerticalAlignment="Center">
 			    <TextBlock Style="{StaticResource TextBlock-Default}" Text="Satisfied ?" VerticalAlignment="Center"></TextBlock>

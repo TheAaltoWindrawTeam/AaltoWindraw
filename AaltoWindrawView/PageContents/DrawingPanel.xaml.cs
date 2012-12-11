@@ -412,22 +412,22 @@ namespace AaltoWindraw
 
         private void BackgroundBlack(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor((Color)FindResource("BrushColor-Black"));
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-Black")).Color);
         }
 
         private void BackgroundWhite(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor((Color)FindResource("BrushColor-White"));
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-White")).Color);
         }
 
         private void BackgroundPaleYellow(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor((Color)FindResource("BrushColor-PaleYellow"));
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-PaleYellow")).Color);
         }
 
         private void BackgroundSkyBlue(object sender, RoutedEventArgs e)
         {
-            ChangeBackgroundColor((Color)FindResource("BrushColor-SkyBlue"));
+            ChangeBackgroundColor(((SolidColorBrush)FindResource("BrushColor-SkyBlue")).Color);
         }
 
         #endregion ChangeBackground
@@ -444,102 +444,102 @@ namespace AaltoWindraw
 
         private void BrushBlack(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Black"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Black")).Color);
         }
 
         private void BrushGrey(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Grey"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Grey")).Color);
         }
 
         private void BrushWhite(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-White"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-White")).Color);
         }
 
         private void BrushPink(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Pink"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Pink")).Color);
         }
 
         private void BrushMauve(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Mauve"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Mauve")).Color);
         }
 
         private void BrushPurple(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Purple"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Purple")).Color);
         }
 
         private void BrushIndigo(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Indigo"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Indigo")).Color);
         }
 
         private void BrushMarineBlue(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-MarineBlue"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-MarineBlue")).Color);
         }
 
         private void BrushBlue(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Blue"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Blue")).Color);
         }
 
         private void BrushSkyBlue(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-SkyBlue"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-SkyBlue")).Color);
         }
 
         private void BrushBlueGreen(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-BlueGreen"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-BlueGreen")).Color);
         }
 
         private void BrushDarkGreen(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-DarkGreen"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-DarkGreen")).Color);
         }
 
         private void BrushGreen(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Green"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Green")).Color);
         }
 
         private void BrushGreenYellow(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-GreenYellow"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-GreenYellow")).Color);
         }
 
         private void BrushPaleYellow(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-PaleYellow"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-PaleYellow")).Color);
         }
 
         private void BrushYellow(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Yellow"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Yellow")).Color);
         }
 
         private void BrushAmbre(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Ambre"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Ambre")).Color);
         }
 
         private void BrushOrange(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Orange"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Orange")).Color);
         }
 
         private void BrushRed(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Red"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Red")).Color);
         }
 
         private void BrushBrown(object sender, RoutedEventArgs e)
         {
-            ChangeBrushColor((Color)FindResource("BrushColor-Brown"));
+            ChangeBrushColor(((SolidColorBrush)FindResource("BrushColor-Brown")).Color);
         }
 
         #endregion ChangeBrushColor
@@ -583,6 +583,11 @@ namespace AaltoWindraw
             }
         }
         #endregion Miscellaneous
+
+        private void BgRed_TouchEnter(object sender, TouchEventArgs e)
+        {
+
+        }
 
 
 

@@ -15,11 +15,11 @@
 			<TextBlock Style="{StaticResource TextBlock-SubTitle}" Text="On this card will be written what you have to draw."></TextBlock>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="30">
 				<Button x:Name="Card1" Content="Button" HorizontalAlignment="Left" Height="174.792" Style="{DynamicResource ButtonCard}" VerticalAlignment="Top" Width="119" Margin="20"
-                        Click="OnClickCard1" TouchDown="OnClickCard1" TouchEnter="OnClickCard1"/>
+                        Click="OnClickCard1" TouchEnter="OnClickCard1"/>
 				<Button x:Name="Card2" Content="Button" HorizontalAlignment="Left" Height="174.792" Style="{DynamicResource ButtonCard}" VerticalAlignment="Top" Width="119" Margin="20"
-                        Click="OnClickCard2" TouchDown="OnClickCard2" TouchEnter="OnClickCard2"/>
+                        Click="OnClickCard2" TouchEnter="OnClickCard2"/>
 				<Button x:Name="Card3" Content="Button" HorizontalAlignment="Left" Height="174.792" Style="{DynamicResource ButtonCard}" VerticalAlignment="Top" Width="119" Margin="20"
-                        Click="OnClickCard3" TouchDown="OnClickCard3" TouchEnter="OnClickCard3"/>
+                        Click="OnClickCard3" TouchEnter="OnClickCard3"/>
 			</StackPanel>
 			<TextBlock Style="{StaticResource TextBlock-Title}" Text="You have to draw :"></TextBlock>
 			<TextBlock Style="{StaticResource TextBlock-SubTitle}" x:Name="DrawingToGuess" FontSize="56" Text="?" HorizontalAlignment="Center"></TextBlock>
@@ -27,12 +27,12 @@
 			<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
 				<StackPanel Orientation="Vertical" Margin="0,0,40,0">
 					<Button x:Name="ButtonNo" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="Auto" Content="No, I want another one" Margin="0,0,0,20"
-                            Click="OnClickAnotherOne" TouchDown="OnClickAnotherOne" TouchEnter="OnClickAnotherOne"/>
+                            Click="OnClickAnotherOne" TouchEnter="OnClickAnotherOne"/>
 					<Button x:Name="ButtonAdd" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="550" Content="I want to draw what I want" Margin="0,0,0,0"
-                            Click="OnClickDrawWhatIWant" TouchEnter="OnClickDrawWhatIWant" TouchDown="OnClickDrawWhatIWant"/>
+                            Click="OnClickDrawWhatIWant" TouchEnter="OnClickDrawWhatIWant"/>
 				</StackPanel>
                 <Button x:Name="ButtonYes" Style="{DynamicResource YellowButton}" FontSize="75" Width="250" Content="Yes !" 
-                        Click="OpenDrawingWindow" TouchDown="OpenDrawingWindow" TouchEnter="OpenDrawingWindow"/>
+                        Click="OpenDrawingWindow" TouchEnter="OpenDrawingWindow"/>
 			</StackPanel>
 			
 		</StackPanel>

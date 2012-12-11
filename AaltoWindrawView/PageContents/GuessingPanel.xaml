@@ -25,7 +25,7 @@
 		<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
 			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center"></TextBlock>
 			<Button x:Name="Button_Another" Content="Try another" Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
-                    Click="OnClickTryAnother" TouchDown="OnClickTryAnother" TouchEnter="OnClickTryAnother"/>
+                    Click="OnClickTryAnother" TouchEnter="OnClickTryAnother"/>
 		</StackPanel>
 		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Row="1" Grid.Column="0">
 			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" 

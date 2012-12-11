@@ -22,11 +22,11 @@
 			<Viewbox Height="240" HorizontalAlignment="Left" Margin="0,30,0,0" >
 			<StackPanel x:Name="NavigationButtons"  Orientation="Vertical">
 				<Button x:Name="Button_Back" Style="{DynamicResource ButtonArrowLeft}" Margin="0,0,0,60"
-                        Click="OnClickBackwards" TouchDown="OnClickBackwards" TouchEnter="OnClickBackwards"/>
+                        Click="OnClickBackwards" TouchEnter="OnClickBackwards"/>
 				<Button x:Name="Button_About" Style="{DynamicResource ButtonQuestion}" Margin="0,0,0,60"
-                        Click="OnClickAbout" TouchDown="OnClickAbout" TouchEnter="OnClickAbout"/>
+                        Click="OnClickAbout" TouchEnter="OnClickAbout"/>
 				<Button x:Name="Button_Close" Style="{DynamicResource ButtonClose}" Margin="0,0,0,20" Height="40"
-                        Click="OnClickClose" TouchDown="OnClickClose" TouchEnter="OnClickClose"/>
+                        Click="OnClickClose" TouchEnter="OnClickClose"/>
 			</StackPanel>
 			</Viewbox>
 		</StackPanel>

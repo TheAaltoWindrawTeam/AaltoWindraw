@@ -29,7 +29,7 @@
 				 <StackPanel Orientation="Horizontal">
 				 				<TextBox x:Name="FieldName" Width="400" Tag="Your name" Style="{DynamicResource TextBoxGUI}" Margin="10,0,20,0"></TextBox>
 								<Button x:Name="ButtonSave" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Save" Margin="0,0,0,0" VerticalAlignment="Center"
-	                        Click="OnClickSave" TouchDown="OnClickSave" TouchEnter="OnClickSave"></Button>
+	                        Click="OnClickSave" TouchEnter="OnClickSave"></Button>
 
 				 </StackPanel>
 			 </StackPanel>
@@ -48,7 +48,7 @@
 			 </StackPanel>
 			 
 			 <Button x:Name="ButtonGoBackHome" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="300" Content="Go back home" Margin="0,20,0,0" VerticalAlignment="Center"
-	                        Click="OnClickGoBackHome" TouchDown="OnClickGoBackHome" TouchEnter="OnClickGoBackHome"></Button>
+	                        Click="OnClickGoBackHome" TouchEnter="OnClickGoBackHome"></Button>
 
 			 
 			 <StackPanel x:Name="IsNotHighScoreFeedback" Orientation="Vertical">
@@ -62,7 +62,7 @@
 				
 				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
 						<Button x:Name="ButtonTryAgain" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Try again" Margin="30" VerticalAlignment="Center"
-	                        Click="OnClickTryAgain" TouchDown="OnClickTryAgain" TouchEnter="OnClickTryAgain"></Button>
+	                        Click="OnClickTryAgain" TouchEnter="OnClickTryAgain"></Button>
 				</StackPanel>
 			</StackPanel>
 		

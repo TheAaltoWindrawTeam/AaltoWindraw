@@ -54,6 +54,7 @@ namespace AaltoWindraw.Database
         {
             try
             {
+                mongoProcess.Close();
                 mongoProcess.Kill();
             }
             catch (System.InvalidOperationException)

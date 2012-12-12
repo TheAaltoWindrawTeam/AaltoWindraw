@@ -167,6 +167,8 @@ namespace AaltoWindraw
         private void OnTouchEnter(object sender, TouchEventArgs e)
         {
             drawTimer.Stop();
+            UserAttempt.IsEnabled = true;
+            Keyboard.Focus((TextBox)UserAttempt);
         }
 
         #endregion

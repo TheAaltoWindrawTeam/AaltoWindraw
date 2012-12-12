@@ -21,7 +21,7 @@
 		
 		<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
 			<TextBlock x:Name="DrawingToDraw" Style="{StaticResource TextBlock-SubTitle}" Text="Batman" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-			<TextBox x:Name="FieldTitle" Tag="Title of your drawing" Height="48" Width="300" Style="{DynamicResource TextBoxGUI}" HorizontalAlignment="Left"></TextBox>
+            <TextBox x:Name="FieldTitle" Tag="Title of your drawing" Height="48" Width="300" Style="{DynamicResource TextBoxGUI}" HorizontalAlignment="Left" TouchEnter="OnClickTextbox"></TextBox>
 
 		<StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right">
 			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center" Height="48"></TextBlock>
@@ -106,7 +106,8 @@
 			
 		    <StackPanel Orientation="Vertical"  VerticalAlignment="Center">
 			    <TextBlock Style="{StaticResource TextBlock-Default}" Text="Satisfied ?" VerticalAlignment="Center"></TextBlock>
-			    <TextBox x:Name="FieldName" Tag="Your name" Height="44" Style="{DynamicResource TextBoxGUI}" Margin="10"></TextBox>
+			    <TextBox x:Name="FieldName" Tag="Your name" Height="44" Style="{DynamicResource TextBoxGUI}" Margin="10"
+                         TouchEnter="OnClickTextbox"></TextBox>
                 <Button x:Name="ButtonSaveDrawing" Content="Save" Style="{DynamicResource YellowButton}"
                         Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
                         Click="OnClickSaveDrawing" TouchEnter="OnClickSaveDrawing"/>

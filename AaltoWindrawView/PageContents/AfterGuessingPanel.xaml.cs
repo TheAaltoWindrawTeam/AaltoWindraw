@@ -103,5 +103,10 @@ namespace AaltoWindraw
         {
             ((MainWindow)Application.Current.MainWindow).GoToHomePage();
         }
+
+        private void OnClickTextbox(object sender, EventArgs e)
+        {
+            Keyboard.Focus((TextBox)sender);
+        }
 	}
 }

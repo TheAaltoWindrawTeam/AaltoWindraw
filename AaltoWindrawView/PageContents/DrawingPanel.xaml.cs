@@ -567,5 +567,10 @@ namespace AaltoWindraw
         }
         #endregion ChangeBrushSize
 
+
+        private void OnClickTextbox(object sender, EventArgs e)
+        {
+            Keyboard.Focus((TextBox)sender);
+        }
     }
 }

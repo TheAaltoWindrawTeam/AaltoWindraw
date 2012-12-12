@@ -56,8 +56,8 @@ namespace AaltoWindraw
                 this.author = null;
 
                 //TODO replace following placeholders with relevant values
-                this.author = "Foo";
-                this.SetBackgroundAsColor(Colors.WhiteSmoke);
+                this.author = "Anonymous";
+                this.SetBackgroundAsColor(Colors.White);
             }
 
             // Constructor for deserialization - should be used by serializer

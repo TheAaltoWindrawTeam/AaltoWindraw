@@ -27,7 +27,7 @@
 		                <TextBlock Text="You are the best!" Style="{DynamicResource TextBlock-Default}"></TextBlock>      
 				 </StackPanel>
 				 <StackPanel Orientation="Horizontal">
-				 				<TextBox x:Name="FieldName" Width="400" Tag="Your name" Style="{DynamicResource TextBoxGUI}" Margin="10,0,20,0"></TextBox>
+				 				<TextBox x:Name="FieldName" Width="400" Tag="Your name" Style="{DynamicResource TextBoxGUI}" Margin="10,0,20,0" TouchEnter="OnClickTextbox"></TextBox>
 								<Button x:Name="ButtonSave" Style="{DynamicResource YellowButton}" FontSize="{DynamicResource FontSize-Title}" Width="200" Content="Save" Margin="0,0,0,0" VerticalAlignment="Center"
 	                        Click="OnClickSave" TouchEnter="OnClickSave"></Button>
 

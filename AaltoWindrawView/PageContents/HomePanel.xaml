@@ -1,0 +1,55 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="AaltoWindraw.HomePanel"
+	x:Name="Page"
+	FlowDirection="LeftToRight"
+	Width="Auto" Height="Auto">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<StackPanel Grid.Row="4" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25" VerticalAlignment="Center">
+				<Button x:Name="Home_DrawButton" Content="Draw" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenRandomCardWindow" TouchEnter="OpenRandomCardWindow"/>
+				<TextBlock x:Name="DrawDescription" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Style="{DynamicResource TextBlock-Default}" Text="Draw something and add it to the database" Margin="20,0,0,0" VerticalAlignment="Center"/>
+			</StackPanel>
+		
+			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25">
+                <Button x:Name="Home_GuessButton" Content="Guess" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenBeforeGuessingWindow" TouchEnter="OpenBeforeGuessingWindow"/>
+				<TextBlock x:Name="GuessDescription" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Style="{DynamicResource TextBlock-Default}" Text="Guess as quickly as you can a drawing from the database" Margin="20,0,0,0" VerticalAlignment="Center"/>
+			</StackPanel>
+		
+			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25">
+				<Button x:Name="Home_PlayOnlineButton" Content="Play Online" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenOnlineWindow" TouchEnter="OpenOnlineWindow"/>
+				<TextBlock x:Name="PlayOnlineDescription" HorizontalAlignment="Left" Style="{DynamicResource TextBlock-Default}" TextWrapping="WrapWithOverflow" Text="Play online with a friend on an other Aalto Window Platform" Margin="20,0,0,0" VerticalAlignment="Center"/>
+			</StackPanel>
+		
+			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,25">
+                <Button x:Name="Home_HighScoresButton" Content="High scores" Style="{DynamicResource YellowButton}" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Margin="0"
+                        Click="OpenHighScoresWindow" TouchEnter="OpenHighScoresWindow"/>
+				<TextBlock x:Name="HighScoresDescription" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Style="{DynamicResource TextBlock-Default}" Text="Look who's the king" Margin="20,0,0,0" VerticalAlignment="Center"/>
+			</StackPanel>
+		
+			<StackPanel Height="Auto" Width="Auto" Orientation="Horizontal" Margin="0,0,0,0">
+                <StackPanel Margin="0,0,40,0">
+                	<StackPanel Orientation="Horizontal">
+                		<TextBlock Style="{DynamicResource TextBlock-SubTitle}" Foreground="{DynamicResource FontColor-Title}" Text="Server Availability : "></TextBlock>
+           				<Viewbox Height="40" x:Name="IconServerDown">
+							<Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerDown}" VerticalAlignment="Top" Width="51.837"/>
+						</Viewbox>
+						<Viewbox Height="40" x:Name="IconServerUp">
+							<Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerUp}" VerticalAlignment="Top" Width="62.599"/>
+						</Viewbox>
+					</StackPanel>
+					<TextBlock Style="{DynamicResource TextBlock-Default}" Text="This application needs its server part to be running"></TextBlock>
+				</StackPanel>
+				<Button x:Name="ButtonCheckAgain" Content="Check again" Style="{DynamicResource YellowButton}" Width="220" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Margin="0" 
+                        Click="OnClickCheckAgain" TouchEnter="OnClickCheckAgain"/>
+
+			</StackPanel>
+		
+		</StackPanel>
+	</Grid>
+</UserControl>

@@ -1,0 +1,77 @@
+﻿<UserControl Name="CircularProgressBarCtrl"
+			 x:Class="AaltoWindraw.CircularProgressBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource self}}"
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded" SizeChanged="UserControl_SizeChanged">
+    <Grid x:Name="mainGrid">
+
+        <Ellipse Margin="0,0,0,0" Name="backgroundEllipse1" Fill="{StaticResource GUIColor-MouseOver}">
+            <Ellipse.Clip>
+                <CombinedGeometry GeometryCombineMode="Exclude">
+                    <CombinedGeometry.Geometry1>
+                        <EllipseGeometry x:Name="backgroundEllipseMask1" Center="150,150" RadiusX="100" RadiusY="100"></EllipseGeometry>
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <EllipseGeometry x:Name="backgroundEllipseMask2" Center="150,150" RadiusX="100" RadiusY="100"></EllipseGeometry>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+            </Ellipse.Clip>
+        </Ellipse>
+        
+        <Ellipse Margin="0,0,0,0" Name="ellipse1" Fill="{StaticResource GUIColor-Default}">
+            <Ellipse.Clip>
+                
+                <CombinedGeometry GeometryCombineMode="Exclude">
+                    <CombinedGeometry.Geometry1>
+                        <PathGeometry>
+                            <PathFigure x:Name="pathFigure_arc1" StartPoint="{Binding Path=StartUp}">
+                                <ArcSegment IsLargeArc="false"
+                                Size="{Binding Path=CircleSize}"
+                                Point="{Binding Path=StartDown}"
+                                SweepDirection="Clockwise"
+                                x:Name="ArcSegment_arc1" />
+                            </PathFigure>
+
+                            <PathFigure x:Name="pathFigure_arc2" StartPoint="{Binding Path=StartDown}">
+                                <ArcSegment IsLargeArc="false"
+                                Size="{Binding Path=CircleSize}"
+                                Point="{Binding Path=StartUp}"
+                                SweepDirection="Clockwise"
+                                x:Name="ArcSegment_arc2" />
+                            </PathFigure>
+
+                            <PathFigure x:Name="segment1" IsClosed="True" StartPoint="{Binding Path=StartUp}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <LineSegment x:Name="segment1_seg1" Point="{Binding Path=CircleCenter}" />
+                                        <LineSegment x:Name="segment1_seg2" Point="300,150" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+
+                            <PathFigure x:Name="segment2" IsClosed="True" StartPoint="{Binding Path=StartDown}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <LineSegment x:Name="segment2_seg1" Point="{Binding Path=CircleCenter}" />
+                                        <LineSegment x:Name="segment2_seg2" Point="100,50" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            
+                        </PathGeometry>
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <EllipseGeometry x:Name="EllipseMask" Center="150,150" RadiusX="100" RadiusY="100"></EllipseGeometry>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+                
+            </Ellipse.Clip>
+        </Ellipse>
+        <TextBlock HorizontalAlignment="Center"  Name="textBlockCenter" Text="0 %" VerticalAlignment="Center" />
+    </Grid>
+</UserControl>
+

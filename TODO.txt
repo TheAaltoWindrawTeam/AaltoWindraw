@@ -1,0 +1,17 @@
+done : Stable server when release
+*TODO : HIGHSCORES page
+done : Activate "I want to draw what I want" as soon as page launched
+done : When in "draw what i want" have textfield instead of text
+done : Add personnal drawing in the database (for the moment, it adds only drawings corresponding to a card)
+done : Palette and Background buttons (complete palette + touchenter)
+done : remove debug console
+done : brush size wider
+*TODO : When hitting Previous from About, it systematically goes back to Home
+*TODO : When hitting Go in BeforeGuess, it always goes to GuessPage even if clicked on Back or About during countdown
+done : In Guess, interrupt counting when typing and restart when hitting ENTER
+done : In Draw, collapse Save button when saved successfully
+*TODO : Changing color during the drawing of a stroke => one stroke = one color & one size !
+
+new transitions
+done : Guess -> Home (or new BeforeGuess...)
+

@@ -1,0 +1,69 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:s="http://schemas.microsoft.com/surface/2008"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="AaltoWindraw.GuessingPanel"
+	x:Name="GuessingPage"
+	FlowDirection="LeftToRight"
+	Width="Auto" Height="Auto"
+    FocusManager.IsFocusScope="True"
+    FocusManager.FocusedElement="{Binding ElementName=UserAttempt}">
+
+
+		<Grid x:Name="LayoutRoot" Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.793*"/>
+			<ColumnDefinition Width="0.207*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.098*"/>
+			<RowDefinition Height="0.902*"/>
+		</Grid.RowDefinitions>
+		
+		<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center"></TextBlock>
+			<Button x:Name="Button_Another" Content="Try another" Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
+                    Click="OnClickTryAnother" TouchEnter="OnClickTryAnother"/>
+		</StackPanel>
+		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Row="1" Grid.Column="0">
+			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White" 
+				/>
+		</Border>
+		
+		<StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="10,0,0,0">
+            <TextBlock x:Name="GuessTimer" Text="00:00:00" Style="{DynamicResource TextBlock-SubTitle}" HorizontalAlignment="Center"/>
+            <TextBox x:Name="UserAttempt" Tag="What is it?" Height="44" Width="Auto" Style="{DynamicResource TextBoxGUI}" Margin="10" Focusable="True"
+			Loaded="FocusTextBox" VerticalAlignment="Stretch" KeyDown="OnKeyDownHandler" TouchEnter="OnTouchEnter"/>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+				<StackPanel x:Name="UserAttemptFeedbackRight"  Orientation="Horizontal" HorizontalAlignment="Left">
+	                <Viewbox Height="28">
+	                    <Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerUp}" VerticalAlignment="Top" Width="51.837" Margin="0,0,10,0"/>
+	                </Viewbox>
+	                <TextBlock Text="Correct !" Style="{DynamicResource TextBlock-Default}"></TextBlock>
+	            </StackPanel>
+	            <StackPanel x:Name="UserAttemptFeedbackWrong"  Orientation="Horizontal" HorizontalAlignment="Left">
+	                <Viewbox Height="28">
+	                    <Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerDown}" VerticalAlignment="Top" Width="51.837" Margin="0,0,10,0"/>
+	                </Viewbox>
+	                <TextBlock Text="Nope !" Style="{DynamicResource TextBlock-Default}"></TextBlock>
+	            </StackPanel>
+				
+				<StackPanel x:Name="UserAttemptFeedbackTooLate"  Orientation="Horizontal" HorizontalAlignment="Left">
+	                <Viewbox Height="28">
+	                    <Button Content="Button" HorizontalAlignment="Left" Height="51.838" Style="{DynamicResource IconServerDown}" VerticalAlignment="Top" Width="51.837" Margin="0,0,10,0"/>
+	                </Viewbox>
+	                <TextBlock Text="Too late..." Style="{DynamicResource TextBlock-Default}"></TextBlock>
+	            </StackPanel>
+            </StackPanel>
+            <Button x:Name="ButtonIKnow" Content="Submit" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickIKnow" TouchEnter="OnClickIKnow"/>
+            <Button x:Name="ButtonTryAgain" Content="Try again" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickTryAgain" TouchEnter="OnClickTryAgain"/>
+            <Button x:Name="ButtonPlayAgain" Content="Play again" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickPlayAgain" TouchEnter="OnClickPlayAgain"/>
+            <Button x:Name="ButtonCheckScore" Content="Check my score" Style="{DynamicResource YellowButton}" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Click="OnClickCheckMyScore" TouchEnter="OnClickCheckMyScore"/>
+
+		</StackPanel>
+		
+	</Grid>
+
+</UserControl>

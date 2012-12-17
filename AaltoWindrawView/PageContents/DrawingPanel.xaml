@@ -1,0 +1,137 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:s="http://schemas.microsoft.com/surface/2008"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="AaltoWindraw.DrawingPanel"
+	x:Name="DrawingPage"
+	FlowDirection="LeftToRight"
+	Width="Auto" Height="Auto">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.793*"/>
+			<ColumnDefinition Width="0.207*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.098*"/>
+			<RowDefinition Height="0.902*"/>
+		</Grid.RowDefinitions>
+		
+		<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+			<TextBlock x:Name="DrawingToDraw" Style="{StaticResource TextBlock-SubTitle}" Text="Batman" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+            <TextBox x:Name="FieldTitle" Tag="Title of your drawing" Height="48" Width="300" Style="{DynamicResource TextBoxGUI}" HorizontalAlignment="Left" TouchEnter="OnClickTextbox"></TextBox>
+
+		<StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right">
+			<TextBlock Style="{StaticResource TextBlock-Default}" Text="Not Satisfied ?" VerticalAlignment="Center" Height="48"></TextBlock>
+                <Button x:Name="ButtonReset"    Content="Reset"         Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickResetBoard" TouchEnter="OnClickResetBoard"/>
+                <Button x:Name="ButtonAnother"  Content="Draw another"  Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickDrawAnother" TouchEnter="OnClickDrawAnother"/>
+                <Button x:Name="ButtonAddNew"   Content="Add a new one" Style="{DynamicResource YellowButton}" Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10" Click="OnClickAddANewOne" TouchEnter="OnClickAddANewOne"/>
+		</StackPanel>
+		</Grid>
+
+		<Border x:Name="InkCanvasBorder" BorderBrush="#FFC4C4C4" BorderThickness="1" Grid.Row="1" Grid.Column="0">
+			<s:SurfaceInkCanvas x:Name="canvas" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Background="White"
+                                PreviewMouseDown="OnMouseDown" PreviewMouseUp="OnMouseUp" PreviewMouseMove="onMouseMove"
+                                TouchEnter="OnTouchDown" TouchLeave="OnTouchUp" PreviewTouchMove="onTouchMove"
+				/>
+		</Border>
+		
+		<StackPanel Grid.Row="1" Grid.Column="1" Margin="8">
+			<Expander x:Name="Expander_Palette" Header="Palette" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+							<Button x:Name="ButtonBrushBlack" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Black}" Click="BrushBlack" TouchEnter="BrushBlack"/>
+                            <Button x:Name="ButtonBrushGrey" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Grey}" Click="BrushGrey" TouchEnter="BrushGrey"/>
+                            <Button x:Name="ButtonBrushWhite" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-White}" Click="BrushWhite" TouchEnter="BrushWhite"/>
+                            <Button x:Name="ButtonBrushPink" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Pink}" Click="BrushPink" TouchEnter="BrushPink"/>
+                            <Button x:Name="ButtonBrushMauve" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Mauve}" Click="BrushMauve" TouchEnter="BrushMauve"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="ButtonBrushPurple" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Purple}" Click="BrushPurple" TouchEnter="BrushPurple"/>
+                            <Button x:Name="ButtonBrushIndigo" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Indigo}" Click="BrushIndigo" TouchEnter="BrushIndigo"/>
+                            <Button x:Name="ButtonBrushMarineBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-MarineBlue}" Click="BrushMarineBlue" TouchEnter="BrushMarineBlue"/>
+                            <Button x:Name="ButtonBrushBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Blue}" Click="BrushBlue" TouchEnter="BrushBlue"/>
+                            <Button x:Name="ButtonBrushSkyBlue" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-SkyBlue}" Click="BrushSkyBlue" TouchEnter="BrushSkyBlue"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="ButtonBrushBlueGreen" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-BlueGreen}" Click="BrushBlueGreen" TouchEnter="BrushBlueGreen"/>
+                            <Button x:Name="ButtonBrushDarkGreen" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-DarkGreen}" Click="BrushDarkGreen" TouchEnter="BrushDarkGreen"/>
+                            <Button x:Name="ButtonBrushGreen" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Green}" Click="BrushGreen" TouchEnter="BrushGreen"/>
+                            <Button x:Name="ButtonBrushGreenYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-GreenYellow}" Click="BrushGreenYellow" TouchEnter="BrushGreenYellow"/>
+                            <Button x:Name="ButtonBrushPaleYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-PaleYellow}" Click="BrushPaleYellow" TouchEnter="BrushPaleYellow"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="ButtonBrushYellow" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Yellow}" Click="BrushYellow" TouchEnter="BrushYellow"/>
+                            <Button x:Name="ButtonBrushAmbre" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Ambre}" Click="BrushAmbre" TouchEnter="BrushAmbre"/>
+                            <Button x:Name="ButtonBrushOrange" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Orange}" Click="BrushOrange" TouchEnter="BrushOrange"/>
+                            <Button x:Name="ButtonBrushRed" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Red}" Click="BrushRed" TouchEnter="BrushRed"/>
+                            <Button x:Name="ButtonBrushBrown" 	Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Brown}" Click="BrushBrown" TouchEnter="BrushBrown"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Background" Header="Background" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5">
+					<StackPanel VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+						<StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="BgWhite" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-White}" Click="BackgroundWhite" TouchEnter="BackgroundWhite"/>
+                            <Button x:Name="BgGreenYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-GreenYellow}" Click="BackgroundGreenYellow" TouchEnter="BackgroundGreenYellow"/>
+                            <Button x:Name="BgPaleYellow" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-PaleYellow}" Click="BackgroundPaleYellow" TouchEnter="BackgroundPaleYellow"/>
+                            <Button x:Name="BgSkyBlue" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-SkyBlue}" Click="BackgroundSkyBlue" TouchEnter="BackgroundSkyBlue"/>
+                            <Button x:Name="BgBlack" Content="Button" Height="35" Width="35" Style="{DynamicResource ColorButtonStyle-Black}" Click="BackgroundBlack" TouchEnter="BackgroundBlack"/>
+                        </StackPanel>
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			<Expander x:Name="Expander_Brush" Header="Brush" FontFamily="Segoe UI Light" FontSize="18.667" Background="#FFFECB06" Style="{DynamicResource ExpanderStyle1}" Foreground="White" Margin="0,0,0,15">
+				<Grid Background="#FFE5E5E5" Margin="0">
+					<StackPanel VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Left" Margin="4">
+						<StackPanel Orientation="Horizontal" Margin="10,0">
+							<TextBlock Foreground="#FFAFAFAF" Background="Transparent"><Run Text="Size"/></TextBlock>
+							<s:SurfaceSlider x:Name="BrushRadiusSlider" Orientation="Horizontal" 
+								Width="175.19" Value="20" Maximum="100" SmallChange="10" LargeChange="20" Minimum="10"
+                                             Thumb.DragCompleted="OnSlideValueChanged" ValueChanged="OnSlideValueChanged"
+								Foreground="White" />
+						</StackPanel>
+
+					</StackPanel>
+				</Grid>
+			</Expander>
+			
+			
+		    <StackPanel Orientation="Vertical"  VerticalAlignment="Center">
+			    <TextBlock Style="{StaticResource TextBlock-Default}" Text="Satisfied ?" VerticalAlignment="Center"></TextBlock>
+			    <TextBox x:Name="FieldName" Tag="Your name" Height="44" Style="{DynamicResource TextBoxGUI}" Margin="10"
+                         TouchEnter="OnClickTextbox"></TextBox>
+                <Button x:Name="ButtonSaveDrawing" Content="Save" Style="{DynamicResource YellowButton}"
+                        Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
+                        Click="OnClickSaveDrawing" TouchEnter="OnClickSaveDrawing"/>
+		    </StackPanel>
+			<StackPanel x:Name="SaveFeeback" Orientation="Vertical">
+				<StackPanel x:Name="SaveFeedbackOK" Orientation="Horizontal">
+					<Viewbox Height="30" Margin="0,0,10,0">
+						<Button Content="Button" HorizontalAlignment="Left" Height="42.045" Style="{DynamicResource ButtonSaveSuccess}" VerticalAlignment="Center" Width="42.045"/>
+			         </Viewbox>
+			         <TextBlock Text="Save successful" Style="{DynamicResource TextBlock-Default}" VerticalAlignment="Center"></TextBlock>      
+				 </StackPanel>
+				 
+				 <StackPanel x:Name="SaveFeedbackNOTOK" Orientation="Horizontal">
+					<Viewbox Height="30" Margin="0,0,10,0">
+						<Button Content="Button" HorizontalAlignment="Left" Height="42.045" Style="{DynamicResource ButtonSaveFail}" VerticalAlignment="Top" Width="42.045"/>
+			         </Viewbox>
+			         <TextBlock Text="Save failed" Style="{DynamicResource TextBlock-Default}" VerticalAlignment="Center"></TextBlock>      
+				 </StackPanel>
+
+				  <Button x:Name="ButtonGoBackHome" Content="Go back Home" Style="{DynamicResource YellowButton}"
+	                        Width="Auto" Height="Auto" FontSize="{StaticResource FontSize-Default}" Margin="10"
+	                        Click="OnClickGoBackHome" TouchEnter="OnClickGoBackHome"/>
+			</StackPanel>
+        </StackPanel>
+		
+	</Grid>
+</UserControl>

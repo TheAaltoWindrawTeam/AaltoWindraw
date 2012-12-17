@@ -1,0 +1,24 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="AaltoWindraw.AboutPanel"
+	x:Name="Page"
+	FlowDirection="LeftToRight"
+	Width="Auto" Height="auto">
+
+	<Grid x:Name="LayoutRoot" Background="White">
+
+           <StackPanel Width="Auto" Orientation="Vertical">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource TextBlock-Title}" Margin="0,0,10,0"><Run Language="fr-fr" Text="About us"/></TextBlock>
+                <TextBlock x:Name="AboutContent" TextWrapping="WrapWithOverflow" Style="{StaticResource TextBlock-Default}" Margin="0,0,10,10" TextAlignment="Justify"><Run Language="fr-fr" Text="About us"/></TextBlock>
+               <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource TextBlock-Title}" Margin="0,0,10,0"><Run Language="fr-fr" Text="License"/></TextBlock>
+			   <TextBlock x:Name="AboutLicense" TextWrapping="WrapWithOverflow" Style="{StaticResource TextBlock-Default}" Margin="0,0,10,10" TextAlignment="Justify"><Run Language="fr-fr" Text="License"/></TextBlock>
+				<StackPanel Orientation="Horizontal">
+					<Button Content="Button" HorizontalAlignment="Left" Height="94.986" Style="{DynamicResource GplLogo}" VerticalAlignment="Center" Width="191.187" Margin="0,0,40,0"/>
+					<Button Content="Button" HorizontalAlignment="Left" Height="84.423" Style="{DynamicResource AaltoLogo}" VerticalAlignment="Center" Width="103.257" Margin="0,0,40,0"/>
+					<Button Content="Button" HorizontalAlignment="Left" Height="104.781" Style="{DynamicResource WindowsSurfaceLogo}" VerticalAlignment="Center" Width="297.438" Margin="0,0,40,0"/>
+           			<Image x:Name="PsdLayer" Height="100" Canvas.Left="0" Source="logo-mongodb-onwhite_Images\Image.png" Canvas.Top="0" Width="Auto"/>
+				</StackPanel>
+			</StackPanel>  
+	</Grid>
+</UserControl>

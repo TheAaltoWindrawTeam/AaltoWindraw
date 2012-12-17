@@ -118,3 +118,5 @@ Desktop.ini
 ###########
 
 own_*
+Database/*
+release/*

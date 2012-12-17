@@ -22,6 +22,8 @@ They prove to be the archetypal platform for the kind of game that __AaltoWindra
 
 You can see a video at http://www.youtube.com/watch?v=72FyK5rsrqo
 
+More information is detailed in the report, see report/AaltoWindraw-Report.pdf
+
 Setup
 -----
 

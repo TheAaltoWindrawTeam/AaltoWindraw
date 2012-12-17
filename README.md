@@ -22,18 +22,20 @@ They prove to be the archetypal platform for the kind of game that __AaltoWindra
 
 You can see a video at http://www.youtube.com/watch?v=72FyK5rsrqo
 
-Milestones
-----------
+Setup
+-----
 
-Milestones for a first usable version of the game should be as follow:
+In order to run AaltoWindraw, you need an instance of MongoDB running.
+MongoDB can be downloaded here: http://www.mongodb.org/downloads
+It can then be launched aside AaltoWindraw.
+If not, AaltoWindraw itself will raise up an instance of MongoDB 
+(provided it is reachable via the PATH variable).
+An new database is filled de facto with a set of default words so that 
+users do not have to manually add them from the beginning.
 
-### 14 Nov 2012
+Some options are to be manually defined according to your needs, they 
+are present in the file:
+AaltoWindrawModel/Properties/Resources.resx
 
-Mid-term demo (only whiteboard and UI capacities).
-
-### 12 Dec 2012
-Workshop. Functional game
-(whiteboard capacities, database) with at least asynchronous ability.
-
-### 21 Dec 2012
-Final submission. Bug correcting and minor enhancements.
+This way the game can be relatively fine-tuned (name of the station, IP 
+of the server, threshold for word recognition and so on).
